@@ -1,0 +1,299 @@
+BROKER SCHEMA br.org.fiep.esb.utils.v1
+PATH br.org.fiep.esb.utils;
+
+CREATE PROCEDURE gerarData(IN dataRecebida CHAR)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.geraData";
+
+CREATE PROCEDURE removerAcento(IN x CHAR)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.removerAcento";
+
+CREATE PROCEDURE primeiraLetraMaiusucla(IN nomeCompleto CHAR)
+RETURNS CHAR
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.primeiraLetraMaiusucla";
+
+CREATE PROCEDURE primeiroNome(IN nomeCompleto CHAR)
+RETURNS CHAR
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.primeiroNome";
+
+CREATE PROCEDURE ultimoNome(IN nomeCompleto CHAR)
+RETURNS CHAR
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.ultimoNome";
+
+CREATE PROCEDURE retiraPrimeiroNome(IN nomeCompleto CHAR)
+RETURNS CHAR
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.retiraPrimeiroNome";
+
+CREATE PROCEDURE duasCasasDecimais(IN valor CHAR)
+RETURNS BOOLEAN
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.duasCasasDecimais";
+
+CREATE PROCEDURE listToString(IN valor REFERENCE)
+RETURNS CHAR
+LANGUAGE JAVA
+EXTERNAL NAME "br.org.fiep.esb.utils.StringUtils.listToString";
+
+CREATE FUNCTION padding(IN string CHAR, IN length1 INT ) RETURNS CHAR
+-- This Function will pad a string to a specific length. There are 2 cases:
+-- String too short: add spaces: 'abcd' --> 'abcd  '
+-- String too long: truncate: 'abcdefghijkl' --> 'abcdef'
+BEGIN
+	DECLARE padding CHAR;
+	IF LENGTH( string ) <= length1 THEN -- 'Batch', 10 --> 'Batch     '
+		SET padding = LEFT( string || SPACE( 1000 ), length1 );
+	ELSE
+		SET padding = string; -- 'ItemDescription', 10 --> 'ItemDescri'
+	END IF;
+	RETURN padding;
+END;
+
+CREATE FUNCTION paddingZeros(IN string CHAR, IN length1 INT ) RETURNS CHAR
+BEGIN
+	DECLARE padding CHAR;
+	IF LENGTH( string ) <= length1  THEN -- 'Batch', 10 --> 'Batch     '
+		SET padding = RIGHT( REPLICATE('0', length1 - LENGTH(string)) || string, length1 );
+	ELSE
+		SET padding = string; -- 'ItemDescription', 10 --> 'ItemDescri'
+	END IF;
+	RETURN padding;
+END;
+
+CREATE FUNCTION paddingSpaces(IN string CHAR, IN length1 INT ) RETURNS CHAR
+BEGIN
+	DECLARE padding CHAR;
+	IF string IS NULL THEN
+		DECLARE strings INT;
+		SET strings =  length1 * 3;
+		SET padding = LEFT( REPLICATE('%20', strings) , (strings));
+	ELSE	
+		IF LENGTH( string ) <= length1 THEN -- 'Batch', 10 --> 'Batch     '
+			DECLARE strings INT;
+			SET strings =  (length1 - LENGTH(string)) * 3;
+			SET padding = LEFT( string || REPLICATE('%20', strings) , (strings + LENGTH(string)));
+		ELSE
+			SET padding = string; -- 'ItemDescription', 10 --> 'ItemDescri'
+		END IF;
+	END IF;
+	RETURN padding;
+END;
+
+CREATE FUNCTION crlf() RETURNS CHAR BEGIN
+	RETURN CAST( X'0D0A' AS CHAR CCSID 819 ); -- Carriage Return, Line Feed (Linux&Windows)
+END;
+CREATE FUNCTION lf() RETURNS CHAR BEGIN
+	RETURN CAST( X'0A' AS CHAR CCSID 819 ); -- Line Feed (Linux only)
+END;
+
+CREATE FUNCTION crlfCcsidEncoding(IN ccsid INT, IN encoding INT) RETURNS CHAR
+BEGIN
+	-- For Linux&Windows: '0D0A',
+	-- '0D' for Windows only
+	RETURN CAST( X'0D0A' AS CHAR CCSID ccsid ENCODING encoding );
+END;
+
+CREATE FUNCTION selectSubField(sourceString CHAR, delimiter CHAR, targetStringPosition INT) RETURNS CHAR
+-- This function returns a substring at parameter position TargetStringPosition within the
+-- passed parameter SourceString. An example of use might be:
+-- selectSubField(MySourceField,' ',2) which will select the second subfield from the
+-- field MySourceField delimited by a blank. If MySourceField has the value
+-- "First Second Third" the function will return the value "Second"
+BEGIN
+	DECLARE delimiterPosition INT;
+	DECLARE currentFieldPosition INT 1;
+	DECLARE startNewString INT 1;
+	DECLARE workingSource CHAR sourceString;
+	SET delimiterPosition = POSITION( delimiter IN sourceString );
+	WHILE currentFieldPosition < targetStringPosition AND delimiterPosition <> 0 DO
+		SET startNewString = delimiterPosition + LENGTH( delimiter );
+		SET workingSource = SUBSTRING( workingSource FROM startNewString );
+		SET delimiterPosition = POSITION( delimiter IN workingSource );
+		SET currentFieldPosition = currentFieldPosition + 1;
+	END WHILE;
+	IF currentFieldPosition < targetStringPosition THEN
+		SET workingSource = NULL;
+	ELSEIF delimiterPosition > 0 THEN
+		-- Remove anything following the delimiter from the string
+		SET workingSource = SUBSTRING( workingSource FROM 1 FOR delimiterPosition - 1 );
+	END IF;
+	RETURN workingSource;
+END;
+
+CREATE FUNCTION countCharInChar(IN char1 CHAR, IN char2 CHAR) RETURNS INT
+-- Returns the number of occurences of char1 in char2
+-- E.g.: ('A', 'ABCDABCDABCD') --> 3
+-- ('ABC', 'ABCDABCD') --> 2
+-- ...
+BEGIN
+	DECLARE count INT 0;
+	IF char1 IS NOT NULL AND char2 IS NOT NULL THEN
+		DECLARE position1 INT POSITION( char1 IN char2 REPEAT count+1 );
+		WHILE position1 <> 0 DO
+			SET count = count + 1;
+			SET position1 = POSITION( char1 IN char2 REPEAT count+1 );
+		END WHILE;
+	END IF;
+	RETURN count;
+END;
+
+CREATE PROCEDURE isNumeric ( IN string CHAR ) RETURNS BOOLEAN
+BEGIN
+	RETURN containsCharsOnly( string, '0123456789' );
+END;
+
+CREATE PROCEDURE isAlphanumeric ( IN string CHAR ) RETURNS BOOLEAN
+BEGIN
+	RETURN containsCharsOnly( string, 'abcdefghijklmnopqrstuvwxyz'
+	|| 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	);
+END;
+
+CREATE PROCEDURE isIdentifier ( IN string CHAR ) RETURNS BOOLEAN
+BEGIN
+	DECLARE firstCharOK BOOLEAN;
+	DECLARE firstChar CHAR SUBSTRING( string FROM 1 FOR 1 );
+	DECLARE chars CHAR 'abcdefghijklmnopqrstuvwxyz'
+	|| 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	|| '_';
+	SET firstCharOK = containsCharsOnly( firstChar, chars );
+	RETURN firstCharOK AND containsCharsOnly( string, chars || '0123456789' );
+END;
+
+CREATE PROCEDURE isAlphanumOrNumeric ( IN string CHAR ) RETURNS BOOLEAN
+BEGIN
+	RETURN containsCharsOnly( string, 'abcdefghijklmnopqrstuvwxyz'
+	|| 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	|| '0123456789'
+	);
+END;
+
+CREATE PROCEDURE isFieldReference ( IN string CHAR ) RETURNS BOOLEAN
+BEGIN
+	DECLARE firstCharOK BOOLEAN;
+	DECLARE firstChar CHAR SUBSTRING( string FROM 1 FOR 1 );
+	DECLARE chars CHAR 'abcdefghijklmnopqrstuvwxyz'
+	|| 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	|| '_';
+	SET firstCharOK = containsCharsOnly( firstChar, chars );
+	RETURN firstCharOK AND containsCharsOnly( string, chars || '0123456789.' );
+END;
+
+CREATE PROCEDURE containsCharsOnly ( IN string CHAR, IN chars CHAR ) RETURNS BOOLEAN
+BEGIN
+	DECLARE length1 INT LENGTH( string );
+	DECLARE i INT 1;
+	WHILE i <= length1 DO
+		DECLARE char1 CHAR SUBSTRING( string FROM i FOR 1 );
+		IF POSITION( char1 IN chars ) = 0 THEN -- Found something else than the chars in 'chars'
+			RETURN FALSE;
+		END IF;
+		SET i = i + 1;
+	END WHILE;
+	RETURN TRUE;
+END;
+
+CREATE PROCEDURE getSubstring ( IN pattern CHAR, IN string CHAR, IN length1 INT ) RETURNS CHAR
+-- Gets a Substring from a Starting "pattern" in "string" for "length1"-characters
+BEGIN
+	DECLARE startSubString INT POSITION( pattern IN string ) + LENGTH( pattern );
+	DECLARE result CHAR SUBSTRING( string FROM startSubString FOR length1 );
+	RETURN result;
+END;   
+
+
+/*
+========================================================================================
+PROCEDURE Split
+========================================================================================
+Splits S on Delim into an array in Env (Environment.Split.Array[])
+Removes Environment.Split before refilling it
+*/
+CREATE PROCEDURE Split (IN S CHARACTER, IN Env REFERENCE, IN Delim CHARACTER)
+BEGIN
+	DECLARE P INTEGER;
+	DECLARE Idx INTEGER 1;
+
+	SET Env.Split = NULL;
+
+	REPEAT
+		SET P = POSITION(Delim IN S);
+		IF P = 0 THEN
+			SET Env.Split.Array[Idx] = S;
+		ELSE
+			SET Env.Split.Array[Idx] = LEFT(S, P - 1);
+			SET S = SUBSTRING(S FROM P + LENGTH(Delim));
+			SET Idx = Idx + 1;
+		END IF;
+		UNTIL P = 0
+
+	END REPEAT;
+
+END;
+
+--CREATE PROCEDURE removeAcento(IN string CHAR) RETURNS CHAR
+--BEGIN
+--         DECLARE semAcento CHAR;  
+ 
+--         SET semAcento = REPLACE(string,'á','a');   
+--         SET semAcento = REPLACE(semAcento,'à','a');  
+--         SET semAcento = REPLACE(semAcento,'ã','a');  
+--         SET semAcento = REPLACE(semAcento,'â','a');
+--         SET semAcento = REPLACE(semAcento,'Á','a');
+--         SET semAcento = REPLACE(semAcento,'À','a');
+--         SET semAcento = REPLACE(semAcento,'Ã','a');
+--         SET semAcento = REPLACE(semAcento,'Â','a');  
+--         SET semAcento = REPLACE(semAcento,'é','e');   
+--         SET semAcento = REPLACE(semAcento,'è','e');   
+--         SET semAcento = REPLACE(semAcento,'ê','e');
+--         SET semAcento = REPLACE(semAcento,'É','e');
+--         SET semAcento = REPLACE(semAcento,'È','e');  
+--         SET semAcento = REPLACE(semAcento,'Ê','e');
+--         SET semAcento = REPLACE(semAcento,'í','i');   
+--         SET semAcento = REPLACE(semAcento,'ì','i');   
+--         SET semAcento = REPLACE(semAcento,'î','i');
+--         SET semAcento = REPLACE(semAcento,'Í','i');
+--         SET semAcento = REPLACE(semAcento,'Ì','i');
+--         SET semAcento = REPLACE(semAcento,'Î','i');	  
+--         SET semAcento = REPLACE(semAcento,'ó','o');   
+         --SET semAcento = REPLACE(semAcento,'ò','o');   
+--         SET semAcento = REPLACE(semAcento,'ô','o');   
+--         SET semAcento = REPLACE(semAcento,'õ','o');
+--         SET semAcento = REPLACE(semAcento,'Ó','o');
+--         SET semAcento = REPLACE(semAcento,'Ô','o');
+--         SET semAcento = REPLACE(semAcento,'Õ','o');
+--         SET semAcento = REPLACE(semAcento,'ú','u');   
+--        SET semAcento = REPLACE(semAcento,'ù','u');   
+--         SET semAcento = REPLACE(semAcento,'û','u');   
+--         SET semAcento = REPLACE(semAcento,'ü','u');
+--     	 SET semAcento = REPLACE(semAcento,'Ú','u');
+--     	 SET semAcento = REPLACE(semAcento,'Ù','u');
+--     	 SET semAcento = REPLACE(semAcento,'Û','u');
+--     	 SET semAcento = REPLACE(semAcento,'Ü','u'); 
+--         SET semAcento = REPLACE(semAcento,'ç','c');
+--         SET semAcento = REPLACE(semAcento,'Ç','c');
+ 
+--         return (UPPER(semAcento));  
+--END;
+
+CREATE FUNCTION changeStringIfEmpty(IN variable CHAR, IN variableToReplaceFor CHAR) RETURNS CHAR
+	BEGIN 
+		
+	    IF (variable IS NULL) THEN
+	    	SET variable = '';
+	    ELSEIF (variable <> '') THEN
+	    	return variable;
+	    END IF;
+	    SET variable = variableToReplaceFor;
+	    
+	    RETURN variable;
+	         
+END;
+
+ 

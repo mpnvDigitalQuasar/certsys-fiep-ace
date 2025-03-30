@@ -1,0 +1,81 @@
+BROKER SCHEMA br.org.fiep.esb.appsgt
+
+
+CREATE COMPUTE MODULE processarContratoAsync_orquestrador
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		SET Environment.Variables.SGTclienteEndereco = InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco;
+		
+		IF InputRoot.JSON.Data.Clientes = '' THEN			
+			PROPAGATE TO LABEL 'lbCriarClienteSGT';
+		ELSEIF InputRoot.JSON.Data.Clientes.Cliente.Enderecos = '' THEN		
+			PROPAGATE TO LABEL 'lbCriarEnderecoClienteSGT';	
+		ELSE
+			PROPAGATE TO LABEL 'lbAtualizarEnderecoClienteSGT';
+		END IF;
+
+		-- PROCESSAR ATENDIMENTO
+		DECLARE codigoIntegracaoAtendimentoAux CHAR '';
+		SET codigoIntegracaoAtendimentoAux = CAST(Environment.Variables.CRMcontratoResult.codCasa AS CHAR) || '-' 
+																	|| Environment.Variables.CRMcontratoResult.codUnidadeOp || '-' 
+																		|| Environment.Variables.CRMcontratoResult.codigoContratoCTR; 
+																		
+		FOR current AS Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[] DO
+								
+			DECLARE codigoIntegracaoAtendimento CHAR '';
+			SET codigoIntegracaoAtendimento = codigoIntegracaoAtendimentoAux || current.codigoProduto;
+
+			DECLARE refContrato REFERENCE TO Environment.Variables.CRMcontratoResult;
+		
+			SET Environment.Variables.codigoIntegracaoPropostaSGT = CAST(refContrato.codCasa AS CHAR) || CAST(refContrato.codUnidadeOp AS CHAR) || CAST(refContrato.codigoContratoCTR AS CHAR) || CAST(current.codigoProduto AS CHAR);
+							
+			PROPAGATE TO LABEL 'lbObterAtendimentoSGT';
+		
+			PROPAGATE TO LABEL 'lbObterProdutoRegionaisSGT';
+	
+			SET OutputRoot.JSON.Data.dataEmissao = Environment.Variables.CRMcontratoResult.dataInicioContrato;
+			SET OutputRoot.JSON.Data.dataInicioPrevista = CURRENT_DATE;
+			SET OutputRoot.JSON.Data.dataConclusaoPrevista = Environment.Variables.CRMcontratoResult.dataTerminoContrato;
+			SET OutputRoot.JSON.Data.codigoIntegracaoAtendimento = Environment.Variables.CRMcontratoResult.cnpjCliente;
+			SET OutputRoot.JSON.Data.idProposta = Environment.Variables.idProposta;
+			SET OutputRoot.JSON.Data.cliente = Environment.Variables.CRMcontratoResult.cnpjCliente;
+			SET OutputRoot.JSON.Data.idProdutoRegional = Environment.Variables.idProdutoRegional;
+			SET OutputRoot.JSON.Data.isEscopoIndefinido = current.isEscopoIndefinido;
+			SET OutputRoot.JSON.Data.isValorHora = current.isValorHora;
+			SET OutputRoot.JSON.Data.numeroDeProducaoEstimada = current.numeroDeProducaoEstimada;
+			SET OutputRoot.JSON.Data.numeroDeRelatorioEstimado = current.numeroDeRelatorioEstimado;
+			SET OutputRoot.JSON.Data.titulo = current.titulo;
+			SET OutputRoot.JSON.Data.unidade = current.unidade;
+			SET OutputRoot.JSON.Data.vlrEconomico = current.vlrEconomico;
+			SET OutputRoot.JSON.Data.vlrFinanceiro = current.vlrFinanceiro;
+			SET OutputRoot.JSON.Data.previsaoReceitaList.cpfcnpj = current.previsoesReceitas.PrevisaoReceita.cpfCnpj;
+			SET OutputRoot.JSON.Data.previsaoReceitaList.tipoPrevisaoReceita = current.previsoesReceitas.PrevisaoReceita.tipoPrevisaoReceita;
+			SET OutputRoot.JSON.Data.previsaoReceitaList.valor = current.previsoesReceitas.PrevisaoReceita.valor;
+			
+			PROPAGATE TO LABEL 'lbCriarAtendimentoSGT';
+			
+			PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT';	
+					
+		END FOR;
+		
+		SET Environment.Variables.status = 'Concluido';
+		SET Environment.Variables.sucesso = true;
+			
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

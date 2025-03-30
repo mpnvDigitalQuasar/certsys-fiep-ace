@@ -1,0 +1,111 @@
+BROKER SCHEMA br.org.fiep.esb.token.v1
+
+CREATE COMPUTE MODULE gerarTokenCRM
+
+	DECLARE resourceCRM EXTERNAL CHARACTER;
+	DECLARE clientInfo EXTERNAL CHARACTER;
+	DECLARE grantType EXTERNAL CHARACTER;
+
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET Environment.Variables.dados = InputRoot.JSON.Data;
+		SET Environment.Variables.sistema ='CRM';
+
+		DECLARE sqlQuery CHARACTER;
+
+		SET sqlQuery = 'SELECT TOP(1)
+		[id_token_broker]
+		,[sistema]
+		,[resource]
+		,[clientId]
+		,[expiresOn]
+		,[tokenType]
+		,[accessToken]
+		,[dateCreated]
+		FROM [dbo].[MKP_ECOM_TOKEN]
+		WHERE [clientId] = '''
+		||CAST(Environment.Variables.user AS CHARACTER)
+		||''' AND [sistema] = '''
+		||CAST(Environment.Variables.sistema AS CHARACTER)
+		||''' order by id_token_broker desc';
+
+		SET Environment.Variables.Result.Item[] = PASSTHRU(sqlQuery);
+
+
+		IF Environment.Variables.Result.Item[1].tokenType <> '' OR Environment.Variables.Result.Item[1].tokenType IS NOT NULL THEN
+
+			DECLARE result REFERENCE TO Environment.Variables.Result.Item[1];
+
+			WHILE LASTMOVE (result) DO
+
+				DECLARE dataExpiracao TIMESTAMP CAST(result.expiresOn AS TIMESTAMP ) - INTERVAL '5' MINUTE;
+
+				IF (dataExpiracao >= CURRENT_TIMESTAMP) THEN
+
+					SET Environment.Variables.token = 'Bearer ' || result.accessToken;
+					PROPAGATE TO TERMINAL 'out';
+
+				ELSE
+
+					DECLARE _recurso CHAR '';
+					DECLARE _idCliente CHAR '';
+					DECLARE _idSecreto CHAR '';
+					DECLARE _InfCliente CHAR '';
+					DECLARE _tipo CHAR '';
+					DECLARE _stringTotal CHAR '';
+
+
+					SET _recurso = 'resource=' || resourceCRM;
+					SET _idCliente = '&client_id=' || Environment.Variables.user;
+					SET _idSecreto = '&client_secret=' || Environment.Variables.password;
+					SET _InfCliente = '&client_info=' || clientInfo;
+					SET _tipo = '&grant_type=' || grantType;
+					SET _stringTotal = _recurso || _idCliente || _idSecreto || _InfCliente || _tipo;
+					SET OutputRoot.HTTPRequestHeader."Content-Type" = 'application/x-www-form-urlencoded';
+					SET OutputRoot.BLOB.BLOB = CAST(_stringTotal AS BLOB CCSID 1208 ENCODING 815);
+					PROPAGATE TO TERMINAL 'out1';
+
+				END IF;
+
+				MOVE result NEXTSIBLING;
+			END WHILE;
+
+		ELSE
+
+			DECLARE _recurso CHAR '';
+			DECLARE _idCliente CHAR '';
+			DECLARE _idSecreto CHAR '';
+			DECLARE _InfCliente CHAR '';
+			DECLARE _tipo CHAR '';
+			DECLARE _stringTotal CHAR '';
+
+			SET _recurso = 'resource=' || resourceCRM;
+			SET _idCliente = '&client_id=' || Environment.Variables.user;
+			SET _idSecreto = '&client_secret=' || Environment.Variables.password;
+			SET _InfCliente = '&client_info=' || clientInfo;
+			SET _tipo = '&grant_type=' || grantType;
+			SET _stringTotal = _recurso || _idCliente || _idSecreto || _InfCliente || _tipo;
+			SET OutputRoot.HTTPRequestHeader."Content-Type" = 'application/x-www-form-urlencoded';
+			SET OutputRoot.BLOB.BLOB = CAST(_stringTotal AS BLOB CCSID 1208 ENCODING 815);
+			PROPAGATE TO TERMINAL 'out1';
+		END IF;
+
+		RETURN FALSE;
+
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

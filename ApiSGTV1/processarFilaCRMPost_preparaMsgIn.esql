@@ -1,0 +1,64 @@
+DECLARE ns5 NAMESPACE 'http://schemas.xmlsoap.org/soap/envelope/';
+
+
+CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		SET Environment.Variables.tipo = InputRoot.JSON.Data.tipo;
+		SET Environment.Variables.etapa.tipo = Environment.Variables.tipo;	
+		
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:User = 'service_sgthmg';
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Password = 'S3rv1ce@sGtHMG';
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Domain = 'fiepr.org.br';
+		
+		IF Environment.Variables.tipo = 'CONTRATO' THEN
+	
+			IF FIELDNAME(InputRoot.JSON.Data.idIntegracao) IS NULL THEN
+				SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = 0;
+			ELSE
+				SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = InputRoot.JSON.Data.idIntegracao;
+			END IF;
+			
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:tipoEntidade = 1; -- CONTRATO
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:processo = 1;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:status = 0;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:pagina = 1;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:quantidade = 1; --DESCOMENTAR 10;
+			
+		ELSEIF Environment.Variables.tipo = 'PRODUTO' THEN
+			
+			IF InputRoot.JSON.Data.idIntegracao = '' THEN
+				SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = 0;
+			ELSE
+				SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = InputRoot.JSON.Data.idIntegracao;
+			END IF;
+			
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:tipoEntidade = 2; -- PRODUTO
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:processo = 1;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:status = 0;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:pagina = 1;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:quantidade = 10;
+		END IF;
+
+		DELETE FIELD OutputRoot.JSON;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

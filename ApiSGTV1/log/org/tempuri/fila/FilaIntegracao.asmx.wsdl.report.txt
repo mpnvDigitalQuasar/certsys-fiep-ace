@@ -1,0 +1,25 @@
+
+
+Importing file: C:\Barramento\GIT\FIEP\testeIntegradoV2\assembly\AppSGT_V7\xml-resources\web-service-references\FilaIntegracao\wsdl\wbscrmprd.fiepr.org.br\FilaIntegracao.asmx.wsdl
+
+The WSDL import will proceed with bindings FilaIntegracaoSoap.
+Creating wsdl schema document for file:///C:/Barramento/GIT/FIEP/testeIntegradoV2/assembly/AppSGT_V7/xml-resources/web-service-references/FilaIntegracao/wsdl/wbscrmprd.fiepr.org.br/FilaIntegracao.asmx.wsdl.
+Parsing wsdl binding {http://tempuri.org/fila/}FilaIntegracaoSoap.
+Parsing wsdl binding input GetFilaIntegracao.
+Parsing wsdl binding output GetFilaIntegracao.
+Parsing wsdl binding input PutInativarItensFilaIntegracao.
+Parsing wsdl binding output PutInativarItensFilaIntegracao.
+Processing doc style for operation GetFilaIntegracao.
+Processing doc style for operation PutInativarItensFilaIntegracao.
+Populating WSDL schema FilaIntegracao.asmx.xsd.
+Creating file FilaIntegracao.asmx.xsd in the workspace.
+Creating file FilaIntegracao.asmx_InlineSchema1.xsd in the workspace.
+Copying source WSDL FilaIntegracao.asmx.wsdl to FilaIntegracao.asmx.wsdl.
+
+Elapsed time processing this message definition file: 0.186 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

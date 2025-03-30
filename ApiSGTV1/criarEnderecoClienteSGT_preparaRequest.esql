@@ -1,0 +1,40 @@
+
+
+CREATE COMPUTE MODULE criarEnderecoClienteSGT_preparaRequest
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		DELETE FIELD Environment.Variables.idEtapa;
+		SET Environment.Variables.etapa.nome = 'Inserir Endereço SGT';
+		SET Environment.Variables.etapa.status = 'Em processamento';
+
+		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
+						
+		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontasResult.cpfCnpj;
+		SET OutputRoot.JSON.Data.idTipoEndereco = 1;
+		SET OutputRoot.JSON.Data.cep = Environment.Variables.CRMcontratoResult.endereco.cep;
+		SET OutputRoot.JSON.Data.logradouro = Environment.Variables.CRMcontratoResult.endereco.logradouro;
+		SET OutputRoot.JSON.Data.numero = Environment.Variables.CRMcontratoResult.endereco.numeroEndereco;
+		SET OutputRoot.JSON.Data.bairro = Environment.Variables.CRMcontratoResult.endereco.bairro;
+		SET OutputRoot.JSON.Data.complemento = Environment.Variables.CRMcontratoResult.endereco.complemento;
+		SET OutputRoot.JSON.Data.codigoIBGEMunicipio = Environment.Variables.CRMcontratoResult.endereco.codigoIBGE;
+				
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

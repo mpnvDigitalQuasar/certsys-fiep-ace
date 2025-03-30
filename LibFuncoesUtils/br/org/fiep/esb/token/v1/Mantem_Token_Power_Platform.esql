@@ -1,0 +1,50 @@
+BROKER SCHEMA br.org.fiep.esb.token.v1
+
+
+CREATE COMPUTE MODULE Mantem_Token_Power_Platform
+	
+	DECLARE resourcePowerPlatform EXTERNAL CHARACTER;
+	
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		DECLARE dataRecebimento CHARACTER;
+		DECLARE secondsToAdd INTEGER;
+		DECLARE dataTokenEXP TIMESTAMP;
+		
+		SET dataTokenEXP = CURRENT_TIMESTAMP + CAST(InputRoot.JSON.Data.ext_expires_in AS INTERVAL SECOND);
+		
+		SET OutputRoot.JSON.Data.sistema = Environment.Variables.sistema;
+		SET OutputRoot.JSON.Data.resource = resourcePowerPlatform;
+		SET OutputRoot.JSON.Data.clientId = Environment.Variables.user;
+		--conversão de long pata timestamp
+--		SET dataRecebimento = br.org.fiep.esb.utils.v1.gerarData(dataTokenEXP);
+		
+		SET dataRecebimento = REPLACE(SUBSTRING(CAST(CAST(dataTokenEXP AS TIMESTAMP FORMAT 'yyyy-MM-dd'' ''HH:mm:ss') AS CHARACTER) AFTER 'TIMESTAMP '),'''','');
+		
+		SET OutputRoot.JSON.Data.expiresOn = dataRecebimento;
+		SET OutputRoot.JSON.Data.accessToken = InputRoot.JSON.Data.access_token;
+		SET OutputRoot.JSON.Data.tokenType = InputRoot.JSON.Data.token_type;
+
+
+		DECLARE jsonBlob1 BLOB;
+		DECLARE JSON CHAR;
+		DECLARE options1 INTEGER BITOR(FolderBitStream, ValidateNone);
+		SET jsonBlob1 = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options1);
+		SET JSON = CAST(jsonBlob1 AS CHAR ENCODING 1208);
+		DECLARE result row;
+		CALL insert_token(JSON, result.Item[]);
+		COMMIT;
+		DELETE FIELD OutputRoot.JSON;
+		SET Environment.Variables.idTokenBroker = result.Item.idTokenBroker;		
+		
+		SET Environment.Variables.token = 'Bearer ' || InputRoot.JSON.Data.access_token;
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE insert_token(IN json CHAR)
+	LANGUAGE DATABASE
+	DYNAMIC RESULT SETS 1
+	EXTERNAL NAME "dbo.MKP_ECOM_SP_INS_TOKEN";
+END MODULE;

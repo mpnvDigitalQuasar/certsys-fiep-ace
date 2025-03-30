@@ -1,0 +1,91 @@
+BROKER SCHEMA br.org.fiep.esb.utils
+
+
+
+
+
+
+/*******************************************************************************
+  * Procedure para adicionar uma fila MQ para a lista de destino da variavel.
+  * Esta lista é utilizada pelo no MQOuput para inserir as mensagens nessas filas.
+  *
+  * IN LocalEnvironment: o LocalEnvironment para checar o tamanho da lista.
+  *	IN OutputLocalEnvironment: o OutputLocalEnvironment para atualizar os destino com a fila 
+  * IN nomeFila: nome da fila para ser adicionada aos destinos
+  *
+  *******************************************************************************/
+
+CREATE PROCEDURE adicionarListaDestinoMQ(IN LocalEnvironment REFERENCE, IN OutputLocalEnvironment REFERENCE
+										, IN nomeFila char) BEGIN
+	DECLARE I INTEGER CARDINALITY(LocalEnvironment.Destination.MQ.DestinationData[]);
+	IF I = 0 THEN
+		SET OutputLocalEnvironment.Destination.MQ.DestinationData[1].queueName = nomeFila;
+	ELSE
+		SET OutputLocalEnvironment.Destination.MQ.DestinationData[I+1].queueName = nomeFila;
+	END IF;
+END;	
+
+/*******************************************************************************
+  * Procedure para adicionar uma fila JMS para a lista de destino da variavel.
+  * Esta lista é utilizada pelo no JMSOuput para inserir as mensagens nessas filas.
+  *
+  * IN LocalEnvironment: o LocalEnvironment para checar o tamanho da lista.
+  *	IN OutputLocalEnvironment: o OutputLocalEnvironment para atualizar os destino com a fila 
+  * IN nomeFila: nome da fila para ser adicionada aos destinos
+  *
+  *******************************************************************************/
+
+CREATE PROCEDURE adicionarListaDestinoJMS(IN LocalEnvironment REFERENCE, IN OutputLocalEnvironment REFERENCE
+										, IN nomeFila char) BEGIN
+	DECLARE I INTEGER CARDINALITY(LocalEnvironment.Destination.MQ.DestinationData[]);
+	IF I = 0 THEN
+		SET OutputLocalEnvironment.Destination.JMSDestinationList.DestinationData[1].queueName = nomeFila;
+	ELSE
+		SET OutputLocalEnvironment.Destination.JMSDestinationList.DestinationData[I+1].queueName = nomeFila;
+	END IF;
+END;	
+
+/*******************************************************************************
+  * Procedure para modificar a url de endpoint de um SOAP Request. 
+  * 
+  * IN OutputLocalEnvironment: the LocalEnvironment para ser modificado.
+  * IN endpoint: a url para modificar o destino do no de SOAP Request.
+  *
+  *******************************************************************************/
+CREATE PROCEDURE configurarDefaultSOAPUrl(IN OutputLocalEnvironment REFERENCE, IN endpoint char) BEGIN
+	SET OutputLocalEnvironment.Destination.SOAP.Request.Transport.HTTP.WebServiceURL = endpoint;
+	
+END;
+
+
+/*******************************************************************************
+  * Procedure para modificar a url de endpoint de um HTTP Request. 
+  * 
+  * IN OutputLocalEnvironment: the LocalEnvironment para ser modificado.
+  * IN endpoint: a url para modificar o destino do no de HTTP Request.
+  *
+  *******************************************************************************/
+CREATE PROCEDURE configurarDefaultHTTPUrl(IN OutputLocalEnvironment REFERENCE, IN endpoint char) BEGIN  
+  SET OutputLocalEnvironment.Destination.HTTP.RequestURL = endpoint;
+END;
+
+
+/*******************************************************************************
+  * Procedure para adionar um label na lista de destino do RouteToLabel.
+  * Esta lista e utilizada pelo no RoteToLabel.
+  *
+  * IN LocalEnvironment: o LocalEnvironment par consulta. 
+  * IN OutputLocalEnvironment: o LocalEnvironment para ser alterado com a adicao do label.
+  * IN novoLabel:  the label to be added to the list
+  *
+  *******************************************************************************/
+CREATE PROCEDURE adicionarListaRouteToLabel(IN LocalEnvironment REFERENCE, IN OutputLocalEnvironment REFERENCE, IN novoLabel char) BEGIN
+  
+	IF LocalEnvironment.Destination.RouterList.DestinationData is null THEN
+     SET OutputLocalEnvironment.Destination.RouterList.DestinationData."label" = novoLabel;
+  ELSE
+     CREATE LASTCHILD OF LocalEnvironment.Destination.RouterList.DestinationData
+     NAME 'label' VALUE novoLabel; 
+  END IF;
+END;
+

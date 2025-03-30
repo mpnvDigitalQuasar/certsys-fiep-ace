@@ -1,0 +1,14 @@
+BROKER SCHEMA br.org.fiep.esb.cache
+
+
+CREATE FILTER MODULE CacheIn_Atualizar_Cache_
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		IF LocalEnvironment.HTTP.Input.QueryString.atualizar THEN
+			RETURN FALSE;
+		ELSE
+			RETURN TRUE;
+		END IF;
+	END;
+
+END MODULE;

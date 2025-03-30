@@ -1,0 +1,57 @@
+
+
+CREATE COMPUTE MODULE obterContaCRM_validarDados
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		IF InputRoot.XMLNSC.ns:GetContasResponse.ns:GetContasResult.ns:resultados.ns:ContaRetorno.ns:cpfCnpj = '' THEN
+			CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Cliente nao localizado no CRM: ' || Environment.Variables.cnpjCpfCRM || 'Contrato: ' || Environment.Variables.CRMcodigoContratoCTR || 'Unidade: ' || Environment.Variables.CRMcodUnidadeOp, BrokerName);		
+		END IF;
+		
+		SET Environment.Variables.CRMcontasResult.associadoSindicato = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:associadoSindicato;
+		SET Environment.Variables.CRMcontasResult.cei = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:cei;
+		SET Environment.Variables.CRMcontasResult.cnpjSindicatoRelacionado = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:cnpjSindicatoRelacionado;
+		SET Environment.Variables.CRMcontasResult.codigoAX = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:codigoAX;
+		SET Environment.Variables.CRMcontasResult.codigoEmpresarial = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:codigoEmpresarial;
+		SET Environment.Variables.CRMcontasResult.cpfCnpj = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:cpfCnpj;
+		SET Environment.Variables.CRMcontasResult.dataNascimento = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:dataNascimento;
+		SET Environment.Variables.CRMcontasResult.email = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:email;
+		SET Environment.Variables.CRMcontasResult.emailNF = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:emailNF;
+		SET Environment.Variables.CRMcontasResult.enderecos = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:enderecos;
+		SET Environment.Variables.CRMcontasResult.filiadoSindicato = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:filiadoSindicato;
+		SET Environment.Variables.CRMcontasResult.idConta = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:idConta;
+		SET Environment.Variables.CRMcontasResult.informacoesCnae = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:informacoesCnae;
+		SET Environment.Variables.CRMcontasResult.inscricaoEstadual = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:inscricaoEstadual;
+		SET Environment.Variables.CRMcontasResult.isSindicato = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:isSindicato;
+		SET Environment.Variables.CRMcontasResult.microRegiao = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:microRegiao;
+		SET Environment.Variables.CRMcontasResult.nit = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:nit;
+		SET Environment.Variables.CRMcontasResult.nomeFantasia = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:nomeFantasia;
+		SET Environment.Variables.CRMcontasResult.numeroFuncionarios = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:numeroFuncionarios;
+		SET Environment.Variables.CRMcontasResult.porte = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:porte;
+		SET Environment.Variables.CRMcontasResult.razaoSocial = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:razaoSocial;
+		SET Environment.Variables.CRMcontasResult.rg = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:rg;
+		SET Environment.Variables.CRMcontasResult.status = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:status;
+		SET Environment.Variables.CRMcontasResult.telefone = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:telefone;
+		SET Environment.Variables.CRMcontasResult.tipoConta = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:tipoConta;
+
+		SET Environment.Variables.etapa.status = 'Concluido';
+									
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

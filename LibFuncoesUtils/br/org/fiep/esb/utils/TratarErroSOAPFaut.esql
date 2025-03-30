@@ -1,0 +1,304 @@
+BROKER SCHEMA br.org.fiep.esb.utils
+
+
+/*
+	Constuir a mensagem de SOAP fault para retorna para o servico - modelo simplificado com apenas uma exceção.
+	A Stack Trace dos erros e adiciona aos detalhes da SOAP Fault.
+
+*/
+CREATE COMPUTE MODULE CriarSOAPFaultSimplificado
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		DECLARE soapenv NAMESPACE 'http://schemas.xmlsoap.org/soap/envelope/';
+		SET OutputRoot.SOAP.Context.Namespace.(SOAP.NamespaceDecl)xmlns:soapenv = 'http://schemas.xmlsoap.org/soap/envelope/';
+		SET OutputRoot.SOAP.Body.soapenv:Fault.faultcode = 'soapenv:Server';	
+		SET OutputRoot.SOAP.Body.soapenv:Fault.faultstring = 'A chamada ao serviço não foi completa.';
+		SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Message = 'Um erro foi detectado ao processar a chamada do web service Integration Bus.';
+		SET OutputLocalEnvironment.Destination.SOAP.Reply.Transport.HTTP.ReplyStatusCode = 500;
+		
+		-- Adicionar a StackTrace de Erro
+		DECLARE Error INTEGER;
+		DECLARE Text CHARACTER;
+		DECLARE Label CHARACTER;
+		DECLARE I INTEGER 1;
+		DECLARE numSubs INTEGER;
+		DECLARE start REFERENCE TO InputExceptionList.*[1];
+
+		SET Text = '';
+		SET I = 0; 
+		WHILE start.Number IS NOT NULL DO
+			
+			SET Label = start.Label;
+			SET Error = start.Number;
+			IF Error >= 3001 AND Error <= 3049 THEN
+				SET I = I + 1; 
+				IF I=1 THEN
+					SET Text = start.Insert.Text;
+				ELSE
+					SET Text = Text || ' - ' || start.Insert.Text;
+				END IF;
+			ELSE
+				IF Error <> 2230 THEN
+					-- Nao incluir "Mensagens repassada e relancadas"
+					SET I = I + 1; 
+					IF I=1 THEN
+						SET Text = start.Text;
+					ELSE
+						SET Text = Text || ' - ' || start.Text;
+					END IF;
+					
+				END IF;
+			END IF;
+			
+			MOVE start LASTCHILD;
+		END WHILE;
+		
+		SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[1].Error = 12345;
+		SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[1].Text = Text;
+		
+		DECLARE Fault REFERENCE TO  Environment.Variables.Fault;
+		
+		DECLARE MensagemFault CHARACTER;
+		SET MensagemFault = '';
+			
+		SET MensagemFault = MensagemFault || Fault.faultstring;
+		
+		IF MensagemFault <> '' THEN
+			
+			SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[1].Error = '3003';
+			SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[1].Text = MensagemFault;
+			SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[1].Detail = Fault.detail;
+	
+		END IF;
+	
+		RETURN TRUE;
+	END;
+
+END MODULE;
+
+
+/*
+	Constuir a mensagem de SOAP fault para retorna para o servico.
+	A Stack Trace dos erros e adiciona aos detalhes da SOAP Fault.
+
+*/
+CREATE COMPUTE MODULE CriarSOAPFault
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		DECLARE soapenv NAMESPACE 'http://schemas.xmlsoap.org/soap/envelope/';
+		SET OutputRoot.SOAP.Context.Namespace.(SOAP.NamespaceDecl)xmlns:soapenv = 'http://schemas.xmlsoap.org/soap/envelope/';
+		SET OutputRoot.SOAP.Body.soapenv:Fault.faultcode = 'soapenv:Server';	
+		SET OutputRoot.SOAP.Body.soapenv:Fault.faultstring = 'A chamada ao serviço não foi completa.';
+		SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Message = 'Um erro foi detectado ao processar a chamada do web service Integration Bus.';
+		SET OutputLocalEnvironment.Destination.SOAP.Reply.Transport.HTTP.ReplyStatusCode = 500;
+		
+		-- Adicionar a StackTrace de Erro
+		DECLARE Error INTEGER;
+		DECLARE Text CHARACTER;
+		DECLARE Label CHARACTER;
+		DECLARE I INTEGER 1;
+		DECLARE numSubs INTEGER;
+		DECLARE start REFERENCE TO InputExceptionList.*[1];
+
+		WHILE start.Number IS NOT NULL DO 
+			SET Label = start.Label;
+			SET Error = start.Number;
+			IF Error >= 3001 AND Error <= 3049 THEN
+				SET Text = start.Insert.Text;
+			ELSE
+				SET Text = start.Text;
+			END IF;
+			-- Nao incluir "Mensagens repassada e relancadas"
+			IF Error <> 2230 THEN
+				SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[I].Error = Error;
+				SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[I].Text = Text;
+				SET I = I+1; 
+			END IF;
+			
+			MOVE start LASTCHILD;
+		END WHILE;
+		
+		DECLARE Fault REFERENCE TO  Environment.Variables.Fault;
+		
+		DECLARE MensagemFault CHARACTER;
+		SET MensagemFault = '';
+			
+		SET MensagemFault = MensagemFault || Fault.faultstring;
+		
+		IF MensagemFault <> '' THEN
+			
+			SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[I].Error = '3003';
+			SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[I].Text = MensagemFault;
+			SET OutputRoot.SOAP.Body.soapenv:Fault.detail.Exceptions[I].Detail = Fault.detail;
+	
+		END IF;
+	
+		RETURN TRUE;
+	END;
+
+END MODULE;
+
+
+-- Propriedade Definida pelo Usuario para o configurar o destino da fila MQ
+DECLARE FilaErroMQ EXTERNAL CHAR 'FIEP.SOAP.ERRO';
+
+
+/*
+	Constuir a mensagem de erro.
+	
+	- Cria o cabecalho MQMD
+	- Cria dados da mensagem de erro (Ex: Serviço, Broker e Endpoint)
+	- Cria Stacktrace das mensagens de erros.
+
+*/
+CREATE COMPUTE MODULE CriarMensagemErro
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET OutputRoot.Properties = NULL;
+		
+		-- Criando o cabecalho MQMD 
+		CREATE FIRSTCHILD OF OutputRoot DOMAIN ('MQMD') NAME 'MQMD';
+		DECLARE MQMDRef REFERENCE TO OutputRoot.MQMD;
+		SET MQMDRef.Version = MQMD_CURRENT_VERSION;
+		SET MQMDRef.ApplIdentityData = SQL.BrokerName;
+		SET MQMDRef.CodedCharSetId = InputRoot.Properties.CodedCharSetId;
+		SET MQMDRef.Encoding = InputRoot.Properties.Encoding;
+
+		CREATE NEXTSIBLING OF MQMDRef DOMAIN('XMLNSC') NAME 'XMLNSC';
+		DECLARE OutRef REFERENCE TO OutputRoot.XMLNSC;
+
+		-- Criar Dados da Mensagem de Erro	
+		SET OutRef.Erro.Broker = SQL.BrokerName;
+		MOVE OutRef TO OutputRoot.XMLNSC.Erro;
+    	SET OutRef.MessageFlowLabel = SQL.MessageFlowLabel; 
+    	SET OutRef.DataCorrente =   CURRENT_TIMESTAMP;  
+		SET OutRef.Status = InputLocalEnvironment.Variables.StatusCode;
+    	SET OutRef.Servico.nome = InputRoot.SOAP.Context.service;
+		SET OutRef.Servico.namespace = InputRoot.SOAP.Context.Namespace;
+		SET OutRef.Servico.port = InputRoot.SOAP.Context.port;
+		SET OutRef.Servico.portType = InputRoot.SOAP.Context.portType;
+		SET OutRef.Servico.operacao = InputRoot.SOAP.Context.operation;
+		SET OutRef.Servico.endpoint = Environment.PatternVariables.TargetEndpoint;
+		SET OutRef.Servico.envelope = InputRoot.SOAP;
+		
+		Call AddExceptionData();
+		
+		--Configurando a Fila de Destino de Erro
+		CALL br.org.fiep.esb.utils.adicionarListaDestinoMQ(Environment, OutputLocalEnvironment, FilaErroMQ);
+		
+		RETURN TRUE;
+	END;
+
+/*
+	Adiciona os dados de exceção a uma estrutura de erro XML de acordo com a lista de excecoes.
+*/
+CREATE PROCEDURE AddExceptionData() BEGIN
+	
+		DECLARE ERef REFERENCE TO OutputRoot.XMLNSC.Erro; 
+		DECLARE Error INTEGER;
+		DECLARE Text CHARACTER;
+		DECLARE Label CHARACTER;
+		Declare FaultText CHARACTER 'Exception Data:';
+		DECLARE I INTEGER 1;
+		DECLARE K INTEGER;
+		DECLARE start REFERENCE TO InputExceptionList.*[1];
+
+		WHILE start.Number IS NOT NULL DO 
+			SET Label = start.Label;
+			SET Error = start.Number;
+			IF Error >= 3001 AND Error <= 3049 THEN
+				SET Text = start.Insert.Text;
+			ELSE
+				SET Text = start.Text;
+			END IF;
+			-- Não incluir exeções relancadas
+			IF Error <> 2230 THEN
+				DECLARE Inserts Character;
+				DECLARE INS Integer;
+				SET Inserts = '';
+				-- Verifica se ha inserts nesta excecao
+				IF EXISTS (start.Insert[]) THEN
+				
+				 	SET Inserts = Inserts || COALESCE(start.Insert[1].Text,'NULL')|| ' / ';
+				 	SET K = 1;
+				 	INSERTS: LOOP
+						IF CARDINALITY(start.Insert[])> K 
+						THEN 
+							SET Inserts = Inserts || COALESCE(start.Insert[K+1].Text,'NULL')|| ' / ';
+						-- Nao tem mais inserts para prosegguir
+						ELSE LEAVE INSERTS;
+						END IF;
+					SET K = K+1;
+					END LOOP INSERTS;
+				END IF;
+				SET ERef.Exception[I].Label = Label;
+				SET ERef.Exception[I].Error = Error;
+				SET ERef.Exception[I].Text = Text;
+				Set ERef.Exception[I].Inserts = COALESCE(Inserts, '');
+				
+				SET FaultText = FaultText || ' Label: ' || COALESCE(Label, ''); 
+				SET FaultText = FaultText || ' Error: ' || COALESCE(CAST(Error AS CHARACTER), '');
+				SET FaultText = FaultText || ' Text: ' || COALESCE(Text, '');
+				SET FaultText = FaultText || ' Inserts: ' || COALESCE(Inserts, '');
+
+				SET I = I+1; 
+			END IF;
+			
+			MOVE start LASTCHILD;
+		END WHILE;
+		
+		DECLARE Fault REFERENCE TO  Environment.Variables.Fault;
+		
+		DECLARE MensagemFault CHARACTER;
+		SET MensagemFault = '';
+			
+		SET MensagemFault = MensagemFault || Fault.faultstring;
+		
+		IF MensagemFault <> '' THEN
+			
+			SET ERef.Exception[I].Error = '3003';
+			SET ERef.Exception[I].Text = MensagemFault;
+			SET ERef.Exception[I].Detail = Fault.detail;
+			SET I = I+1; 
+			
+			SET FaultText = FaultText || ' Error: ' || COALESCE(CAST(3003 AS CHARACTER), '');
+			SET FaultText = FaultText || ' Text: ' || COALESCE(MensagemFault, '');
+	
+		END IF;
+		
+		SET Environment.PatternVariables.FaultText = FaultText;
+		
+	END;
+
+	
+END MODULE;
+
+
+/*
+	Guarda a mensagem de fault de retorno de um web service para ser utilizada posteriormente.
+	
+	Variavel Atualizada - Environment.Var.Fault
+
+*/
+CREATE COMPUTE MODULE GuardarFaultEnvironment
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE soapenv NAMESPACE 'http://schemas.xmlsoap.org/soap/envelope/';
+		
+		SET OutputRoot = InputRoot;
+		
+		-- Criando a variável de Fault no Local Environment para utilacao posterior
+		CREATE LASTCHILD OF Environment.Variables NAME 'Fault';
+		CREATE LASTCHILD OF Environment.Variables.Fault NAME 'faultstring';
+		SET Environment.Variables.Fault.faultstring = OutputRoot.SOAP.Body.soapenv:Fault.faultstring;
+		
+		CREATE LASTCHILD OF Environment.Variables.Fault NAME 'detail';
+		SET Environment.Variables.Fault.detail = OutputRoot.SOAP.Body.soapenv:Fault.detail;
+		
+		RETURN TRUE;
+	END;
+	
+END MODULE;

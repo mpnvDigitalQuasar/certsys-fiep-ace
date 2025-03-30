@@ -1,0 +1,226 @@
+BROKER SCHEMA br.org.fiep.esb.utils
+PATH br.org.fiep.esb.utils;
+
+
+/*************
+
+	Converter uma Mensagem Qualquer Parser (XMLNSC, SOAP, BLOB ou XML) para o Parser de JSON.
+
+*************/
+CREATE COMPUTE MODULE Converter_Para_JSON
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		
+		DECLARE mensagemEntrada REFERENCE TO InputBody; 
+		MOVE  mensagemEntrada LASTCHILD; 
+		CREATE LASTCHILD OF OutputRoot.JSON.Data NAME FIELDNAME(mensagemEntrada);
+		
+		DECLARE mensagemSaida REFERENCE TO OutputRoot.JSON.Data;
+		MOVE mensagemSaida LASTCHILD;
+		SET mensagemSaida = mensagemEntrada;
+		
+		CALL createJSONArrays(OutputRoot.JSON.Data);
+		
+		RETURN TRUE;
+	END;
+	
+	/***********************
+	
+		Caminha sobre a arvore de mensagem JSON recursivamente.
+		Atualiza os elementos que são listas (arrays) com o seu campo com o um tipo JSON.Array.
+	
+	************************/ 
+	CREATE PROCEDURE createJSONArrays(IN root REFERENCE ) 
+	BEGIN
+		-- Referencias para a iteracao da arvore
+		DECLARE firstArrayElementRef REFERENCE TO root;
+		DECLARE siblingRef REFERENCE TO root;
+		DECLARE arraySize INTEGER 0;
+
+		WHILE LASTMOVE(siblingRef) DO
+			
+			-- Process any child elements first 
+			DECLARE firstChildRef REFERENCE TO siblingRef;
+			MOVE firstChildRef FIRSTCHILD;
+			IF LASTMOVE(firstChildRef) THEN
+				CALL createJSONArrays(firstChildRef);
+			END IF;
+
+			-- Verifia se o nome do campo corrente e diferente do nome do campo anterior
+			IF FIELDNAME(siblingRef) = FIELDNAME(firstArrayElementRef) THEN
+				SET arraySize = arraySize + 1;
+			ELSE
+				-- Se existir uma sequencia com campos do mesmo nome
+				IF arraySize > 1 THEN
+					CALL createJSONArray(firstArrayElementRef, arraySize);
+				END IF;				
+
+				-- comeca a procurar por um novo array
+				MOVE firstArrayElementRef TO siblingRef;
+				SET arraySize = 1;
+			END IF;
+			
+			MOVE siblingRef NEXTSIBLING;
+		END WHILE;
+		
+		IF arraySize > 1 THEN
+			CALL createJSONArray(firstArrayElementRef, arraySize);
+		END IF;
+	END;
+	
+	/*****************
+		Cria a lista de elementos JSON Arrays a partir de uma lista de XML.
+	*****************/
+	CREATE PROCEDURE createJSONArray(IN firstArrayElementRef REFERENCE, IN arraySize INTEGER) BEGIN
+		-- Cria um elemento pai para o array
+		DECLARE arrayParentRef REFERENCE TO firstArrayElementRef;
+		CREATE PREVIOUSSIBLING OF firstArrayElementRef 
+			AS arrayParentRef 
+			TYPE JSON.Array 
+			NAMESPACE FIELDNAMESPACE(firstArrayElementRef) 
+			NAME FIELDNAME(firstArrayElementRef);
+			
+		-- Constroi os filhos do array
+		DECLARE pos INTEGER 1;
+		WHILE pos <= arraySize DO
+			DECLARE tempRef REFERENCE TO firstArrayElementRef;
+			MOVE firstArrayElementRef NEXTSIBLING;
+
+			DETACH tempRef;
+			ATTACH tempRef TO arrayParentRef AS LASTCHILD;
+			
+			SET pos = pos + 1;
+		END WHILE;
+	END;
+	
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+	
+END MODULE;
+
+/*************
+
+	Extrai o nome da operação de acordo com o nome do campo do primeiro filho de JSON.DATA.{Primeiro Filho}.
+		- Redireciona e este nome para o RouteToLabel rest_{Primeiro Filho}
+
+*************/
+CREATE COMPUTE MODULE ExtrairOperacao_JSON_RouteToLabel
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		-- Obtendo o nome do primeiro filho
+		DECLARE mensagemEntrada REFERENCE TO InputRoot.JSON.Data; 
+		MOVE  mensagemEntrada FIRSTCHILD; 
+		
+		--Configurando o RouteToLabel
+		DECLARE nomeOperacao CHARACTER 'rest_' || FIELDNAME(mensagemEntrada);
+		CALL br.org.fiep.esb.utils.adicionarListaRouteToLabel(InputLocalEnvironment, OutputLocalEnvironment, nomeOperacao);
+		
+		RETURN TRUE;
+	END;
+	
+	
+END MODULE;
+
+
+/*************
+
+	Atualizar o status code do HTTP request para um bad request (400).
+
+*************/
+CREATE COMPUTE MODULE AtualizarHTTPStatusCodeBadRequest
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET OutputLocalEnvironment = InputLocalEnvironment;
+		SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 400;
+		
+		RETURN TRUE;
+	END;
+	
+END MODULE;
+
+
+/***********************
+	
+	Caminha sobre a arvore de mensagem XML recursivamente.
+	Atualiza os elementos que são listas JSON.Array para uma lista em XML (repeticoes dos elementos);
+
+************************/ 
+CREATE PROCEDURE criarXMLArraysAPartirJSONArray(IN root REFERENCE ) 
+BEGIN
+	-- Referencias para a iteracao da arvore
+	DECLARE firstArrayElementRef REFERENCE TO root;
+	DECLARE siblingRef REFERENCE TO root;
+	DECLARE arraySize INTEGER 0;
+
+	WHILE LASTMOVE(siblingRef) DO
+		
+		-- Process any child elements first 
+		DECLARE firstChildRef REFERENCE TO siblingRef;
+		MOVE firstChildRef FIRSTCHILD;
+		IF LASTMOVE(firstChildRef) THEN
+			CALL br.org.fiep.esb.utils.criarXMLArraysAPartirJSONArray(firstChildRef);
+		END IF;
+
+		-- Verifia se o nome do campo corrente e diferente do nome do campo anterior
+		IF FIELDNAME(siblingRef) = FIELDNAME(firstArrayElementRef) THEN
+			SET arraySize = arraySize + 1;
+		ELSE
+			-- Se existir uma sequencia com campos do mesmo nome
+			IF arraySize > 1 THEN
+				CALL br.org.fiep.esb.utils.criarXMLArrayAPartirJSONArray(firstArrayElementRef, arraySize);
+			END IF;				
+
+			-- comeca a procurar por um novo array
+			MOVE firstArrayElementRef TO siblingRef;
+			SET arraySize = 1;
+		END IF;
+		
+		MOVE siblingRef NEXTSIBLING;
+	END WHILE;
+	
+	IF arraySize > 1 THEN
+		CALL criarXMLArrayAPartirJSONArray(firstArrayElementRef, arraySize);
+	ELSEIF FIELDNAME(firstArrayElementRef) = 'Item' THEN 
+		SET arraySize = 1;
+		CALL br.org.fiep.esb.utils.criarXMLArrayAPartirJSONArray(firstArrayElementRef, arraySize);
+	END IF;
+END;
+
+/*****************
+	Cria a lista de elementos XML´s para um Array de JSON.
+*****************/
+CREATE PROCEDURE criarXMLArrayAPartirJSONArray(IN firstArrayElementRef REFERENCE, IN arraySize INTEGER) BEGIN
+	-- Busca a referencia do elemento pai
+	DECLARE arrayParentRef REFERENCE TO firstArrayElementRef;
+	MOVE arrayParentRef PARENT;
+		
+	-- Constroi os filhos do array
+	DECLARE pos INTEGER 1;
+	WHILE pos <= arraySize DO
+		DECLARE tempRef REFERENCE TO firstArrayElementRef;
+		
+		CREATE PREVIOUSSIBLING OF arrayParentRef 
+			NAMESPACE FIELDNAMESPACE(arrayParentRef) 
+			NAME FIELDNAME(arrayParentRef);
+		
+		DECLARE previousSibling REFERENCE TO arrayParentRef;
+		MOVE previousSibling PREVIOUSSIBLING;
+		SET previousSibling = tempRef;
+		
+		MOVE firstArrayElementRef NEXTSIBLING;
+		SET pos = pos + 1;
+	END WHILE;
+	
+	DETACH arrayParentRef;
+END;
+

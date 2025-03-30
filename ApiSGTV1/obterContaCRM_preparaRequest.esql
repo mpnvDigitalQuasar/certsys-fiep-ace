@@ -1,0 +1,45 @@
+DECLARE ns8 NAMESPACE 'http://tempuri.org/conta/';
+
+
+CREATE COMPUTE MODULE obterContaCRM_preparaRequest
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		DELETE FIELD Environment.Variables.idEtapa;
+		SET Environment.Variables.etapa.nome = 'Buscar Cliente CRM';
+		SET Environment.Variables.etapa.status = 'Em processamento';
+
+		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
+				
+		DECLARE cpfCnpj CHAR '';
+		SET cpfCnpj = Environment.Variables.cnpjCpfCRM; --'03579617000100';
+		
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:User = 'service_sgthmg';
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:Password = 'S3rv1ce@sGtHMG';
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:Domain = 'fiepr.org.br';
+			
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:cpfCnpj = cpfCnpj;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:tipoConta = 0;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:status = 0;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:pagina = 1;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:quantidade = 1;
+				
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

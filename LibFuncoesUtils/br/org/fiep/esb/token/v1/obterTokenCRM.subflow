@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFlowOrder.msgnode="ComIbmFlowOrder.msgnode" xmlns:ComIbmTrace.msgnode="ComIbmTrace.msgnode" xmlns:ComIbmWSRequest.msgnode="ComIbmWSRequest.msgnode" xmlns:br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow="br/org/fiep/esb/monitoramento/v1/HttpRequestOut.subflow" xmlns:br_org_fiep_esb_utils_v1_Reply.subflow="br/org/fiep/esb/utils/v1/Reply.subflow" xmlns:br_org_fiep_esb_utils_v1_TratarErro.subflow="br/org/fiep/esb/utils/v1/TratarErro.subflow"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:mbmonitor="http://www.ibm.com/wbi/2008/eflow_mbmonitor" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="br/org/fiep/esb/token/v1/obterTokenCRM.subflow" nsPrefix="br_org_fiep_esb_token_v1_obterTokenCRM.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="SQUARE">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.resourceCRM" name="resourceCRM" defaultValueLiteral="_resourceCRM_">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.clientInfo" name="clientInfo" defaultValueLiteral="_clientInfo_">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.grantType" name="grantType" defaultValueLiteral="_grantType_">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="obterTokenCRM" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj16/obterTokenCRM.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj30/obterTokenCRM.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="10,20">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Failure" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output1" location="560,307">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="101,20">
+        <translation xmi:type="utility:ConstantString" string="Trace Failure"/>
+        <monitorEvents eventSourceDescription="Out terminal" eventSourceName="Trace Failure.terminal.out" eventIdentity="UNAUTHORIZED">
+          <eventXMLDoc xmi:type="mbmonitor:MonitorEvent" eventUOW="none">
+            <applicationData dataLocation="$ExceptionList" isXPath="true" complexData="true"/>
+            <globalTransactionCorrelator dataLocation="$Environment/Variables/globalTransactionId" eventCorrelation="dataLocation"/>
+            <parentTransactionCorrelator dataLocation="$Environment/Variables/parentTransactionId" eventCorrelation="dataLocation"/>
+            <localTransactionCorrelator/>
+            <bitStreamData encoding="none" bitstreamContent="none"/>
+            <eventName literal="UNAUTHORIZED"/>
+            <eventFilter dataLocation="true()" isXPath="true"/>
+          </eventXMLDoc>
+        </monitorEvents>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input1" location="10,109">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Out" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_utils_v1_TratarErro.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="235,20">
+        <translation xmi:type="utility:ConstantString" string="TratarErro"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_utils_v1_Reply.subflow:FCMComposite_1" xmi:id="FCMComposite_1_3" location="350,20">
+        <translation xmi:type="utility:ConstantString" string="Reply"/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="511,208" URLSpecifier="https://brokerv10dev.fiepr.org.br:7843/ObterCredencial" httpVersion="1.1" protocol="TLS">
+        <translation xmi:type="utility:ConstantString" string="obterCredencialACE"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="876,208" computeExpression="esql://routine/br.org.fiep.esb.token.v1#propagaCredencial.Main">
+        <translation xmi:type="utility:ConstantString" string="propagaCredencial"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="1065,109" dataSource="odbc_db_broker" computeExpression="esql://routine/br.org.fiep.esb.token.v1#gerarTokenCRM.Main">
+        <translation xmi:type="utility:ConstantString" string="Gerar Token CRM"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_12" location="229,109" computeExpression="esql://routine/br.org.fiep.esb.token.v1#validaCredencialACE.Main">
+        <translation xmi:type="utility:ConstantString" string="Verificar Credencial Carregadas"/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="1241,109" URLSpecifier="https://brokerv10dev.fiepr.org.br:7843/gerarToken" httpVersion="1.1" protocol="TLS" messageDomainProperty="JSON">
+        <translation xmi:type="utility:ConstantString" string="gerarTokenCRM"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="1585,109" dataSource="odbc_db_broker" computeExpression="esql://routine/br.org.fiep.esb.token.v1#mantemTokenACE.Main">
+        <translation xmi:type="utility:ConstantString" string="Mantem Token"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFlowOrder.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="101,109">
+        <translation xmi:type="utility:ConstantString" string="Flow Order"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="293,307" computeExpression="esql://routine/br.org.fiep.esb.token.v1#propagaToken.Main">
+        <translation xmi:type="utility:ConstantString" string="Propaga Token"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow:FCMComposite_1" xmi:id="FCMComposite_1_11" location="707,208">
+        <translation xmi:type="utility:ConstantString" string="HttpRequestOut"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow:FCMComposite_1" xmi:id="FCMComposite_1_13" location="1406,109">
+        <translation xmi:type="utility:ConstantString" string="HttpRequestOut1"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_13" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_24" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_12" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_25" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_6" sourceNode="InTerminal.Input1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.first" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="OutTerminal.Output1" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_15" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.Input2"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_11" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_17" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_18" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_19" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_13" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_20" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.Input2"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_12" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.resourceCRM">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.resourceCRM" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.clientInfo">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.clientInfo" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.grantType">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.grantType" bundleName="br/org/fiep/esb/token/v1/obterTokenCRM" pluginId="LibFuncoesUtils"/>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>
