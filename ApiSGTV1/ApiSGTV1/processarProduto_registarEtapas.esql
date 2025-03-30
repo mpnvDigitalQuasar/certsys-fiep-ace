@@ -1,0 +1,34 @@
+
+
+CREATE COMPUTE MODULE processarProduto_registarEtapas
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyEntireMessage();
+		
+		CALL procs.selectNomeEtapa(Environment.Variables.etapa.nome, Environment.Variables.etapa.tipo, Environment.Variables.etapa.Item[]);
+
+		DECLARE jsonBlob BLOB;
+		DECLARE jsonMsg CHAR;
+		DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);	
+		
+		SET OutputRoot.JSON.Data.idEtapa = Environment.Variables.idEtapa;
+		SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;
+		SET OutputRoot.JSON.Data.idNomeEtapa = Environment.Variables.etapa.Item.id;
+		SET OutputRoot.JSON.Data.status = Environment.Variables.etapa.status;
+		SET OutputRoot.JSON.Data.sucesso = Environment.Variables.etapa.sucesso;
+
+		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
+		SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
+		
+		CALL procs.upsetEtapaProduto(jsonMsg, Environment.Variables.idEtapa);
+		COMMIT;
+				
+		RETURN TRUE;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

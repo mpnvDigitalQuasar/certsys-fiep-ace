@@ -1,15 +1,17 @@
-DECLARE ns44 NAMESPACE 'http://tempuri.org/produto/';
 
-
-CREATE COMPUTE MODULE obterProdutoCRM_prepararResponse
+DECLARE urlProdutosRegionais EXTERNAL CHAR '';
+CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
 		
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:Domain = '';
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = '';
-						
+		DELETE FIELD Environment.Variables.idEtapa;
+		SET Environment.Variables.etapa.nome = 'Buscar Produto SGT';
+		SET Environment.Variables.etapa.status = 'Em processamento';
+
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlProdutosRegionais || 'codigoIntegracaoProposta=' || Environment.Variables.codigoIntegracaoPropostaSGT;
+	
 		RETURN TRUE;
 	END;
 

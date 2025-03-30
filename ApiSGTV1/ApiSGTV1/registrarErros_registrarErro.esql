@@ -4,9 +4,12 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
+		
+		CALL CopyEntireMessage();
 
 		DECLARE ERRO CHAR '';
+		SET Environment.Variables.etapa.sucesso = 0;
+		SET Environment.Variables.etapa.status = 'Falha';
 		
 		IF EXISTS(InputExceptionList.RecoverableException[]) THEN
 			

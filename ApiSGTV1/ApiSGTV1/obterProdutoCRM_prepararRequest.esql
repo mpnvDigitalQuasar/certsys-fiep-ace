@@ -1,0 +1,45 @@
+DECLARE obterProdutoUser EXTERNAL CHAR '';
+DECLARE obterProdutoPass EXTERNAL CHAR '';
+DECLARE obterProdutoDomain EXTERNAL CHAR ''; 
+
+CREATE COMPUTE MODULE obterProdutoCRM_prepararRequest
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		SET Environment.Variables.etapa.nome = 'Buscar Produto CRM';
+		SET Environment.Variables.etapa.status = 'Em processamento';
+		
+		SET Environment.Variables.idRegistro = InputRoot.JSON.Data.idRegistro;
+		SET Environment.Variables.statusCrm = 0; 
+		
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:User = obterProdutoUser;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:Password = obterProdutoPass;	
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:Domain = obterProdutoDomain;
+		
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = Environment.Variables.idRegistro;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:isRegional = true;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:status = Environment.Variables.statusCrm; -- SE NÃO TIVE RETORNO, MUDAR PARA 1
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:pagina = 1;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:quantidade = 10;
+		
+		RETURN TRUE;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
