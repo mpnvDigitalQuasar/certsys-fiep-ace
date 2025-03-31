@@ -1,4 +1,5 @@
 
+DECLARE criarPropostaToken EXTERNAL CHAR '';
 
 CREATE COMPUTE MODULE criarPropostaSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -13,7 +14,8 @@ CREATE COMPUTE MODULE criarPropostaSGT_preparaRequest
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
 						
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
-		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer e1dec11e-6687-3a4c-b668-86167144a640';
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarPropostaToken;
+		
 		SET OutputRoot.JSON.Data.codigoIntegracaoProposta = Environment.Variables.codigoIntegracaoPropostaSGT;
 		SET OutputRoot.JSON.Data.descricao = Environment.Variables.SGTdescricaoProposta;
 				

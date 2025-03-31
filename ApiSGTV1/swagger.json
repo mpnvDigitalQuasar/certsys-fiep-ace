@@ -8,6 +8,9 @@
   "paths" : {
     "/processar/fila/crm" : {
       "post" : {
+      "security" : [ {
+          "basicAuth" : [ ]
+        } ],
         "operationId" : "processarFilaCRMPost",
         "responses" : {
           "200" : {
@@ -118,61 +121,14 @@
           "required" : true
         } ]
       }
-    },
-    "/testeGET" : {
-      "get" : {
-        "operationId" : "getTesteGET",
-        "responses" : {
-          "200" : {
-            "description" : "The operation was successful.",
-            "schema" : {
-              "$ref" : "#/definitions/ApiError"
-            }
-          }
-        },
-        "produces" : [ "application/json" ],
-        "description" : "Retrieve testeGET"
-      }
-    },
-    "/testePOST" : {
-      "post" : {
-        "operationId" : "postTestePOST",
-        "responses" : {
-          "200" : {
-            "description" : "The operation was successful."
-          }
-        },
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "description" : "Insert a testePOST",
-        "parameters" : [ {
-          "name" : "body",
-          "in" : "body",
-          "schema" : {
-            "$ref" : "#/definitions/ApiError"
-          },
-          "description" : "The request body for the operation",
-          "required" : true
-        } ]
-      }
-    },
-    "/testeSOAP" : {
-      "get" : {
-        "operationId" : "getTesteSOAP",
-        "responses" : {
-          "200" : {
-            "description" : "The operation was successful.",
-            "schema" : {
-              "$ref" : "#/definitions/ApiError"
-            }
-          }
-        },
-        "produces" : [ "application/json" ],
-        "description" : "Retrieve testeSOAP"
-      }
     }
   },
   "basePath" : "/api/sgt/v1",
+  "securityDefinitions" : {
+    "basicAuth" : {
+      "type" : "basic"
+    }
+  },
   "definitions" : {
     "ApiError" : {
       "type" : "object",

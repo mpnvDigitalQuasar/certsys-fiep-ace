@@ -10,8 +10,8 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 		SET Environment.Variables.tipo = InputRoot.JSON.Data.tipo;
 		SET Environment.Variables.etapa.tipo = Environment.Variables.tipo;	
 		
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:User = 'service_sgthmg';
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Password = 'S3rv1ce@sGtHMG';
+		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:User = 'service_sgthmg';
+		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Password = 'S3rv1ce@sGtHMG';
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Domain = 'fiepr.org.br';
 		
 		IF Environment.Variables.tipo = 'CONTRATO' THEN

@@ -17,8 +17,8 @@ CREATE COMPUTE MODULE obterContaCRM_preparaRequest
 		SET cpfCnpj = Environment.Variables.cnpjCpfCRM; --'03579617000100';
 		
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:User = 'service_sgthmg';
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:Password = 'S3rv1ce@sGtHMG';
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:Domain = 'fiepr.org.br';
+		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:Password = 'S3rv1ce@sGtHMG';
+		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:token.ns8:Domain = 'fiepr.org.br';
 			
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:cpfCnpj = cpfCnpj;
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns8:GetContas.ns8:tipoConta = 0;

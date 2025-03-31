@@ -6,9 +6,6 @@
         </sharedLibraryReference>
     </references>
     <ns2:operations>
-        <ns2:operation name="getTesteGET" implementation="getTesteGET.subflow"/>
-        <ns2:operation name="getTesteSOAP" implementation="getTesteSOAP.subflow"/>
-        <ns2:operation name="postTestePOST" implementation="postTestePOST.subflow"/>
         <ns2:operation name="processarFilaCRMDelete" implementation="processarFilaCRMDelete.subflow"/>
         <ns2:operation name="processarFilaCRMPatch" implementation="processarFilaCRMPatch.subflow"/>
         <ns2:operation name="processarFilaCRMPost" implementation="processarFilaCRMPost.subflow"/>

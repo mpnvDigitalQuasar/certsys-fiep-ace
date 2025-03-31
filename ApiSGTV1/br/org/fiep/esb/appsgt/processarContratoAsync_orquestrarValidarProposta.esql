@@ -7,7 +7,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestrarValidarProposta
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
 		
-		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta) IS NULL THEN
+		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta.idProposta) IS NULL THEN
 			--Não Localizada a proposta no SGT
 			PROPAGATE TO LABEL 'lbCriarPropostaSGT';
 		ELSE
