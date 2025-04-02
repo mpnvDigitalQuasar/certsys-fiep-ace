@@ -119,7 +119,11 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
 		SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
 		
-		CALL procs.upsetErroContrato(jsonMsg, Environment.Variables.idErro);
+		IF Environment.Variables.msgMQ.tipo = 'CONTRATO' THEN
+			CALL procs.upsetErroContrato(jsonMsg, Environment.Variables.idErro);
+		ELSEIF Environment.Variables.msgMQ.tipo = 'PRODUTO' THEN
+			CALL procs.upsetErroProduto(jsonMsg, Environment.Variables.idErro);
+		END IF;
 		COMMIT;
 
 		-- ETAPA
@@ -134,7 +138,11 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
 		SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
 		
-		CALL procs.upsetEtapaContrato(jsonMsg, Environment.Variables.idEtapa);
+		IF Environment.Variables.msgMQ.tipo = 'CONTRATO' THEN
+			CALL procs.upsetEtapaContrato(jsonMsg, Environment.Variables.idEtapa);
+		ELSEIF Environment.Variables.msgMQ.tipo = 'PRODUTO' THEN
+			CALL procs.upsetEtapaProduto(jsonMsg, Environment.Variables.idErro);
+		END IF;
 		COMMIT;		
 		
 		-- HISTORICO
@@ -147,7 +155,11 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
 		SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
 		
-		CALL procs.upsetHistoricoContrato(jsonMsg, Environment.Variables.idHistorico);
+		IF Environment.Variables.msgMQ.tipo = 'CONTRATO' THEN
+			CALL procs.upsetHistoricoContrato(jsonMsg, Environment.Variables.idHistorico);
+		ELSEIF Environment.Variables.msgMQ.tipo = 'PRODUTO' THEN
+			CALL procs.upsetEtapaProduto(jsonMsg, Environment.Variables.idErro);
+		END IF;
 		COMMIT;		
 					
 		RETURN TRUE;
