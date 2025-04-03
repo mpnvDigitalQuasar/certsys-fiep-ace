@@ -34,6 +34,9 @@
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="1430,22" computeExpression="esql://routine/#obterContaCRM_validarDados.Main">
         <translation xmi:type="utility:ConstantString" string="validarDados"/>
       </nodes>
+      <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="1600,106">
+        <translation xmi:type="utility:ConstantString" string="registrarErros2"/>
+      </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
@@ -47,6 +50,7 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in">
         <bendPoints>-443,144,320,144</bendPoints>
       </connections>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
     </composition>
     <propertyOrganizer/>
     <stickyBoard/>

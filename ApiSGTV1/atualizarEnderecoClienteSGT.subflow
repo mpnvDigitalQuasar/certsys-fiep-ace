@@ -3,6 +3,9 @@
     xmlns:registrarErros.subflow="registrarErros.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="atualizarEnderecoClienteSGT.subflow" nsPrefix="atualizarEnderecoClienteSGT.subflow">
   <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="RECTANGLE">
     <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.atualizarEnderecoToken" name="atualizarEnderecoToken" lowerBound="1" defaultValueLiteral="SGTBearerToken">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="atualizarEnderecoClienteSGT" bundleName="atualizarEnderecoClienteSGT" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/atualizarEnderecoClienteSGT.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/atualizarEnderecoClienteSGT.gif"/>
@@ -46,7 +49,11 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
     </composition>
-    <propertyOrganizer/>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.atualizarEnderecoToken">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.atualizarEnderecoToken" bundleName="atualizarEnderecoClienteSGT" pluginId="ApiSGTV1"/>
+      </propertyDescriptor>
+    </propertyOrganizer>
     <stickyBoard/>
   </eClassifiers>
 </ecore:EPackage>

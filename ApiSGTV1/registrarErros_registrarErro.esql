@@ -73,15 +73,25 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
 										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;
 			WHEN Environment.Variables.etapa.nome = 'Buscar Cliente CRM'  THEN
-				SET msgErro = 'Falha ao Buscar Cliente CRM';	
+				SET msgErro = 'Falha ao buscar cliente no CRM ' || Environment.Variables.CRMcnpjCpf ||
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
 			WHEN Environment.Variables.etapa.nome = 'Buscar Cliente SGT'  THEN
-				SET msgErro = 'Falha ao Buscar Cliente SGT';	
+				SET msgErro = 'Falha ao buscar cliente no SGT: ' || Environment.Variables.CRMcnpjCpf ||
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
 			WHEN Environment.Variables.etapa.nome = 'Inserir Cliente SGT'  THEN
-				SET msgErro = 'Falha ao Inserir Cliente SGT';					
+				SET msgErro = 'Falha ao cadastrar cliente no SGT: ' || Environment.Variables.CRMcnpjCpf ||
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;					
 			WHEN Environment.Variables.etapa.nome = 'Inserir Endereço SGT'  THEN
-				SET msgErro = 'Falha ao Inserir Endereço SGT';
+				SET msgErro = 'Falha ao cadastrar endereço no SGT ' || Environment.Variables.CRMcnpjCpf ||
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
 			WHEN Environment.Variables.etapa.nome = 'Atualizar Endereço SGT'  THEN
-				SET msgErro = 'Falha ao Atualizar Endereço SGT';
+				SET msgErro = 'Falha ao atualizar endereço do cliente no SGT ' || Environment.Variables.CRMcnpjCpf ||
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
 			WHEN Environment.Variables.etapa.nome = 'Buscar Atendimento SGT'  THEN
 				SET msgErro = 'Falha ao Buscar Atendimento SGT';
 			WHEN Environment.Variables.etapa.nome = 'Buscar Produto Regional SGT'  THEN

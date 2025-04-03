@@ -1,4 +1,5 @@
 
+DECLARE criarClienteToken EXTERNAL CHAR '';
 
 CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -11,7 +12,10 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 		SET Environment.Variables.etapa.status = 'Em processamento';
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
-				
+
+		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarClienteToken;
+						
 		SET OutputRoot.JSON.Data.tipoPessoa = Environment.Variables.CRMcontasResult.tipoConta;
 		SET OutputRoot.JSON.Data.tipoCnpj = Environment.Variables.CRMcontasResult.porte;
 		SET OutputRoot.JSON.Data.nomeFantasia = Environment.Variables.CRMcontasResult.nomeFantasia;

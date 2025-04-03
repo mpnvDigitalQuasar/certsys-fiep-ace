@@ -6,6 +6,9 @@
     <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.urlCliente" name="urlCliente" lowerBound="1" defaultValueLiteral="urlCliente">
       <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterClienteToken" name="obterClienteToken" lowerBound="1" defaultValueLiteral="SGTBearerToken">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="obterClienteSGT" bundleName="obterClienteSGT" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/obterClienteSGT.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/obterClienteSGT.gif"/>
@@ -52,6 +55,9 @@
     <propertyOrganizer>
       <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.urlCliente">
         <propertyName xmi:type="utility:TranslatableString" key="Property.urlCliente" bundleName="obterClienteSGT" pluginId="ApiSGTV1"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterClienteToken">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.obterClienteToken" bundleName="obterClienteSGT" pluginId="ApiSGTV1"/>
+        </propertyDescriptor>
       </propertyDescriptor>
     </propertyOrganizer>
     <stickyBoard/>

@@ -1,4 +1,5 @@
 
+DECLARE criarEnderecoToken EXTERNAL CHAR '';
 
 CREATE COMPUTE MODULE criarEnderecoClienteSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -11,7 +12,10 @@ CREATE COMPUTE MODULE criarEnderecoClienteSGT_preparaRequest
 		SET Environment.Variables.etapa.status = 'Em processamento';
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
-						
+
+		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarEnderecoToken;
+								
 		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontasResult.cpfCnpj;
 		SET OutputRoot.JSON.Data.idTipoEndereco = 1;
 		SET OutputRoot.JSON.Data.cep = Environment.Variables.CRMcontratoResult.endereco.cep;

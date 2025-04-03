@@ -5,17 +5,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestrador
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 
-		SET Environment.Variables.SGTclienteEndereco = InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco;
-		
-		IF InputRoot.JSON.Data.Clientes = '' THEN			
-			PROPAGATE TO LABEL 'lbCriarClienteSGT';
-		ELSEIF InputRoot.JSON.Data.Clientes.Cliente.Enderecos = '' THEN		
-			PROPAGATE TO LABEL 'lbCriarEnderecoClienteSGT';	
-		ELSE
-			PROPAGATE TO LABEL 'lbAtualizarEnderecoClienteSGT';
-		END IF;
-
-		-- PROCESSAR ATENDIMENTO
+		-- Iniciando o processamento de atendimentos
 		DECLARE codigoIntegracaoAtendimentoAux CHAR '';
 		SET codigoIntegracaoAtendimentoAux = CAST(Environment.Variables.CRMcontratoResult.codCasa AS CHAR) || '-' 
 																	|| Environment.Variables.CRMcontratoResult.codUnidadeOp || '-' 

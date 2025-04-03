@@ -37,6 +37,7 @@ CREATE COMPUTE MODULE obterContaCRM_validarDados
 		SET Environment.Variables.CRMcontasResult.tipoConta = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:tipoConta;
 
 		SET Environment.Variables.etapa.status = 'Concluido';
+		SET Environment.Variables.etapa.sucesso = true;
 									
 		RETURN TRUE;
 	END;
