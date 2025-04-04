@@ -1,4 +1,7 @@
 DECLARE ns NAMESPACE 'http://tempuri.org/fila/';
+DECLARE processarFilaDomain EXTERNAL CHAR '';
+DECLARE processarFilaUser EXTERNAL CHAR '';
+DECLARE processarFilaPass EXTERNAL CHAR '';
 
 
 CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgOut
@@ -56,7 +59,7 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgOut
 				SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
 				SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
 				
-				CALL procs.upsetHistoricoContrato(jsonMsg, Environment.Variables.idHistorico);
+				CALL procs.upsetHistoricoProduto(jsonMsg, Environment.Variables.idHistorico);
 				COMMIT;
 				
 				SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;		
@@ -71,9 +74,9 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgOut
 			
 			DELETE FIELD OutputRoot;
 			
-			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:User = 'service_sgthmg';
-			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Password = 'S3rv1ce@sGtHMG';
-			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Domain = 'fiepr.org.br';
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:User = processarFilaUser;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Password = processarFilaPass;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Domain = processarFilaDomain;
 			
 			IF Environment.Variables.tipo = 'CONTRATO' THEN
 

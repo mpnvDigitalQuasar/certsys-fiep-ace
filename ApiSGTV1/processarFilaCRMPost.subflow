@@ -4,6 +4,15 @@
     xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="processarFilaCRMPost.subflow" nsPrefix="processarFilaCRMPost.subflow">
   <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" nodeLayoutStyle="RECTANGLE">
     <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaDomain" name="processarFilaDomain" defaultValueLiteral="CRMDomain">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaPass" name="processarFilaPass" defaultValueLiteral="CRMPassword">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaUser" name="processarFilaUser" defaultValueLiteral="CRMUser">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="processarFilaCRMPost" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/processarFilaCRMPost.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/processarFilaCRMPost.gif"/>
@@ -113,7 +122,17 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_17" targetNode="FCMComposite_1_23" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_18" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_19" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
     </composition>
-    <propertyOrganizer/>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.processarFilaDomain">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.processarFilaDomain" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.processarFilaPass">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.processarFilaPass" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
+          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.processarFilaUser">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.processarFilaUser" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
     <stickyBoard/>
   </eClassifiers>
 </ecore:EPackage>
