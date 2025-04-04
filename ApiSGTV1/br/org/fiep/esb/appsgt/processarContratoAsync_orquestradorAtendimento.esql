@@ -1,15 +1,13 @@
 BROKER SCHEMA br.org.fiep.esb.appsgt
 
 
-CREATE COMPUTE MODULE processarContratoAsync_orquestrador
+CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-
+		
 		-- Iniciando o processamento de atendimentos
 		DECLARE codigoIntegracaoAtendimentoAux CHAR '';
-		SET codigoIntegracaoAtendimentoAux = CAST(Environment.Variables.CRMcontratoResult.codCasa AS CHAR) || '-' 
-																	|| Environment.Variables.CRMcontratoResult.codUnidadeOp || '-' 
-																		|| Environment.Variables.CRMcontratoResult.codigoContratoCTR; 
+		SET codigoIntegracaoAtendimentoAux = CAST(Environment.Variables.CRMcontratoResult.codCasa AS CHAR) || '-' || Environment.Variables.CRMcontratoResult.codUnidadeOp || '-' || Environment.Variables.CRMcontratoResult.codigoContratoCTR; 
 																		
 		FOR current AS Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[] DO
 								
@@ -19,10 +17,26 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestrador
 			DECLARE refContrato REFERENCE TO Environment.Variables.CRMcontratoResult;
 		
 			SET Environment.Variables.codigoIntegracaoPropostaSGT = CAST(refContrato.codCasa AS CHAR) || CAST(refContrato.codUnidadeOp AS CHAR) || CAST(refContrato.codigoContratoCTR AS CHAR) || CAST(current.codigoProduto AS CHAR);
-							
+			
+			-- Consultando atendimento no SGT
 			PROPAGATE TO LABEL 'lbObterAtendimentoSGT';
-		
-			PROPAGATE TO LABEL 'lbObterProdutoRegionaisSGT';
+			
+			
+			IF InputRoot.JSON.Data.idAtendimento <> '' THEN
+				-- Atendimento nao encontrado no SGT
+				SET Environment.Variables.SGTidAtendimento = InputRoot.JSON.Data.idAtendimento;
+		        SET Environment.Variables.SGTatendimentoStatus = InputRoot.JSON.Data.atendimentoStatus;		
+		        
+		        -- Buscar Produto Regional no SGT
+		        PROPAGATE TO LABEL 'lbObterProdutoRegionaisSGT';
+		        
+			ELSEIF InputRoot.JSON.Data.status = 'negociacao' THEN
+				
+				-- Alterar Status Atendimento aceito
+				PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT';
+			END IF;
+				
+			
 	
 			SET OutputRoot.JSON.Data.dataEmissao = Environment.Variables.CRMcontratoResult.dataInicioContrato;
 			SET OutputRoot.JSON.Data.dataInicioPrevista = CURRENT_DATE;
@@ -51,7 +65,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestrador
 		
 		SET Environment.Variables.status = 'Concluido';
 		SET Environment.Variables.sucesso = true;
-			
+		
 		RETURN TRUE;
 	END;
 

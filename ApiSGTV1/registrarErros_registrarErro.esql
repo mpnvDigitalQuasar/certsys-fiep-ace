@@ -93,7 +93,9 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
 										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
 			WHEN Environment.Variables.etapa.nome = 'Buscar Atendimento SGT'  THEN
-				SET msgErro = 'Falha ao Buscar Atendimento SGT';
+				SET msgErro = 'Falha ao buscar atendimento no SGT: ' || Environment.Variables.SGTcodigoIntegracaoProposta || 
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;
 			WHEN Environment.Variables.etapa.nome = 'Buscar Produto Regional SGT'  THEN
 				SET msgErro = 'Falha ao Buscar Produto Regional SGT';				
 			WHEN Environment.Variables.etapa.nome = 'Inserir Atendimento SGT'  THEN

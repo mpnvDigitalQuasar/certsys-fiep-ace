@@ -1,5 +1,7 @@
 
 DECLARE urlAtendimento EXTERNAL CHAR '';
+DECLARE obterAtendimentoToken EXTERNAL CHAR '';
+
 CREATE COMPUTE MODULE obterAtendimentoSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
@@ -11,7 +13,10 @@ CREATE COMPUTE MODULE obterAtendimentoSGT_preparaRequest
 		SET Environment.Variables.etapa.status = 'Em processamento';
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
-					
+
+		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || obterAtendimentoToken;
+							
 		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtendimento || 'codigoIntegracaoProposta=' || Environment.Variables.codigoIntegracaoPropostaSGT;
 				
 		RETURN TRUE;

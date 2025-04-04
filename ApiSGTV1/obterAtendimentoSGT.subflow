@@ -6,6 +6,9 @@
     <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.urlAtendimento" name="urlAtendimento" lowerBound="1" defaultValueLiteral="urlAtendimento">
       <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterAtendimentoToken" name="obterAtendimentoToken" lowerBound="1" defaultValueLiteral="SGTBearerToken">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="obterAtendimentoSGT" bundleName="obterAtendimentoSGT" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/obterAtendimentoSGT.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/obterAtendimentoSGT.gif"/>
@@ -51,6 +54,9 @@
     <propertyOrganizer>
       <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.urlAtendimento">
         <propertyName xmi:type="utility:TranslatableString" key="Property.urlAtendimento" bundleName="obterAtendimentoSGT" pluginId="ApiSGTV1"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterAtendimentoToken">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.obterAtendimentoToken" bundleName="obterAtendimentoSGT" pluginId="ApiSGTV1"/>
+        </propertyDescriptor>
       </propertyDescriptor>
     </propertyOrganizer>
     <stickyBoard/>

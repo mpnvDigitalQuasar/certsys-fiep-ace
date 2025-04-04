@@ -4,13 +4,10 @@ CREATE COMPUTE MODULE obterAtendimentoSGT_preparaResponse
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
-		IF InputRoot.JSON.Data.idAtendimento <> '' THEN
-			SET Environment.Variables.SGTidAtendimento = InputRoot.JSON.Data.idAtendimento;
-            SET Environment.Variables.SGTatendimentoStatus = InputRoot.JSON.Data.atendimentoStatus;		
-		END IF;
+		CALL CopyEntireMessage();
 
 		SET Environment.Variables.etapa.status = 'Concluido';
+		SET Environment.Variables.etapa.sucesso = true;
 						
 		RETURN TRUE;
 	END;
