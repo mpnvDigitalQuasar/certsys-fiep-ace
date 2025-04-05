@@ -1,5 +1,5 @@
 
-
+DECLARE criarAtendimentoToken EXTERNAL CHAR '';
 CREATE COMPUTE MODULE criarAtendimentoSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
@@ -11,6 +11,9 @@ CREATE COMPUTE MODULE criarAtendimentoSGT_preparaRequest
 		SET Environment.Variables.etapa.status = 'Em processamento';
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
+		
+		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarAtendimentoToken;
 						
 		RETURN TRUE;
 	END;

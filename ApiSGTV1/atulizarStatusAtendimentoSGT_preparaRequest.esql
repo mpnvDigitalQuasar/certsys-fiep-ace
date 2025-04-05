@@ -1,5 +1,7 @@
 
 DECLARE urlAtualizarAtendimento EXTERNAL CHAR '';
+DECLARE obterAtendimentoToken EXTERNAL CHAR '';
+
 CREATE COMPUTE MODULE atulizarStatusAtendimentoSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
@@ -11,6 +13,9 @@ CREATE COMPUTE MODULE atulizarStatusAtendimentoSGT_preparaRequest
 		SET Environment.Variables.etapa.status = 'Em processamento';
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
+		
+		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || obterAtendimentoToken;
 		
 		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarAtendimento || Environment.Variables.SGTidAtendimento || 'aceito';
 								

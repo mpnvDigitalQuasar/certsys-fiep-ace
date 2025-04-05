@@ -96,14 +96,33 @@ CREATE COMPUTE MODULE registrarErros_registrarErro
 				SET msgErro = 'Falha ao buscar atendimento no SGT: ' || Environment.Variables.SGTcodigoIntegracaoProposta || 
 									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
 										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;
+										
+										SET Environment.Variables.fimAtendimento = true;
+										
 			WHEN Environment.Variables.etapa.nome = 'Buscar Produto Regional SGT'  THEN
-				SET msgErro = 'Falha ao Buscar Produto Regional SGT';				
+				SET msgErro = 'Falha ao buscar produto regional no SGT: ' || Environment.Variables.SGTcodigoIntegracaoProdutoRegional || -- TODO
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;		
+										
+										SET Environment.Variables.fimAtendimento = true;		
 			WHEN Environment.Variables.etapa.nome = 'Inserir Atendimento SGT'  THEN
-				SET msgErro = 'Falha ao Inserir Atendimento SG';	
+				SET msgErro = 'Falha ao Cadastrar atendimento no SGT: ' || Environment.Variables.SGTcodigoIntegracaoProdutoRegional || -- TODO
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
+										
+										SET Environment.Variables.fimAtendimento = true;
+											
 			WHEN Environment.Variables.etapa.nome = 'Atualizar Atendimento SGT'  THEN
-				SET msgErro = 'Falha ao Atualizar Atendimento SGT';	
+				SET msgErro = 'Falha ao alterar status atendimento no SGT: ' || Environment.Variables.SGTcodigoIntegracaoProdutoRegional || -- TODO
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;	
+										
+										SET Environment.Variables.fimAtendimento = true;
+											
 			WHEN Environment.Variables.etapa.nome = 'Remover Contrato CRM'  THEN
-				SET msgErro = 'Falha ao Remover Contrato CRM';												
+				SET msgErro = 'Falha ao remover contrato da fila de integracao do CRM: ' || Environment.Variables.contratoId || ' Id fla: ' || Environment.Variables.idFila || -- TODO
+									' Contrato: ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR ||
+										' Unidade: ' || Environment.Variables.CRMcontratoResult.codUnidadeOp;													
 			END CASE;			
 		ELSEIF Environment.Variables.msgMQ.tipo = 'PRODUTO' THEN
 			CASE

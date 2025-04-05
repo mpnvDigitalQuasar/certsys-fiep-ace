@@ -15,6 +15,9 @@
     <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterProdutoDomain" name="obterProdutoDomain" defaultValueLiteral="CRMDomain">
       <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterProdutoToken" name="obterProdutoToken" lowerBound="1" defaultValueLiteral="SGTBearerToken">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="obterProdutoRegionaisSGT" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/obterProdutoRegionaisSGT.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/obterProdutoRegionaisSGT.gif"/>
@@ -90,6 +93,9 @@
             <propertyName xmi:type="utility:TranslatableString" key="Property.obterProdutoPass" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
             <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterProdutoDomain">
               <propertyName xmi:type="utility:TranslatableString" key="Property.obterProdutoDomain" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
+              <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterProdutoToken">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.obterProdutoToken" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
+              </propertyDescriptor>
             </propertyDescriptor>
           </propertyDescriptor>
         </propertyDescriptor>
