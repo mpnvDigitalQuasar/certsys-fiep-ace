@@ -30,119 +30,143 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 				
 				-- MUDAR PARA CASE	
 				CASE
-				WHEN etapa = 1  THEN
-					
-					-- Consultando atendimento no SGT
-					PROPAGATE TO LABEL 'lbObterAtendimentoSGT';
-					
-					-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
-					SET fimAtendimento = Environment.Variables.fimAtendimento;
-					
-					IF fimAtendimento = true THEN
-						LEAVE fimAtendimento;	
-					ELSEIF InputRoot.JSON.Data.idAtendimento = 0 THEN -- Atendimento nao encontrado no SGT
-						SET etapa = 2; -- Buscar Produto Regional no SGT	
-					ELSEIF InputRoot.JSON.Data.status = 'negociacao' THEN
-						SET etapa = 4; -- Alterar Status Atendimento aceito		
-					END IF;	
-					
-				WHEN etapa = 2  THEN	
-					
-				WHEN etapa = 3  THEN	
-				
-				WHEN etapa = 4  THEN	
-					
-				END CASE;
-			
-
-
-
-			
-				-- Consultando atendimento no SGT
-				PROPAGATE TO LABEL 'lbObterAtendimentoSGT';
-				-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
-				SET fimAtendimento = Environment.Variables.fimAtendimento;
-				IF fimAtendimento = true THEN
-					LEAVE fimAtendimento;
-				END IF;
-
-				IF InputRoot.JSON.Data.idAtendimento <> '' THEN
-					-- Atendimento nao encontrado no SGT
-					SET Environment.Variables.SGTidAtendimento = InputRoot.JSON.Data.idAtendimento;
-					SET Environment.Variables.SGTatendimentoStatus = InputRoot.JSON.Data.atendimentoStatus;
-					-- Buscar Produto Regional no SGT
-					PROPAGATE TO LABEL 'lbObterProdutoRegionaisSGT';
-					-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
-					SET fimAtendimento = Environment.Variables.fimAtendimento;
-					IF fimAtendimento = true THEN
-						LEAVE fimAtendimento;
-					END IF;
-
-					IF Environment.Variables.getProdutoRegional IS NOT NULL THEN
-						
-						-- Cadastrar o Atendimento no SGT
-						PROPAGATE TO LABEL 'lbCriarAtendimentoSGT';
+					-- Consultando Atendimento
+					WHEN etapa = 1  THEN 
+							
+						-- Consultando atendimento no SGT
+						PROPAGATE TO LABEL 'lbObterAtendimentoSGT';							-- Consultando atendimento no SGT
 						
 						-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
 						SET fimAtendimento = Environment.Variables.fimAtendimento;
-						IF fimAtendimento = true THEN
-							LEAVE fimAtendimento;
-						END IF;
 						
-						IF Environment.Variables.idAtendimento IS NOT NULL THEN
+						IF fimAtendimento = true THEN 										-- Valida mudança de valor para casos de erro
+							LEAVE fimAtendimento;	
+						
+						ELSEIF InputRoot.JSON.Data.idAtendimento = 0 THEN 					-- Atendimento encontrado no SGT
+							
+							SET Environment.Variables.SGTidAtendimento = InputRoot.JSON.Data.idAtendimento;
+							SET Environment.Variables.SGTatendimentoStatus = InputRoot.JSON.Data.atendimentoStatus;
+							
+							SET etapa = 2; -- Buscar Produto Regional no SGT	
+					
+						ELSEIF InputRoot.JSON.Data.status = 'negociacao' THEN
+							SET etapa = 4; -- Alterar Status Atendimento aceito		
 						
 						ELSE
-						
-						END IF;
-						
-
-					ELSE
-									
-						SET fimAtendimento = true;
-						IF fimAtendimento = true THEN
-							LEAVE fimAtendimento;
-						END IF;
-						
-					END IF;							        
-
-
-				ELSEIF InputRoot.JSON.Data.status = 'negociacao' THEN
-					-- Alterar Status Atendimento aceito no SGT
-					PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT';
-					-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
-					SET fimAtendimento = Environment.Variables.fimAtendimento;
-					IF fimAtendimento = true THEN
-						LEAVE fimAtendimento;
-					END IF;
-
-				END IF;
-
-				SET OutputRoot.JSON.Data.dataEmissao = Environment.Variables.CRMcontratoResult.dataInicioContrato;
-				SET OutputRoot.JSON.Data.dataInicioPrevista = CURRENT_DATE;
-				SET OutputRoot.JSON.Data.dataConclusaoPrevista = Environment.Variables.CRMcontratoResult.dataTerminoContrato;
-				SET OutputRoot.JSON.Data.codigoIntegracaoAtendimento = Environment.Variables.CRMcontratoResult.cnpjCliente;
-				SET OutputRoot.JSON.Data.idProposta = Environment.Variables.idProposta;
-				SET OutputRoot.JSON.Data.cliente = Environment.Variables.CRMcontratoResult.cnpjCliente;
-				SET OutputRoot.JSON.Data.idProdutoRegional = Environment.Variables.idProdutoRegional;
-				SET OutputRoot.JSON.Data.isEscopoIndefinido = current.isEscopoIndefinido;
-				SET OutputRoot.JSON.Data.isValorHora = current.isValorHora;
-				SET OutputRoot.JSON.Data.numeroDeProducaoEstimada = current.numeroDeProducaoEstimada;
-				SET OutputRoot.JSON.Data.numeroDeRelatorioEstimado = current.numeroDeRelatorioEstimado;
-				SET OutputRoot.JSON.Data.titulo = current.titulo;
-				SET OutputRoot.JSON.Data.unidade = current.unidade;
-				SET OutputRoot.JSON.Data.vlrEconomico = current.vlrEconomico;
-				SET OutputRoot.JSON.Data.vlrFinanceiro = current.vlrFinanceiro;
-				SET OutputRoot.JSON.Data.previsaoReceitaList.cpfcnpj = current.previsoesReceitas.PrevisaoReceita.cpfCnpj;
-				SET OutputRoot.JSON.Data.previsaoReceitaList.tipoPrevisaoReceita = current.previsoesReceitas.PrevisaoReceita.tipoPrevisaoReceita;
-				SET OutputRoot.JSON.Data.previsaoReceitaList.valor = current.previsoesReceitas.PrevisaoReceita.valor;
+							SET fimAtendimento = true;
+							SET etapa = NULL;
+							
+							IF fimAtendimento = true THEN
+								LEAVE fimAtendimento;	
+							END IF;	
+						END IF;	
 					
-				-- Alterar Status do Atendimento no SGT para Aceito
-				PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT';
+					-- Buscar produto Regional no SGT	
+					WHEN etapa = 2  THEN 
+						
+						PROPAGATE TO LABEL 'lbObterProdutoRegionaisSGT'; 					-- Buscar Produto Regional no SGT
+
+						-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
+						SET fimAtendimento = Environment.Variables.fimAtendimento;
+						
+						IF fimAtendimento = true THEN 										-- Valida mudança de valor para casos de erro
+							LEAVE fimAtendimento;	
+					
+						ELSEIF Environment.Variables.getProdutoRegional IS NOT NULL THEN 	-- Cadastrar Atendimento no SGT			
+							SET etapa = 3;
+						
+						ELSE 																-- Passa para o proximo
+							SET fimAtendimento = true;
+							SET etapa = NULL;
+							
+							IF fimAtendimento = true THEN
+								LEAVE fimAtendimento;	
+							END IF;		
+						END IF;
+												
+					-- Cadastrar o Atendimento no SGT
+					WHEN etapa = 3  THEN 
+					
+						PROPAGATE TO LABEL 'lbCriarAtendimentoSGT'; 						-- Cadastrar o Atendimento no SGT
+						
+						-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
+						SET fimAtendimento = Environment.Variables.fimAtendimento;
+						
+						IF fimAtendimento = true THEN 										-- Valida mudança de valor para casos de erro
+							LEAVE fimAtendimento;	
+						ELSEIF InputRoot.JSON.Data.idAtendimento <> 0 THEN 					-- Consultar Atendimento				
+							SET etapa = 1;
+						ELSE																-- Passa para o proximo
+							SET fimAtendimento = true;
+							SET etapa = NULL;
+							
+							IF fimAtendimento = true THEN
+								LEAVE fimAtendimento;	
+							END IF;	
+						END IF;
+						
+					-- Alterar Status do Atendimento no SGT para Aceito
+					WHEN etapa = 4  THEN 
+						
+						SET OutputRoot.JSON.Data.dataEmissao = Environment.Variables.CRMcontratoResult.dataInicioContrato;
+						SET OutputRoot.JSON.Data.dataInicioPrevista = CURRENT_DATE;
+						SET OutputRoot.JSON.Data.dataConclusaoPrevista = Environment.Variables.CRMcontratoResult.dataTerminoContrato;
+						SET OutputRoot.JSON.Data.codigoIntegracaoAtendimento = Environment.Variables.CRMcontratoResult.cnpjCliente;
+						SET OutputRoot.JSON.Data.idProposta = Environment.Variables.idProposta;
+						SET OutputRoot.JSON.Data.cliente = Environment.Variables.CRMcontratoResult.cnpjCliente;
+						SET OutputRoot.JSON.Data.idProdutoRegional = Environment.Variables.idProdutoRegional;
+						SET OutputRoot.JSON.Data.isEscopoIndefinido = current.isEscopoIndefinido;
+						SET OutputRoot.JSON.Data.isValorHora = current.isValorHora;
+						SET OutputRoot.JSON.Data.numeroDeProducaoEstimada = current.numeroDeProducaoEstimada;
+						SET OutputRoot.JSON.Data.numeroDeRelatorioEstimado = current.numeroDeRelatorioEstimado;
+						SET OutputRoot.JSON.Data.titulo = current.titulo;
+						SET OutputRoot.JSON.Data.unidade = current.unidade;
+						SET OutputRoot.JSON.Data.vlrEconomico = current.vlrEconomico;
+						SET OutputRoot.JSON.Data.vlrFinanceiro = current.vlrFinanceiro;
+						SET OutputRoot.JSON.Data.previsaoReceitaList.cpfcnpj = current.previsoesReceitas.PrevisaoReceita.cpfCnpj;
+						SET OutputRoot.JSON.Data.previsaoReceitaList.tipoPrevisaoReceita = current.previsoesReceitas.PrevisaoReceita.tipoPrevisaoReceita;
+						SET OutputRoot.JSON.Data.previsaoReceitaList.valor = current.previsoesReceitas.PrevisaoReceita.valor;
+						
+						PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT'; 				-- Alterar Status do Atendimento no SGT para Aceito
+
+						-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
+						SET fimAtendimento = Environment.Variables.fimAtendimento;
+						
+						IF fimAtendimento = true THEN
+							LEAVE fimAtendimento;	
+						
+						ELSEIF InputRoot.JSON.Data.idAtendimento = 0 THEN 					-- Alterado Status do Atendimento no SGT para aceit						
+							SET etapa = 5;
+						
+						ELSE																-- Falha ao alterar Status do Atendimento no SGT
+							SET fimAtendimento = true;
+							SET etapa = NULL;
+							
+							IF fimAtendimento = true THEN
+								LEAVE fimAtendimento;	
+							END IF;	
+						END IF;
+					
+				WHEN etapa = 5  THEN 														-- Se não ocorreu erro no contrato remove da fila
+						
+					IF fimAtendimento <> true THEN
+						PROPAGATE TO LABEL 'lbRemoverFilaCRM'; 
+					ELSE
+						SET fimAtendimento = true;
+						SET etapa = NULL;
+						
+						IF fimAtendimento = true THEN
+							SET etapa = NULL;
+							LEAVE fimAtendimento;	
+						END IF;	
+					END IF;
+						
+				END CASE;
 
 				SET fimAtendimento = true;
 
 				UNTIL
-				TRUE
+					TRUE
 			END REPEAT;
 
 		END FOR;
