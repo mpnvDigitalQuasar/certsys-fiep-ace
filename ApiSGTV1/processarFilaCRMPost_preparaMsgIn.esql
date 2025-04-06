@@ -7,6 +7,35 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
 		
+		
+		-- TESTE REPET E CASE
+		
+		DECLARE fimAtendimento BOOLEAN false;
+		DECLARE etapa INT 1;
+		
+		fimAtendimento: REPEAT
+		
+			CASE
+				WHEN etapa = 1 THEN
+				  	SET etapa = 2;
+				WHEN etapa = 2 THEN
+					SET etapa = 3;
+				WHEN etapa = 3 THEN
+					SET etapa = 4;
+			ELSE
+				SET fimAtendimento = true;
+				
+				IF fimAtendimento = true THEN
+					LEAVE fimAtendimento;
+				END IF;
+			END CASE;	
+					
+			UNTIL
+			TRUE
+		END REPEAT;		
+		
+		-- TESTE REPET E CASE
+		
 		SET Environment.Variables.tipo = InputRoot.JSON.Data.tipo;
 		SET Environment.Variables.etapa.tipo = Environment.Variables.tipo;	
 		
