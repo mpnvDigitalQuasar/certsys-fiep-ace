@@ -167,8 +167,8 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 				END CASE;
 
 				UNTIL
-				FALSE
-			END REPEAT;
+					fimAtendimento = false
+			END REPEAT fimAtendimento;
 
 		END FOR;
 

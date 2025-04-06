@@ -31,8 +31,8 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 			END CASE;	
 					
 			UNTIL
-			TRUE
-		END REPEAT;		
+				fimAtendimento = false
+		END REPEAT fimAtendimento;	
 		
 		-- TESTE REPET E CASE
 		
