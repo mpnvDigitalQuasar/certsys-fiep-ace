@@ -1,6 +1,7 @@
 BROKER SCHEMA br.org.fiep.esb.appsgt
 
 
+
 CREATE COMPUTE MODULE processarProdutoAsync_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
