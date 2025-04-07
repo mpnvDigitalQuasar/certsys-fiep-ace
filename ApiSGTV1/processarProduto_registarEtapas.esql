@@ -11,16 +11,17 @@ CREATE COMPUTE MODULE processarProduto_registarEtapas
 		DECLARE jsonMsg CHAR;
 		DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);	
 		
-		SET OutputRoot.JSON.Data.idEtapa = Environment.Variables.idEtapa;
-		SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;
-		SET OutputRoot.JSON.Data.idNomeEtapa = Environment.Variables.etapa.Item.id;
-		SET OutputRoot.JSON.Data.status = Environment.Variables.etapa.status;
-		SET OutputRoot.JSON.Data.sucesso = Environment.Variables.etapa.sucesso;
+		SET OutputRoot.JSON.Data.etapa.idEtapa = Environment.Variables.idEtapa;
+		SET OutputRoot.JSON.Data.etapa.idHistorico = Environment.Variables.idHistorico;
+		SET OutputRoot.JSON.Data.etapa.idNomeEtapa = Environment.Variables.etapa.Item.id;
+		SET OutputRoot.JSON.Data.etapa.status = Environment.Variables.etapa.status;
+		SET OutputRoot.JSON.Data.etapa.sucesso = Environment.Variables.etapa.sucesso;
 
-		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
+		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data.etapa,,1208,,,,options);
 		SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
 		
 		CALL procs.upsetEtapaProduto(jsonMsg, Environment.Variables.idEtapa);
+		
 		COMMIT;
 				
 		RETURN TRUE;

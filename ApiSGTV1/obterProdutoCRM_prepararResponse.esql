@@ -6,19 +6,16 @@ CREATE COMPUTE MODULE obterProdutoCRM_prepararResponse
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
-
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:Domain = '';
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = '';
 		
 		DECLARE retorno BOOLEAN TRUE;
 		
 		--setar idIntegracao em Environment.Variables.codigoIntegracaoPropostaSGT
 		
-		IF	InputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:quantidade > 0 THEN
+		IF	InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:quantidade > 0 THEN
 			SET Environment.Variables.etapa.status = 'Concluido';
 			SET Environment.Variables.etapa.sucesso = 1;	
 			
-			SET Environment.Variables.retornoCrm = InputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno;
+			SET Environment.Variables.retornoCrm = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno;
 		ELSE
 			--CASO NÃO RETORNE
 			IF Environment.Variables.statusCrm = 0 THEN

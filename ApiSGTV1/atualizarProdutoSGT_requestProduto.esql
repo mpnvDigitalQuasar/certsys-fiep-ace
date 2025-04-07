@@ -9,7 +9,7 @@ CREATE COMPUTE MODULE atualizarProdutoSGT_requestProduto
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
 				
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlProdutosRegionais || '/' || Environment.Variables.SGTidProdutoRegional;
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = reqProdutosRegionais || '/' || Environment.Variables.SGTidProdutoRegional;
 		
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer '|| criarProdutoBearer;
 

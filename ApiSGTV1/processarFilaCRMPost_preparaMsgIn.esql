@@ -7,35 +7,6 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
 		
-		
-		-- TESTE REPET E CASE
-		
-		DECLARE fimAtendimento BOOLEAN false;
-		DECLARE etapa INT 1;
-		
-		fimAtendimento: REPEAT
-		
-			CASE
-				WHEN etapa = 1 THEN
-				  	SET etapa = 2;
-				WHEN etapa = 2 THEN
-					SET etapa = 3;
-				WHEN etapa = 3 THEN
-					SET etapa = 4;
-			ELSE
-				SET fimAtendimento = true; -- SAIR DO REPEAT - OK
-				
---				IF fimAtendimento = true THEN -- SAIR DO REPEAT - OK
---					LEAVE fimAtendimento;
---				END IF;
-			END CASE;	
-					
-			UNTIL
-				fimAtendimento = true
-		END REPEAT fimAtendimento;	
-		
-		-- TESTE REPET E CASE
-		
 		SET Environment.Variables.tipo = InputRoot.JSON.Data.tipo;
 		SET Environment.Variables.etapa.tipo = Environment.Variables.tipo;	
 		
@@ -59,7 +30,7 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 			
 		ELSEIF Environment.Variables.tipo = 'PRODUTO' THEN
 			
-			IF InputRoot.JSON.Data.idIntegracao = '' THEN
+			IF FIELDNAME(InputRoot.JSON.Data.idIntegracao) IS NULL THEN
 				SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = 0;
 			ELSE
 				SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = InputRoot.JSON.Data.idIntegracao;
