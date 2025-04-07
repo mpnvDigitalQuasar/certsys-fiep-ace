@@ -29,14 +29,12 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 
 			SET Environment.Variables.codigoIntegracaoPropostaSGT = CAST(refContrato.codCasa AS CHAR) || CAST(refContrato.codUnidadeOp AS CHAR) || CAST(refContrato.codigoContratoCTR AS CHAR) || CAST(current.codigoProduto AS CHAR);
 
-
 			fimAtendimento: REPEAT
 
 				CASE
 				WHEN etapa = 1 THEN
 					
 					PROPAGATE TO LABEL 'lbObterAtendimentoSGT'; 											-- Consultando atendimento no SGT
-					
 					
 					SET fimAtendimento = Environment.Variables.fimAtendimento; 								-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
 
@@ -56,9 +54,9 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE																					-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
-						IF fimAtendimento = true THEN
-							LEAVE fimAtendimento;
-						END IF;
+--						IF fimAtendimento = true THEN
+--							LEAVE fimAtendimento;
+--						END IF;
 					END IF;
 					
 				WHEN etapa = 2 THEN
@@ -76,9 +74,9 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE 																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
-						IF fimAtendimento = true THEN
-							LEAVE fimAtendimento;
-						END IF;
+--						IF fimAtendimento = true THEN
+--							LEAVE fimAtendimento;
+--						END IF;
 					END IF;
 					
 				WHEN etapa = 3 THEN
@@ -96,9 +94,9 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE 																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
-						IF fimAtendimento = true THEN
-							LEAVE fimAtendimento;
-						END IF;
+--						IF fimAtendimento = true THEN
+--							LEAVE fimAtendimento;
+--						END IF;
 					END IF;
 					
 				WHEN etapa = 4 THEN
@@ -135,9 +133,9 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE 																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
-						IF fimAtendimento = true THEN
-							LEAVE fimAtendimento;
-						END IF;
+--						IF fimAtendimento = true THEN
+--							LEAVE fimAtendimento;
+--						END IF;
 					END IF;
 
 				WHEN etapa = 5 THEN 
@@ -150,24 +148,24 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
-						IF fimAtendimento = true THEN
-							SET etapa = NULL;
-							LEAVE fimAtendimento;
-						END IF;
+--						IF fimAtendimento = true THEN
+--							SET etapa = NULL;
+--							LEAVE fimAtendimento;
+--						END IF;
 					END IF;
 
 				ELSE																					-- Passa para o proximo contrato
 
 					SET fimAtendimento = true;
 
-					IF fimAtendimento = true THEN
-						LEAVE fimAtendimento;
-					END IF;
+--					IF fimAtendimento = true THEN
+--						LEAVE fimAtendimento;
+--					END IF;
 
 				END CASE;
 
 				UNTIL
-					fimAtendimento = false
+					fimAtendimento = true
 			END REPEAT fimAtendimento;
 
 		END FOR;
