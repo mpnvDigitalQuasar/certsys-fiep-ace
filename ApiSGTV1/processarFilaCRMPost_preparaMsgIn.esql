@@ -23,15 +23,15 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 				WHEN etapa = 3 THEN
 					SET etapa = 4;
 			ELSE
-				SET fimAtendimento = true;
+				SET fimAtendimento = true; -- SAIR DO REPEAT - OK
 				
-				IF fimAtendimento = true THEN
-					LEAVE fimAtendimento;
-				END IF;
+--				IF fimAtendimento = true THEN -- SAIR DO REPEAT - OK
+--					LEAVE fimAtendimento;
+--				END IF;
 			END CASE;	
 					
 			UNTIL
-				fimAtendimento = false
+				fimAtendimento = true
 		END REPEAT fimAtendimento;	
 		
 		-- TESTE REPET E CASE
