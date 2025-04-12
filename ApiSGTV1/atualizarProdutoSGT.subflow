@@ -3,6 +3,12 @@
     xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:registrarErros.subflow="registrarErros.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="atualizarProdutoSGT.subflow" nsPrefix="atualizarProdutoSGT.subflow">
   <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="SQUARE">
     <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.atualizarProdutoToken" name="atualizarProdutoToken" defaultValueLiteral="SGTBearerToken">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.atualizarProdutoUrl" name="atualizarProdutoUrl" defaultValueLiteral="https://apisgt/produtosRegionais">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="atualizarProdutoSGT" bundleName="atualizarProdutoSGT" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/atualizarProdutoSGT.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/atualizarProdutoSGT.gif"/>
@@ -16,7 +22,7 @@
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="295,31" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
         <translation xmi:type="utility:ConstantString" string="registrarEtapa"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="103,95" computeExpression="esql://routine/#atualizarProdutoSGT_requestProduto.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="103,95" computeExpression="esql://routine/#atualizarProdutoSGT_requestProduto.Main" computeMode="destinationAndMessage">
         <translation xmi:type="utility:ConstantString" string="requestProduto"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="680,104" computeExpression="esql://routine/#atualizarProdutoSGT_responseProduto.Main">
@@ -31,7 +37,7 @@
       <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="478,133">
         <translation xmi:type="utility:ConstantString" string="registrarErros"/>
       </nodes>
-      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="380,102" URLSpecifier="https://apisgt/produtosRegionais" httpVersion="1.1" protocol="TLS" messageDomainProperty="JSON">
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="380,102" URLSpecifier="https://apisgt/produtosRegionais" httpMethod="PUT" httpVersion="1.1" protocol="TLS" messageDomainProperty="JSON">
         <translation xmi:type="utility:ConstantString" string="HTTP Request"/>
       </nodes>
       <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_10" location="476,60">
@@ -57,7 +63,14 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.first" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.Input"/>
     </composition>
-    <propertyOrganizer/>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.atualizarProdutoToken">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.atualizarProdutoToken" bundleName="atualizarProdutoSGT" pluginId="ApiSGTV1"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.atualizarProdutoUrl">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.atualizarProdutoUrl" bundleName="atualizarProdutoSGT" pluginId="ApiSGTV1"/>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
     <stickyBoard/>
   </eClassifiers>
 </ecore:EPackage>

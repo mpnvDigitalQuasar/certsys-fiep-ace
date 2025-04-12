@@ -9,7 +9,6 @@ CREATE COMPUTE MODULE removerProdutoFilaIntegracaoCRM_preparaRequest
 		SET Environment.Variables.etapa.nome = 'Remover Contrato CRM';
 		SET Environment.Variables.etapa.status = 'Concluido';
 
-		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
 
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:PutInativarItensFilaIntegracao.ns:token.ns:User = removerProdutoUser;
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:PutInativarItensFilaIntegracao.ns:token.ns:Password = removerProdutoPass;

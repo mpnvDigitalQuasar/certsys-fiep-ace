@@ -9,11 +9,12 @@ CREATE COMPUTE MODULE criarProdutoSGT_prepararRequest
 		
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer '|| criarProdutoBearer;
 
-		SET OutputRoot.JSON.Data.codigoIntegracaoProdutoRegional 	= Environment.Variables.retornoCrm.codigoProduto;
-		SET OutputRoot.JSON.Data.isAtivo 							= Environment.Variables.retornoCrm.isAtivo;
-		SET OutputRoot.JSON.Data.nome 								= Environment.Variables.retornoCrm.nome;
-		SET OutputRoot.JSON.Data.CRProdutoRegional 					= Environment.Variables.retornoCrm.crProdutoRegional;
-		SET OutputRoot.JSON.Data.codigoDNProdutoNacional 			= Environment.Variables.retornoCrm.idProdutoNacional;
+		 SET OutputRoot.JSON.Data.codigoIntegracaoProdutoRegional = Environment.Variables.retornoCrm.codigoProduto;
+		 SET OutputRoot.JSON.Data.isAtivo = Environment.Variables.retornoCrm.isAtivo;
+		 SET OutputRoot.JSON.Data.nome = Environment.Variables.retornoCrm.nome;
+		 SET OutputRoot.JSON.Data.CRProdutoRegional = Environment.Variables.retornoCrm.crProdutoRegional;
+		 SET OutputRoot.JSON.Data.codigoDNProdutoNacional = Environment.Variables.retornoCrm.idProdutoNacional;
+
 
 		RETURN TRUE;
 	END;

@@ -1,7 +1,7 @@
 BROKER SCHEMA br.org.fiep.esb.appsgt
 
 
-CREATE COMPUTE MODULE processarContratoAsync_orquestrarValidarProposta
+CREATE COMPUTE MODULE processarContratoAsync_validarProposta
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
@@ -10,16 +10,11 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestrarValidarProposta
 		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta.idProposta) IS NULL THEN
 			--Não Localizada a proposta no SGT
 			PROPAGATE TO LABEL 'lbCriarPropostaSGT';
-			
-			--Falha de contrato. Passa para o proximo
-			IF Environment.Variables.etapa.status = 'Falha' THEN
-				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar proposta no SGT', BrokerName);
-			END IF;
 		ELSE
 			--Localizada proposta no SGT
 			SET Environment.Variables.SGTproposta = InputRoot.JSON.Data.Propostas.Proposta;
-		END IF;		
-			
+		END IF;
+		
 		RETURN TRUE;
 	END;
 

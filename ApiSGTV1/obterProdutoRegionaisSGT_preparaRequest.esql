@@ -1,5 +1,5 @@
-
-DECLARE reqProdutosRegionais EXTERNAL CHAR '';
+DECLARE obterProdutoToken EXTERNAL CHAR '';
+DECLARE urlProdutosRegionais EXTERNAL CHAR '';
 CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
@@ -9,9 +9,12 @@ CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaRequest
 		DELETE FIELD Environment.Variables.idEtapa;
 		SET Environment.Variables.etapa.nome = 'Buscar Produto SGT';
 		SET Environment.Variables.etapa.status = 'Em processamento';
+		
+		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || obterProdutoToken;
 
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = reqProdutosRegionais || 'codigoIntegracaoProposta=' || Environment.Variables.retornoCrm.codigoProduto;
-	
+		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.codigoIntegracaoProdutoRegional = 'SN009730';--Environment.Variables.retornoCrm.codigoProduto;
+
 		RETURN TRUE;
 	END;
 

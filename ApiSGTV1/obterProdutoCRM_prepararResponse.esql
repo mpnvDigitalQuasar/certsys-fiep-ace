@@ -15,7 +15,14 @@ CREATE COMPUTE MODULE obterProdutoCRM_prepararResponse
 			SET Environment.Variables.etapa.status = 'Concluido';
 			SET Environment.Variables.etapa.sucesso = 1;	
 			
-			SET Environment.Variables.retornoCrm = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno;
+			--SET OutputRoot.JSON.Data = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno;
+			--SET Environment.Variables.retornoCrm = OutputRoot.JSON.Data;
+			SET Environment.Variables.retornoCrm.codigoProduto = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno.ns44:codigoProduto;
+			SET Environment.Variables.retornoCrm.isAtivo = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno.ns44:isAtivo;
+			SET Environment.Variables.retornoCrm.nome = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno.ns44:nome;
+			SET Environment.Variables.retornoCrm.crProdutoRegional = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno.ns44:crProdutoRegional;
+			SET Environment.Variables.retornoCrm.idProdutoNacional = InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:resultados.ns44:ProdutoRetorno.ns44:idProdutoNacional;
+			
 		ELSE
 			--CASO NÃO RETORNE
 			IF Environment.Variables.statusCrm = 0 THEN

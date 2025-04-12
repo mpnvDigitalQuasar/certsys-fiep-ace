@@ -7,7 +7,7 @@ CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaResponse
 		-- CALL CopyEntireMessage();
 		DECLARE retorno BOOLEAN TRUE;
 		
-		IF InputRoot.JSON.Data.idProdutoRegional <> '' THEN
+		IF InputRoot.JSON.Data.ProdutosRegionais.ProdutoRegional.idProdutoRegional IS NOT NULL THEN
 			SET Environment.Variables.SGTidProdutoRegional = InputRoot.JSON.Data.ProdutosRegionais.ProdutoRegional.idProdutoRegional;
 			
 			SET retorno = FALSE;
@@ -17,7 +17,7 @@ CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaResponse
 		
 		SET Environment.Variables.etapa.status = 'Concluido';
 		SET Environment.Variables.etapa.sucesso = 1;
-				
+		
 		RETURN retorno;
 	END;
 

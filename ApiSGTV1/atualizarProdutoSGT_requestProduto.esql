@@ -1,4 +1,5 @@
-
+DECLARE atualizarProdutoUrl EXTERNAL CHAR '';
+DECLARE atualizarProdutoToken EXTERNAL CHAR '';
 
 CREATE COMPUTE MODULE atualizarProdutoSGT_requestProduto
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -6,12 +7,10 @@ CREATE COMPUTE MODULE atualizarProdutoSGT_requestProduto
 		DELETE FIELD Environment.Variables.idEtapa;
 		SET Environment.Variables.etapa.nome = 'Atualizar Produto SGT';
 		SET Environment.Variables.etapa.status = 'Em processamento';
-
-		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
 				
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = reqProdutosRegionais || '/' || Environment.Variables.SGTidProdutoRegional;
-		
-		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer '|| criarProdutoBearer;
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = atualizarProdutoUrl || '/'|| Environment.Variables.SGTidProdutoRegional;
+		--SET OutputLocalEnvironment.Destination.REST.Request.Parameters.id = Environment.Variables.SGTidProdutoRegional;
+		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer '|| atualizarProdutoToken;
 
 		SET OutputRoot.JSON.Data.codigoIntegracaoProdutoRegional 	= Environment.Variables.retornoCrm.codigoProduto;
 		SET OutputRoot.JSON.Data.isAtivo 							= Environment.Variables.retornoCrm.isAtivo;

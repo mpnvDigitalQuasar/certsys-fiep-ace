@@ -35,7 +35,12 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 				WHEN etapa = 1 THEN
 					
 					PROPAGATE TO LABEL 'lbObterAtendimentoSGT'; 											-- Consultando atendimento no SGT
-					
+
+					--Falha de atendimento e contrato. Passa para o proximo
+					IF Environment.Variables.etapa.status = 'Falha' THEN
+						CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao obter atendimento no SGT', BrokerName);
+					END IF;
+								
 					SET fimAtendimento = Environment.Variables.fimAtendimento; 								-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
 
 					IF fimAtendimento = true THEN 															-- Valida mudança de valor para casos de erro
@@ -54,15 +59,17 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE																					-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
---						IF fimAtendimento = true THEN
---							LEAVE fimAtendimento;
---						END IF;
 					END IF;
 					
 				WHEN etapa = 2 THEN
 
 					PROPAGATE TO LABEL 'lbObterProdutoRegionaisSGT'; 									-- Buscar Produto Regional no SGT
-																										
+
+					--Falha de atendimento e contrato. Passa para o proximo
+					IF Environment.Variables.etapa.status = 'Falha' THEN
+						CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao obter produto no SGT', BrokerName);
+					END IF;
+																									
 					SET fimAtendimento = Environment.Variables.fimAtendimento;							-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
 
 					IF fimAtendimento = true THEN 														-- Valida mudança de valor para casos de erro
@@ -74,15 +81,17 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE 																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
---						IF fimAtendimento = true THEN
---							LEAVE fimAtendimento;
---						END IF;
 					END IF;
 					
 				WHEN etapa = 3 THEN
 
 					PROPAGATE TO LABEL 'lbCriarAtendimentoSGT'; 										-- Cadastrar o Atendimento no SGT
-					
+
+					--Falha de atendimento e contrato. Passa para o proximo
+					IF Environment.Variables.etapa.status = 'Falha' THEN
+						CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao criar atendimento no SGT', BrokerName);
+					END IF;
+										
 					SET fimAtendimento = Environment.Variables.fimAtendimento; 							-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
 
 					IF fimAtendimento = true THEN 														-- Valida mudança de valor para casos de erro
@@ -94,9 +103,6 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE 																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
---						IF fimAtendimento = true THEN
---							LEAVE fimAtendimento;
---						END IF;
 					END IF;
 					
 				WHEN etapa = 4 THEN
@@ -133,9 +139,6 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE 																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
---						IF fimAtendimento = true THEN
---							LEAVE fimAtendimento;
---						END IF;
 					END IF;
 
 				WHEN etapa = 5 THEN 
@@ -148,19 +151,11 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					ELSE																				-- Passa para o proximo contrato
 						SET fimAtendimento = true;
 
---						IF fimAtendimento = true THEN
---							SET etapa = NULL;
---							LEAVE fimAtendimento;
---						END IF;
 					END IF;
 
 				ELSE																					-- Passa para o proximo contrato
 
 					SET fimAtendimento = true;
-
---					IF fimAtendimento = true THEN
---						LEAVE fimAtendimento;
---					END IF;
 
 				END CASE;
 

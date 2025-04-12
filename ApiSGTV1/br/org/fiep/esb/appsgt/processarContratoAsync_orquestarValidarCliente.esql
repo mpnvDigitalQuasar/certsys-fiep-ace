@@ -12,17 +12,32 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestarValidarCliente
 			-- Cadastrar cliente SGT
 			PROPAGATE TO LABEL 'lbCriarClienteSGT';
 			
+			--Falha de contrato. Passa para o proximo
+			IF Environment.Variables.etapa.status = 'Falha' THEN
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar cliente no SGT', BrokerName);
+			END IF;
+			
 		ELSEIF FIELDTYPE(InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.id) IS NULL THEN		
 				
 			-- Cadastrar endereço cliente
 			PROPAGATE TO LABEL 'lbCriarEnderecoClienteSGT';
-				
+			
+			--Falha de contrato. Passa para o proximo
+			IF Environment.Variables.etapa.status = 'Falha' THEN
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar endereço no SGT', BrokerName);
+			END IF;
+			
 		ELSE
 			
 			SET Environment.Variables.SGTclienteEndereco = InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco;
 			
 			-- Atualizar endereço cliente
 			PROPAGATE TO LABEL 'lbAtualizarEnderecoClienteSGT';
+			
+			--Falha de contrato. Passa para o proximo
+			IF Environment.Variables.etapa.status = 'Falha' THEN
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir atualizar endereço no SGT', BrokerName);
+			END IF;
 			
 		END IF;
 		

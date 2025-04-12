@@ -15,7 +15,8 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarClienteToken;
-						
+		
+		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontratoResult.cnpjCliente;				
 		SET OutputRoot.JSON.Data.tipoPessoa = Environment.Variables.CRMcontasResult.tipoConta;
 		SET OutputRoot.JSON.Data.tipoCnpj = Environment.Variables.CRMcontasResult.porte;
 		SET OutputRoot.JSON.Data.nomeFantasia = Environment.Variables.CRMcontasResult.nomeFantasia;
