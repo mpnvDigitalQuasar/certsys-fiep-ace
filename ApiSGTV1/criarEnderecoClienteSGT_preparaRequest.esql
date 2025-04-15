@@ -16,7 +16,7 @@ CREATE COMPUTE MODULE criarEnderecoClienteSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarEnderecoToken;
 								
-		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontasResult.cpfCnpj;
+		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontratoResult.cnpjCliente;
 		SET OutputRoot.JSON.Data.idTipoEndereco = 1;
 		SET OutputRoot.JSON.Data.cep = Environment.Variables.CRMcontratoResult.endereco.cep;
 		SET OutputRoot.JSON.Data.logradouro = Environment.Variables.CRMcontratoResult.endereco.logradouro;

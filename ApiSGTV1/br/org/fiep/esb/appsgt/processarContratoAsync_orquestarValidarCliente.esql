@@ -17,7 +17,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestarValidarCliente
 				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar cliente no SGT', BrokerName);
 			END IF;
 			
-		ELSEIF FIELDTYPE(InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.id) IS NULL THEN		
+		ELSEIF EXISTS(InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco[]) IS NULL THEN		
 				
 			-- Cadastrar endereço cliente
 			PROPAGATE TO LABEL 'lbCriarEnderecoClienteSGT';

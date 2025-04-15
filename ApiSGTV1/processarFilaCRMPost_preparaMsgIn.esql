@@ -26,7 +26,7 @@ CREATE COMPUTE MODULE processarFilaCRMPost_preparaMsgIn
 			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:processo = 1;
 			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:status = 0;
 			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:pagina = 1;
-			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:quantidade = 1; --DESCOMENTAR 10;
+			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:quantidade = 10;
 			
 		ELSEIF Environment.Variables.tipo = 'PRODUTO' THEN
 			
