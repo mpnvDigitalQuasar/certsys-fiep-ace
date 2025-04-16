@@ -21,8 +21,8 @@ CREATE COMPUTE MODULE atualizarEnderecoClienteSGT_preparaRequest
 --		DECLARE refClienteRetorno REFERENCE TO Environment.Variables.SGTClienteRetorno.Cliente.Enderecos.Endereco;
 --		SET idEndereco = THE(SELECT ITEM(param.id) FROM refClienteRetorno.Item[] AS param WHERE param.idTipoEndereco = '1');
 				
-		--SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarEndereco || Environment.Variables.SGTClienteRetorno.Cliente.Endereco.id;
-		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.id = Environment.Variables.SGTClienteRetorno.Cliente.Endereco.id; 
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarEndereco || Environment.Variables.SGTClienteRetorno.Cliente.Endereco.id;
+		--SET OutputLocalEnvironment.Destination.REST.Request.Parameters.id = Environment.Variables.SGTClienteRetorno.Cliente.Endereco.id; 
 		 				
 		CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
 		CREATE LASTCHILD OF OutputRoot.JSON NAME 'Data';
