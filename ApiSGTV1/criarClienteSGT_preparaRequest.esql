@@ -16,11 +16,11 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarClienteToken;
 		
-		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontratoResult.cnpjCliente;				
+		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontasResult.cpfCnpj;				
 		SET OutputRoot.JSON.Data.tipoPessoa = 1;
-		SET OutputRoot.JSON.Data.tipoCnpj = 3;
 		SET OutputRoot.JSON.Data.nomeFantasia = Environment.Variables.CRMcontasResult.nomeFantasia;
 		SET OutputRoot.JSON.Data.razaoSocial = Environment.Variables.CRMcontasResult.razaoSocial;
+		SET OutputRoot.JSON.Data.tipoCnpj = 3;
 		
 		IF Environment.Variables.CRMcontasResult.informacoesCnae.cnae IS NOT NULL THEN
 			SET OutputRoot.JSON.Data.cnae = Environment.Variables.CRMcontasResult.informacoesCnae.codigoCnae;
@@ -28,38 +28,15 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 		
 		SET OutputRoot.JSON.Data.inscricaoEstadual = Environment.Variables.CRMcontasResult.inscricaoEstadual;
 		SET OutputRoot.JSON.Data.numeroFuncionarios = Environment.Variables.CRMcontasResult.numeroFuncionarios;
-				
-		DECLARE I INT 1;
-		
-		DECLARE teste1 CHAR '';
-		FOR current AS Environment.Variables.CRMcontasResult.enderecos.Item[] DO
-			
-			SET teste1 = current.logradouro;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].idTipoEndereco = 1;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].cep = current.cep;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].logradouro = current.logradouro;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].numero = current.numeroEndereco;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].bairro = current.bairro;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].complemento = current.complemento;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].codigoIBGEMunicipio = current.codigoIBGE;
-			
-			SET I = I + 1;
-		END FOR;	
 
-		FOR current AS Environment.Variables.CRMcontasResult.enderecos[] DO
-			
-			SET teste1 = current.logradouro;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].idTipoEndereco = 1;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].cep = current.cep;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].logradouro = current.logradouro;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].numero = current.numeroEndereco;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].bairro = current.bairro;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].complemento = current.complemento;
-			SET OutputRoot.JSON.Data.Enderecos.Item[I].codigoIBGEMunicipio = current.codigoIBGE;
-			
-			SET I = I + 1;
-		END FOR;	
-															
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].idTipoEndereco = 1;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].cep = Environment.Variables.CRMcontratoResult.endereco.cep;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].logradouro = Environment.Variables.CRMcontratoResult.endereco.logradouro;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].numero = Environment.Variables.CRMcontratoResult.endereco.numeroEndereco;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].bairro = Environment.Variables.CRMcontratoResult.endereco.bairro;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].complemento = Environment.Variables.CRMcontratoResult.endereco.complemento;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].codigoIBGEMunicipio = Environment.Variables.CRMcontratoResult.endereco.codigoIBGE;
+																
 		RETURN TRUE;
 	END;
 

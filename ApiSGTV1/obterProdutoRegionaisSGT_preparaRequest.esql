@@ -13,7 +13,7 @@ CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || obterProdutoToken;
 
-		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.codigoIntegracaoProdutoRegional = 'SN009730';--Environment.Variables.retornoCrm.codigoProduto;
+		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.codigoIntegracaoProdutoRegional = Environment.Variables.retornoCrm.codigoProduto;
 
 		RETURN TRUE;
 	END;

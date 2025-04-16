@@ -108,7 +108,9 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].isValorHora = current.ns36:isValorHora;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].numeroDeRelatorioEstimado = current.ns36:numeroDeRelatorioEstimado;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].numeroDeRelatorioEstimado = current.ns36:numeroProducaoEstimada;
-	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas = current.ns36:previsoesReceitas;
+	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas.previsaoReceita.cpfCnpj = current.ns36:previsoesReceitas.ns36:PrevisaoReceita.ns36:cpfCnpj;
+	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas.previsaoReceita.tipoPrevisaoReceita = current.ns36:previsoesReceitas.ns36:PrevisaoReceita.ns36:tipoPrevisaoReceita;
+	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas.previsaoReceita.valor = current.ns36:previsoesReceitas.ns36:PrevisaoReceita.ns36:valor;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].titulo = current.ns36:titulo;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].unidade = current.ns36:unidade;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].codUnidadeOp = current.ns36:codUnidadeOp;

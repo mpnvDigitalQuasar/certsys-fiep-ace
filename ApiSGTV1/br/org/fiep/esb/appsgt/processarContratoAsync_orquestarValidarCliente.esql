@@ -5,38 +5,75 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestarValidarCliente
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
-		CALL CopyEntireMessage();
+		-- CALL CopyEntireMessage();
 			
-		IF FIELDTYPE(InputRoot.JSON.Data.Clientes.Cliente.id) IS NULL THEN			
+		IF FIELDTYPE(InputRoot.JSON.Data.Clientes.Cliente.id) IS NOT NULL THEN	
+			SET Environment.Variables.SGTClienteRetorno.Cliente.id = InputRoot.JSON.Data.Clientes.Cliente.id;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.cpfcnpj = InputRoot.JSON.Data.Clientes.Cliente.cpfcnpj;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.cnae = InputRoot.JSON.Data.Clientes.Cliente.cnae;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.inscricaoEstadual = InputRoot.JSON.Data.Clientes.Cliente.inscricaoEstadual;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.isAtivo = InputRoot.JSON.Data.Clientes.Cliente.isAtivo;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.isFonteFomento = InputRoot.JSON.Data.Clientes.Cliente.isFonteFomento;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.isUnidadeSenai = InputRoot.JSON.Data.Clientes.Cliente.isUnidadeSenai;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.nomeFantasia = InputRoot.JSON.Data.Clientes.Cliente.nomeFantasia;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.razaoSocial = InputRoot.JSON.Data.Clientes.Cliente.razaoSocial;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.numeroFuncionarios = InputRoot.JSON.Data.Clientes.Cliente.numeroFuncionarios;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.porteDoCliente = InputRoot.JSON.Data.Clientes.Cliente.porteDoCliente;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.tipoPessoa = InputRoot.JSON.Data.Clientes.Cliente.tipoPessoa;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.tipoCnpj = InputRoot.JSON.Data.Clientes.Cliente.tipoCnpj;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.nomeContato = InputRoot.JSON.Data.Clientes.Cliente.nomeContato;
+			SET Environment.Variables.SGTClienteRetorno.Cliente.emailContato = InputRoot.JSON.Data.Clientes.Cliente.emailContato;	
+			
+			IF EXISTS(InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.Item[])THEN
+				
+				DECLARE continua BOOLEAN false;
+				DECLARE quantidade INT 1;
+				DECLARE count INT CARDINALITY(InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.Item[]);
+				DECLARE input REFERENCE TO InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.Item[1];
+				
+				WHILE continua = false AND quantidade <= count DO
+
+					IF input.idTipoEndereco = '1' THEN
+						SET Environment.Variables.SGTClienteRetorno.Cliente.Endereco = input;
+						SET continua = true;
+					END IF;
+					
+					SET quantidade = quantidade + 1;
+					MOVE input NEXTSIBLING;
+				END WHILE;
+
+			END IF;
+			
+		END IF;
+		
+		IF FIELDTYPE(Environment.Variables.SGTClienteRetorno.Cliente.id) IS NULL THEN			
 			
 			-- Cadastrar cliente SGT
 			PROPAGATE TO LABEL 'lbCriarClienteSGT';
 			
 			--Falha de contrato. Passa para o proximo
 			IF Environment.Variables.etapa.status = 'Falha' THEN
-				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar cliente no SGT', BrokerName);
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao criar cliente no SGT', BrokerName);
 			END IF;
 			
-		ELSEIF EXISTS(InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco[]) IS NULL THEN		
+		ELSEIF FIELDTYPE(Environment.Variables.SGTClienteRetorno.Cliente.Endereco) IS NULL THEN		
 				
 			-- Cadastrar endereço cliente
 			PROPAGATE TO LABEL 'lbCriarEnderecoClienteSGT';
 			
 			--Falha de contrato. Passa para o proximo
 			IF Environment.Variables.etapa.status = 'Falha' THEN
-				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar endereço no SGT', BrokerName);
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao criar endereço no SGT', BrokerName);
 			END IF;
 			
 		ELSE
-			
-			SET Environment.Variables.SGTclienteEndereco = InputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco;
-			
+				
 			-- Atualizar endereço cliente
 			PROPAGATE TO LABEL 'lbAtualizarEnderecoClienteSGT';
 			
 			--Falha de contrato. Passa para o proximo
 			IF Environment.Variables.etapa.status = 'Falha' THEN
-				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir atualizar endereço no SGT', BrokerName);
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao atualizar endereço no SGT', BrokerName);
 			END IF;
 			
 		END IF;

@@ -18,9 +18,9 @@ CREATE COMPUTE MODULE obterProdutoCRM_prepararRequest
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:Password = obterProdutoPass;	
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:token.ns44:Domain = obterProdutoDomain;
 		
-		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = Environment.Variables.idRegistro;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = Environment.Variables.idRegistro;
 		--teste com id que funciona
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = '81b6ed62-f7ee-ef11-be21-002248de9e7e';
+		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:idProduto = '81b6ed62-f7ee-ef11-be21-002248de9e7e';
 		
 		--SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:isRegional = true;
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns44:GetProdutos.ns44:status = Environment.Variables.statusCrm; -- SE NÃO TIVE RETORNO, MUDAR PARA 1

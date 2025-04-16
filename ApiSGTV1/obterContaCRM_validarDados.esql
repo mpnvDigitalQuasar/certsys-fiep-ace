@@ -19,31 +19,10 @@ CREATE COMPUTE MODULE obterContaCRM_validarDados
 		SET Environment.Variables.CRMcontasResult.dataNascimento = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:dataNascimento;
 		SET Environment.Variables.CRMcontasResult.email = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:email;
 		SET Environment.Variables.CRMcontasResult.emailNF = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:emailNF;
-		
-		DECLARE refContaRetorno REFERENCE TO InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:enderecos;
-		
-		DECLARE I INT 1;
-		FOR current AS refContaRetorno.ns8:Endereco[] DO
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cep = current.cep;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].logradouro = current.logradouro;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].numero = current.numeroEndereco;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].bairro = current.bairro;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].complemento = current.complemento;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cidade.nome = current.cidade.nome;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cidade.codigoIBGE.nil = current.cidade.codigoIBGE.nil;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cidade.uf.sigla = current.cidade.uf.sigla;
-			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cidade.uf.pais.nome = current.cidade.uf.pais.nome;
-			
-			SET I = I + 1;
-		END FOR;
-		
 		SET Environment.Variables.CRMcontasResult.filiadoSindicato = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:filiadoSindicato;
 		SET Environment.Variables.CRMcontasResult.idConta = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:idConta;
-		SET Environment.Variables.CRMcontasResult.informacoesCnae = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:informacoesCnae;
 		SET Environment.Variables.CRMcontasResult.inscricaoEstadual = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:inscricaoEstadual;
 		SET Environment.Variables.CRMcontasResult.isSindicato = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:isSindicato;
-		SET Environment.Variables.CRMcontasResult.microRegiao = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:microRegiao;
-		SET Environment.Variables.CRMcontasResult.nit = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:nit;
 		SET Environment.Variables.CRMcontasResult.nomeFantasia = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:nomeFantasia;
 		SET Environment.Variables.CRMcontasResult.numeroFuncionarios = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:numeroFuncionarios;
 		SET Environment.Variables.CRMcontasResult.porte = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:porte;
@@ -52,7 +31,25 @@ CREATE COMPUTE MODULE obterContaCRM_validarDados
 		SET Environment.Variables.CRMcontasResult.status = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:status;
 		SET Environment.Variables.CRMcontasResult.telefone = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:telefone;
 		SET Environment.Variables.CRMcontasResult.tipoConta = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:tipoConta;
-
+		
+		DECLARE refContaRetorno REFERENCE TO InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:enderecos;
+		
+		DECLARE I INT 1;
+		FOR current AS refContaRetorno.ns8:Endereco[] DO
+			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cep = current.ns8:cep;
+			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].logradouro = current.ns8:logradouro;
+			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].numeroEndereco = current.ns8:numeroEndereco;
+			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].bairro = current.ns8:bairro;
+			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].complemento = current.ns8:complemento;
+			SET Environment.Variables.CRMcontasResult.enderecos.Item[I].cidade = current.ns8:cidade;
+			
+			SET I = I + 1;
+		END FOR;
+				
+		SET Environment.Variables.CRMcontasResult.informacoesCnae = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:informacoesCnae;
+		SET Environment.Variables.CRMcontasResult.microRegiao.nome = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:microRegiao.ns8:nome;
+		SET Environment.Variables.CRMcontasResult.nit = InputRoot.SOAP.Body.ns8:GetContasResponse.ns8:GetContasResult.ns8:resultados.ns8:ContaRetorno.ns8:nit;
+		
 		SET Environment.Variables.etapa.status = 'Concluido';
 		SET Environment.Variables.etapa.sucesso = true;
 									

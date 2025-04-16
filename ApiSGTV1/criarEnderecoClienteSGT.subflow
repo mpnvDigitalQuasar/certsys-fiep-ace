@@ -6,6 +6,9 @@
     <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.criarEnderecoToken" name="criarEnderecoToken" lowerBound="1" defaultValueLiteral="SGTBearerToken">
       <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.urlCriarEndereco" name="urlCriarEndereco" lowerBound="1" defaultValueLiteral="urlCriarEndereco">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="criarEnderecoClienteSGT" bundleName="criarEnderecoClienteSGT" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/criarEnderecoClienteSGT.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/criarEnderecoClienteSGT.gif"/>
@@ -25,7 +28,7 @@
       <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow:FCMComposite_1" xmi:id="FCMComposite_1_2" location="1153,22">
         <translation xmi:type="utility:ConstantString" string="HttpRequestOut"/>
       </nodes>
-      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="640,21" URLSpecifier="https://apisgt/propostas" httpVersion="1.1" protocol="TLS" messageDomainProperty="JSON">
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="640,21" URLSpecifier="https://apisgt/clientes" httpVersion="1.1" protocol="TLS" messageDomainProperty="JSON">
         <translation xmi:type="utility:ConstantString" string="HTTP Request"/>
       </nodes>
       <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="897,52">
@@ -51,6 +54,9 @@
     <propertyOrganizer>
       <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.criarEnderecoToken">
         <propertyName xmi:type="utility:TranslatableString" key="Property.criarEnderecoToken" bundleName="criarEnderecoClienteSGT" pluginId="ApiSGTV1"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.urlCriarEndereco">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.urlCriarEndereco" bundleName="criarEnderecoClienteSGT" pluginId="ApiSGTV1"/>
+        </propertyDescriptor>
       </propertyDescriptor>
     </propertyOrganizer>
     <stickyBoard/>

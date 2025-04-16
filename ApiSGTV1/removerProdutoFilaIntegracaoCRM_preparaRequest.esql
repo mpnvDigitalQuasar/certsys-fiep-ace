@@ -6,7 +6,7 @@ CREATE COMPUTE MODULE removerProdutoFilaIntegracaoCRM_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		DELETE FIELD Environment.Variables.idEtapa;
-		SET Environment.Variables.etapa.nome = 'Remover Contrato CRM';
+		SET Environment.Variables.etapa.nome = 'Remover Produto CRM';
 		SET Environment.Variables.etapa.status = 'Concluido';
 
 

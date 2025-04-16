@@ -1,5 +1,6 @@
 
 DECLARE criarEnderecoToken EXTERNAL CHAR '';
+DECLARE urlCriarEndereco EXTERNAL CHAR '';
 
 CREATE COMPUTE MODULE criarEnderecoClienteSGT_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -15,15 +16,17 @@ CREATE COMPUTE MODULE criarEnderecoClienteSGT_preparaRequest
 
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarEnderecoToken;
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlCriarEndereco || '/'|| Environment.Variables.SGTClienteRetorno.cnpjCliente || 'enderecos';
 								
-		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontratoResult.cnpjCliente;
 		SET OutputRoot.JSON.Data.idTipoEndereco = 1;
+		SET OutputRoot.JSON.Data.bairro = Environment.Variables.CRMcontratoResult.endereco.bairro;
 		SET OutputRoot.JSON.Data.cep = Environment.Variables.CRMcontratoResult.endereco.cep;
+		SET OutputRoot.JSON.Data.codigoIBGEMunicipio = Environment.Variables.CRMcontratoResult.endereco.codigoIBGE;
+		SET OutputRoot.JSON.Data.complemento = Environment.Variables.CRMcontratoResult.endereco.complemento;
 		SET OutputRoot.JSON.Data.logradouro = Environment.Variables.CRMcontratoResult.endereco.logradouro;
 		SET OutputRoot.JSON.Data.numero = Environment.Variables.CRMcontratoResult.endereco.numeroEndereco;
-		SET OutputRoot.JSON.Data.bairro = Environment.Variables.CRMcontratoResult.endereco.bairro;
-		SET OutputRoot.JSON.Data.complemento = Environment.Variables.CRMcontratoResult.endereco.complemento;
-		SET OutputRoot.JSON.Data.codigoIBGEMunicipio = Environment.Variables.CRMcontratoResult.endereco.codigoIBGE;
+		
+		--SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontaResult.cnpjCliente;
 				
 		RETURN TRUE;
 	END;

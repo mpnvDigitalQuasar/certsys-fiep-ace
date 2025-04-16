@@ -17,12 +17,16 @@ CREATE COMPUTE MODULE atualizarEnderecoClienteSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || atualizarEnderecoToken;
 
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarEndereco || OutputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.id;
+--		DECLARE idEndereco CHAR '';
+--		DECLARE refClienteRetorno REFERENCE TO Environment.Variables.SGTClienteRetorno.Cliente.Enderecos.Endereco;
+--		SET idEndereco = THE(SELECT ITEM(param.id) FROM refClienteRetorno.Item[] AS param WHERE param.idTipoEndereco = '1');
+				
+		--SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarEndereco || Environment.Variables.SGTClienteRetorno.Cliente.Endereco.id;
+		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.id = Environment.Variables.SGTClienteRetorno.Cliente.Endereco.id; 
 		 				
 		CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
 		CREATE LASTCHILD OF OutputRoot.JSON NAME 'Data';
-						
-		SET OutputRoot.JSON.Data.idEndereco = OutputRoot.JSON.Data.Clientes.Cliente.Enderecos.Endereco.id;
+		
 		SET OutputRoot.JSON.Data.idTipoEndereco = 1;
 		SET OutputRoot.JSON.Data.cep = Environment.Variables.CRMcontratoResult.endereco.cep;
 		SET OutputRoot.JSON.Data.logradouro = Environment.Variables.CRMcontratoResult.endereco.logradouro;
