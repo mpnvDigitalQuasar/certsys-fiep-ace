@@ -17,7 +17,7 @@ CREATE COMPUTE MODULE obterAtendimentoSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || obterAtendimentoToken;
 							
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtendimento || 'codigoIntegracaoProposta=' || Environment.Variables.codigoIntegracaoPropostaSGT;
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtendimento || '?codigoIntegracaoProposta=' || Environment.Variables.codigoIntegracaoPropostaSGT;
 				
 		RETURN TRUE;
 	END;
