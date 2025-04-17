@@ -30,7 +30,7 @@ CREATE COMPUTE MODULE processarContratoAsync_validarClienteSGT
 
 			DECLARE refContrato REFERENCE TO Environment.Variables.CRMcontratoResult;
 		
-			SET Environment.Variables.codigoIntegracaoPropostaSGT = CAST(refContrato.codCasa AS CHAR) || CAST(refContrato.codUnidadeOp AS CHAR) || CAST(refContrato.codigoContratoCTR AS CHAR) || CAST(current.codigoProduto AS CHAR);
+			--SET Environment.Variables.codigoIntegracaoPropostaSGT = CAST(refContrato.codCasa AS CHAR) || CAST(refContrato.codUnidadeOp AS CHAR) || CAST(refContrato.codigoContratoCTR AS CHAR) || CAST(current.codigoProduto AS CHAR);
 							
 			PROPAGATE TO LABEL 'lbObterAtendimentoSGT';
 		

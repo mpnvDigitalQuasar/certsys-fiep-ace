@@ -16,7 +16,7 @@
       <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="21,65">
         <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
       </nodes>
-      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="893,29">
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="910,-2">
         <translation xmi:type="utility:TranslatableString" key="OutTerminal.Insert" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="94,64" computeExpression="esql://routine/#obterProdutoRegionaisSGT_preparaRequest.Main" computeMode="destinationAndMessage">
@@ -28,13 +28,13 @@
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="289,3" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
         <translation xmi:type="utility:ConstantString" string="registrarEtapa"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="768,29" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="785,-2" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
         <translation xmi:type="utility:ConstantString" string="registarEtapas"/>
       </nodes>
-      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output Insert1" location="889,132">
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output Insert1" location="907,103">
         <translation xmi:type="utility:TranslatableString" key="OutTerminal.Update" bundleName="obterProdutoRegionaisSGT" pluginId="ApiSGTV1"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="764,132" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="782,103" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
         <translation xmi:type="utility:ConstantString" string="registarEtapas1"/>
       </nodes>
       <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_8" location="476,31">

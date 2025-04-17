@@ -16,7 +16,7 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarClienteToken;
 		
-		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontasResult.cpfCnpj;				
+		SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontratoResult.cnpjCliente;	--SET OutputRoot.JSON.Data.cpfcnpj = Environment.Variables.CRMcontasResult.cpfCnpj;				
 		SET OutputRoot.JSON.Data.tipoPessoa = 1;
 		SET OutputRoot.JSON.Data.nomeFantasia = Environment.Variables.CRMcontasResult.nomeFantasia;
 		SET OutputRoot.JSON.Data.razaoSocial = Environment.Variables.CRMcontasResult.razaoSocial;
@@ -35,8 +35,9 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].numero = Environment.Variables.CRMcontratoResult.endereco.numeroEndereco;
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].bairro = Environment.Variables.CRMcontratoResult.endereco.bairro;
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].complemento = Environment.Variables.CRMcontratoResult.endereco.complemento;
+		SET OutputRoot.JSON.Data.Enderecos.Item[1].pais = Environment.Variables.CRMcontratoResult.endereco.pais;
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].codigoIBGEMunicipio = Environment.Variables.CRMcontratoResult.endereco.codigoIBGE;
-																
+																		
 		RETURN TRUE;
 	END;
 

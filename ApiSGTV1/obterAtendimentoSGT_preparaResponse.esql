@@ -4,7 +4,9 @@ CREATE COMPUTE MODULE obterAtendimentoSGT_preparaResponse
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
-		CALL CopyEntireMessage();
+		-- CALL CopyEntireMessage();
+		
+		SET Environment.Variables.SGTObterAtendimento = InputRoot.JSON.Data;
 
 		SET Environment.Variables.etapa.status = 'Concluido';
 		SET Environment.Variables.etapa.sucesso = true;

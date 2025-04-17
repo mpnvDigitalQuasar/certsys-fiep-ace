@@ -9,7 +9,7 @@ CREATE COMPUTE MODULE obterProdutoCRM_prepararResponse
 		
 		DECLARE retorno BOOLEAN TRUE;
 		
-		--setar idIntegracao em Environment.Variables.codigoIntegracaoPropostaSGT
+		--setar idIntegracao em Environment.Variables.SGTcodigoIntegracaoProposta
 		
 		IF	InputRoot.SOAP.Body.ns44:GetProdutosResponse.ns44:GetProdutosResult.ns44:quantidade > 0 THEN
 			SET Environment.Variables.etapa.status = 'Concluido';

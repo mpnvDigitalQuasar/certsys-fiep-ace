@@ -16,7 +16,7 @@ CREATE COMPUTE MODULE criarPropostaSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarPropostaToken;
 		
-		SET OutputRoot.JSON.Data.codigoIntegracaoProposta = Environment.Variables.codigoIntegracaoPropostaSGT;
+		SET OutputRoot.JSON.Data.codigoIntegracaoProposta = Environment.Variables.SGTcodigoIntegracaoProposta;
 		SET OutputRoot.JSON.Data.descricao = Environment.Variables.SGTdescricaoProposta;
 				
 		RETURN TRUE;

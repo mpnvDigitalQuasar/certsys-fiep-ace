@@ -13,11 +13,13 @@ CREATE COMPUTE MODULE obterAtendimentoSGT_preparaRequest
 		SET Environment.Variables.etapa.status = 'Em processamento';
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
-
+		
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || obterAtendimentoToken;
 							
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtendimento || '?codigoIntegracaoProposta=' || Environment.Variables.codigoIntegracaoPropostaSGT;
+		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.codigoIntegracaoProposta = Environment.Variables.SGTcodigoIntegracaoProposta;
+		
+		--SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtendimento || '?codigoIntegracaoProposta=' || Environment.Variables.codigoIntegracaoPropostaSGT;
 				
 		RETURN TRUE;
 	END;

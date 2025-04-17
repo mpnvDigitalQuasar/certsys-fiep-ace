@@ -65,7 +65,7 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 				CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Erro ao buscar endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp, BrokerName);				
 			END IF;
 			
-	  		--Gerando codigoIntegracaoPropostaSGT Proposta
+	  		--Gerando SGTcodigoIntegracaoProposta Proposta
 			SET Environment.Variables.SGTcodigoIntegracaoProposta = CAST(refContrato.ns36:codCasa AS CHAR) || CAST(refContrato.ns36:codUnidadeOp AS CHAR) || CAST(refContrato.ns36:codigoContratoCTR AS CHAR);
 	  		SET Environment.Variables.SGTdescricaoProposta = Environment.Variables.SGTcodigoIntegracaoProposta;
 	        SET Environment.Variables.CRMcnpjCpf = refContrato.ns36:cnpjCliente;
@@ -107,7 +107,7 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].isEscopoIndefinido = current.ns36:isEscopoIndefinido;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].isValorHora = current.ns36:isValorHora;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].numeroDeRelatorioEstimado = current.ns36:numeroDeRelatorioEstimado;
-	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].numeroDeRelatorioEstimado = current.ns36:numeroProducaoEstimada;
+	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].numeroProducaoEstimada = current.ns36:numeroProducaoEstimada;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas.previsaoReceita.cpfCnpj = current.ns36:previsoesReceitas.ns36:PrevisaoReceita.ns36:cpfCnpj;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas.previsaoReceita.tipoPrevisaoReceita = current.ns36:previsoesReceitas.ns36:PrevisaoReceita.ns36:tipoPrevisaoReceita;
 	        	SET Environment.Variables.CRMcontratoResult.linhasDeContrato.Item[I].previsoesReceitas.previsaoReceita.valor = current.ns36:previsoesReceitas.ns36:PrevisaoReceita.ns36:valor;
