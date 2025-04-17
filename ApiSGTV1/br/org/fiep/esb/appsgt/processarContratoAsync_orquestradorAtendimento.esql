@@ -7,7 +7,8 @@
 BROKER SCHEMA br.org.fiep.esb.appsgt
 
 
-CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
+CREATE COMPUTE MODULE 
+
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- Iniciando o processamento de atendimentos
