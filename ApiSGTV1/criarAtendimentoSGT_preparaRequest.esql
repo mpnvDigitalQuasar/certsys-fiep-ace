@@ -16,29 +16,6 @@ CREATE COMPUTE MODULE criarAtendimentoSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || criarAtendimentoToken;
 		
 		SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
---		SET OutputRoot.JSON.Data.dataEmissao = Environment.Variables.CRMcontratoResult.dataInicioContrato;
---		SET OutputRoot.JSON.Data.dataInicioPrevista = CURRENT_TIMESTAMP;
---		SET OutputRoot.JSON.Data.dataConclusaoPrevista = Environment.Variables.CRMcontratoResult.dataTerminoContrato;
---		SET OutputRoot.JSON.Data.codigoIntegracaoAtendimento = Environment.Variables.codigoIntegracaoAtendimento;
---		SET OutputRoot.JSON.Data.idProposta = Environment.Variables.SGTproposta.idProposta;
---		SET OutputRoot.JSON.Data.cliente = Environment.Variables.CRMcnpjCpf;
---		SET OutputRoot.JSON.Data.idProdutoRegional = Environment.Variables.SGTProdutoRegional.idProdutoRegional;
---		SET OutputRoot.JSON.Data.isEscopoIndefinido = Environment.Variables.linhaContrato.isEscopoIndefinido;
---		SET OutputRoot.JSON.Data.isValorHora = Environment.Variables.linhaContrato.isValorHora;
---		SET OutputRoot.JSON.Data.numeroDeProducaoEstimada = Environment.Variables.linhaContrato.numeroProducaoEstimada;
---		SET OutputRoot.JSON.Data.numeroDeRelatorioEstimado = Environment.Variables.linhaContrato.numeroDeRelatorioEstimado;
---		SET OutputRoot.JSON.Data.titulo = Environment.Variables.tituloAtendimento;
---		SET OutputRoot.JSON.Data.unidade = Environment.Variables.linhaContrato.unidade;
---		SET OutputRoot.JSON.Data.vlrEconomico = Environment.Variables.linhaContrato.vlrEconomico;
---		SET OutputRoot.JSON.Data.vlrFinanceiro = Environment.Variables.linhaContrato.vlrFinanceiro;
---
---		DECLARE I INT 1;
---		FOR current AS Environment.Variables.x.y.Item[] DO
---			SET OutputRoot.JSON.Data.previsaoReceitaList.Item[I].cpfcnpj = Environment.Variables.linhaContrato.previsoesReceitas.previsaoReceita.cpfCnpj;
---			SET OutputRoot.JSON.Data.previsaoReceitaList.Item[I].tipoPrevisaoReceita = Environment.Variables.linhaContrato.previsoesReceitas.previsaoReceita.tipoPrevisaoReceita;
---			SET OutputRoot.JSON.Data.previsaoReceitaList.Item[I].valor = Environment.Variables.linhaContrato.previsoesReceitas.previsaoReceita.valor;
---			SET I = I + 1;
---		END FOR;
 						
 		RETURN TRUE;
 	END;

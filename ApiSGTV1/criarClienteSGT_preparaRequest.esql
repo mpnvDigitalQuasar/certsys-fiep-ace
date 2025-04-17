@@ -28,7 +28,9 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaRequest
 		
 		SET OutputRoot.JSON.Data.inscricaoEstadual = Environment.Variables.CRMcontasResult.inscricaoEstadual;
 		SET OutputRoot.JSON.Data.numeroFuncionarios = Environment.Variables.CRMcontasResult.numeroFuncionarios;
-
+		
+		CREATE FIELD OutputRoot.JSON.Data.Enderecos IDENTITY(JSON.Array)Enderecos;
+							
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].idTipoEndereco = 1;
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].cep = Environment.Variables.CRMcontratoResult.endereco.cep;
 		SET OutputRoot.JSON.Data.Enderecos.Item[1].logradouro = Environment.Variables.CRMcontratoResult.endereco.logradouro;

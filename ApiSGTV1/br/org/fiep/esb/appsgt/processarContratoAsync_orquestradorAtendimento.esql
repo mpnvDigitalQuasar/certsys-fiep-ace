@@ -43,9 +43,9 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 													
 					IF fimAtendimento = true THEN 															-- Valida mudança de valor para casos de erro				
 						LEAVE fimAtendimento;
-					ELSEIF FIELDTYPE(Environment.Variables.SGTObterAtendimento.Atendimentos.id) IS NULL THEN 	-- Atendimento não encontrado no SGT
+					ELSEIF FIELDTYPE(Environment.Variables.SGTObterAtendimento.Atendimentos.Atendimento) IS NULL THEN 	-- Atendimento não encontrado no SGT
 						SET etapa = 2;																		-- Avança para etapa 2 [Buscar Produto Regional no SGT]
-					ELSEIF InputRoot.JSON.Data.status = 'negociacao' THEN
+					ELSEIF Environment.Variables.SGTObterAtendimento.Atendimentos.Atendimento.atendimentoStatus = 'negociacao' THEN
 						SET etapa = 4; 																		-- Avança para etapa 4 [Alterar Status Atendimento aceito]
 					ELSE 																					-- Atendimento encontrado no SGT																					
 						SET fimAtendimento = true; 	
@@ -91,6 +91,8 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					SET OutputRoot.JSON.Data.vlrEconomico = current.vlrEconomico;
 					SET OutputRoot.JSON.Data.vlrFinanceiro = current.vlrFinanceiro;
 
+					CREATE FIELD OutputRoot.JSON.Data.previsaoReceitaList IDENTITY(JSON.Array)previsaoReceitaList;
+					
 					SET OutputRoot.JSON.Data.previsaoReceitaList.Item[1].cpfcnpj = current.previsoesReceitas.previsaoReceita.cpfCnpj;
 					SET OutputRoot.JSON.Data.previsaoReceitaList.Item[1].tipoPrevisaoReceita = current.previsoesReceitas.previsaoReceita.tipoPrevisaoReceita;
 					SET OutputRoot.JSON.Data.previsaoReceitaList.Item[1].valor = current.previsoesReceitas.previsaoReceita.valor;
@@ -112,7 +114,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					
 				WHEN etapa = 4 THEN 																	-- Alterar Status do Atendimento no SGT para Aceito
 		
-					PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT' DELETE NONE; 								
+					PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT'; 								
 					
 					--Falha de atendimento. Passa para o proximo
 					IF Environment.Variables.etapa.status = 'Falha' THEN

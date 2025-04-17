@@ -121,7 +121,7 @@ BEGIN
 
 	DECLARE data CHAR;
 		
-	SET data = CAST(dataSelecionada AS CHAR FORMAT 'yyyy-MM-dd''T''HH:mm:ss.SSS''Z');
+	SET data = CAST(dataSelecionada AS CHAR FORMAT 'yyyy-MM-dd''T''HH:mm:ss''Z');
 
 	RETURN data;
 END;

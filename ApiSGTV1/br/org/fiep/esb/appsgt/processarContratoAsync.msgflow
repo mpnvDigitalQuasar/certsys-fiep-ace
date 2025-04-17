@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFlowOrder.msgnode="ComIbmFlowOrder.msgnode" xmlns:ComIbmLabel.msgnode="ComIbmLabel.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:atualizarEnderecoClienteSGT.subflow="atualizarEnderecoClienteSGT.subflow" xmlns:atulizarStatusAtendimentoSGT.subflow="atulizarStatusAtendimentoSGT.subflow" xmlns:br_org_fiep_esb_monitoramento_v1_MqInputOut.subflow="br/org/fiep/esb/monitoramento/v1/MqInputOut.subflow"
-    xmlns:criarAtendimentoSGT.subflow="criarAtendimentoSGT.subflow" xmlns:criarClienteSGT.subflow="criarClienteSGT.subflow" xmlns:criarEnderecoClienteSGT.subflow="criarEnderecoClienteSGT.subflow" xmlns:criarPropostaSGT.subflow="criarPropostaSGT.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:obterAtendimentoSGT.subflow="obterAtendimentoSGT.subflow" xmlns:obterClienteSGT.subflow="obterClienteSGT.subflow" xmlns:obterContaCRM.subflow="obterContaCRM.subflow"
-    xmlns:obterContratoCRM.subflow="obterContratoCRM.subflow" xmlns:obterProdutoRegionaisSGT.subflow="obterProdutoRegionaisSGT.subflow" xmlns:obterPropostaSGT.subflow="obterPropostaSGT.subflow" xmlns:removerItemFilaIntegracaoCRM.subflow="removerItemFilaIntegracaoCRM.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="br/org/fiep/esb/appsgt/processarContratoAsync.msgflow" nsPrefix="br_org_fiep_esb_appsgt_processarContratoAsync.msgflow">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFlowOrder.msgnode="ComIbmFlowOrder.msgnode" xmlns:ComIbmLabel.msgnode="ComIbmLabel.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:atualizarEnderecoClienteSGT.subflow="atualizarEnderecoClienteSGT.subflow" xmlns:atualizarStatusAtendimentoSGT.subflow="atualizarStatusAtendimentoSGT.subflow" xmlns:atulizarStatusAtendimentoSGT.subflow="atulizarStatusAtendimentoSGT.subflow"
+    xmlns:br_org_fiep_esb_monitoramento_v1_MqInputOut.subflow="br/org/fiep/esb/monitoramento/v1/MqInputOut.subflow" xmlns:criarAtendimentoSGT.subflow="criarAtendimentoSGT.subflow" xmlns:criarClienteSGT.subflow="criarClienteSGT.subflow" xmlns:criarEnderecoClienteSGT.subflow="criarEnderecoClienteSGT.subflow" xmlns:criarPropostaSGT.subflow="criarPropostaSGT.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:obterAtendimentoSGT.subflow="obterAtendimentoSGT.subflow"
+    xmlns:obterClienteSGT.subflow="obterClienteSGT.subflow" xmlns:obterContaCRM.subflow="obterContaCRM.subflow" xmlns:obterContratoCRM.subflow="obterContratoCRM.subflow" xmlns:obterProdutoRegionaisSGT.subflow="obterProdutoRegionaisSGT.subflow" xmlns:obterPropostaSGT.subflow="obterPropostaSGT.subflow" xmlns:removerItemFilaIntegracaoCRM.subflow="removerItemFilaIntegracaoCRM.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="br/org/fiep/esb/appsgt/processarContratoAsync.msgflow" nsPrefix="br_org_fiep_esb_appsgt_processarContratoAsync.msgflow">
   <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" nodeLayoutStyle="RECTANGLE">
     <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
     <translation xmi:type="utility:TranslatableString" key="processarContratoAsync" bundleName="br/org/fiep/esb/appsgt/processarContratoAsync" pluginId="ApiSGTV1"/>
@@ -20,7 +20,7 @@
       <nodes xmi:type="criarAtendimentoSGT.subflow:FCMComposite_1" xmi:id="FCMComposite_1_9" location="213,815">
         <translation xmi:type="utility:ConstantString" string="criarAtendimentoSGT"/>
       </nodes>
-      <nodes xmi:type="atulizarStatusAtendimentoSGT.subflow:FCMComposite_1" xmi:id="FCMComposite_1_10" location="216,870">
+      <nodes xmi:type="atulizarStatusAtendimentoSGT.subflow:FCMComposite_1" xmi:id="FCMComposite_1_10" location="963,838">
         <translation xmi:type="utility:ConstantString" string="atulizarStatusAtendimentoSGT"/>
       </nodes>
       <nodes xmi:type="obterContaCRM.subflow:FCMComposite_1" xmi:id="FCMComposite_1_11" location="1712,170">
@@ -155,6 +155,9 @@
       <nodes xmi:type="removerItemFilaIntegracaoCRM.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="213,958">
         <translation xmi:type="utility:ConstantString" string="removerItemFilaIntegracaoCRM"/>
       </nodes>
+      <nodes xmi:type="atualizarStatusAtendimentoSGT.subflow:FCMComposite_1" xmi:id="FCMComposite_1_40" location="209,869">
+        <translation xmi:type="utility:ConstantString" string="atualizarStatusAtendimentoSGT"/>
+      </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.Input3"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_25" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_23" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
@@ -183,8 +186,6 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_32" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_17" sourceNode="FCMComposite_1_29" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_17" targetNode="FCMComposite_1_48" sourceNode="FCMComposite_1_17" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
-      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_20" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_34" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
-      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_22" targetNode="FCMComposite_1_39" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_18" sourceNode="FCMComposite_1_33" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_14" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_38" sourceNode="FCMComposite_1_24" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
@@ -195,6 +196,8 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_24" targetNode="FCMComposite_1_41" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_26" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_27" targetNode="FCMComposite_1_24" sourceNode="FCMComposite_1_50" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_20" targetNode="FCMComposite_1_40" sourceNode="FCMComposite_1_34" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_30" targetNode="FCMComposite_1_39" sourceNode="FCMComposite_1_40" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
     </composition>
     <propertyOrganizer/>
     <stickyBoard/>
