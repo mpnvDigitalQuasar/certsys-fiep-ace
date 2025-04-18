@@ -70,7 +70,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					SET OutputRoot.JSON.Data.dataInicioPrevista = procs.converterTIMESTAMP_TZ(CURRENT_TIMESTAMP);
 					SET OutputRoot.JSON.Data.dataConclusaoPrevista = procs.converterTIMESTAMP_TZ(Environment.Variables.CRMcontratoResult.dataTerminoContrato);
 					SET OutputRoot.JSON.Data.codigoIntegracaoAtendimento = codigoIntegracaoAtendimento;
-					SET OutputRoot.JSON.Data.idProposta = Environment.Variables.SGTproposta.idProposta;
+					SET OutputRoot.JSON.Data.idProposta = Environment.Variables.SGTidProposta;
 					SET OutputRoot.JSON.Data.cliente = Environment.Variables.CRMcontratoResult.cnpjCliente;
 					SET OutputRoot.JSON.Data.idProdutoRegional = Environment.Variables.SGTProdutoRegional.idProdutoRegional;
 					SET OutputRoot.JSON.Data.isEscopoIndefinido = current.isEscopoIndefinido;
