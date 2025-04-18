@@ -69,7 +69,7 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 			END IF;
 			
 	  		--Gerando SGTcodigoIntegracaoProposta Proposta
-			SET Environment.Variables.SGTcodigoIntegracaoProposta = CAST(refContrato.ns36:codCasa AS CHAR) || CAST(refContrato.ns36:codUnidadeOp AS CHAR) || CAST(refContrato.ns36:codigoContratoCTR AS CHAR);
+			SET Environment.Variables.SGTcodigoIntegracaoProposta = CAST(refContrato.ns36:codCasa AS CHAR) || '-' || CAST(refContrato.ns36:codUnidadeOp AS CHAR) || '-' || CAST(refContrato.ns36:codigoContratoCTR AS CHAR);
 	  		SET Environment.Variables.SGTdescricaoProposta = Environment.Variables.SGTcodigoIntegracaoProposta;
 	        SET Environment.Variables.CRMcnpjCpf = refContrato.ns36:cnpjCliente;
 	        SET Environment.Variables.CRMcodigoContratoCTR = InputRoot.SOAP.Body.ns36:GetContratoResponse.ns36:GetContratoResult.ns36:codigoContratoCTR;   

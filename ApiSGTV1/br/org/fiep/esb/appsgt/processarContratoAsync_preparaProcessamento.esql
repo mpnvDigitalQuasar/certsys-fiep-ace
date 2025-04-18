@@ -6,7 +6,7 @@ CREATE COMPUTE MODULE processarContratoAsync_preparaProcessamento
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
-		
+					
 		SET Environment.Monitoring.EventCorrelation.parentTransactionId = InputRoot.JSON.Data.parentTransactionId;
 		SET Environment.Variables.idHistorico = InputRoot.JSON.Data.idHistorico;
 		SET Environment.Variables.msgMQ = InputRoot.JSON.Data;

@@ -6,31 +6,24 @@ CREATE COMPUTE MODULE registrarHistoricos_registarHistorico
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
 
-		IF Environment.Variables.tipo = 'CONTRATO' THEN
+		DECLARE jsonBlob BLOB;
+		DECLARE jsonMsg CHAR;
+		DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);	
+		
+		SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;
+		SET OutputRoot.JSON.Data.idRegistro = Environment.Variables.idRegistro;
+		SET OutputRoot.JSON.Data.idFila = Environment.Variables.etapa.tipo;
+		SET OutputRoot.JSON.Data.status = Environment.Variables.etapa.status;
+		SET OutputRoot.JSON.Data.sucesso = Environment.Variables.etapa.sucesso;
+		SET OutputRoot.JSON.Data.localTransactionId = COALESCE(Environment.Monitoring.EventCorrelation.localTransactionId,NULL);
 			
-			DECLARE jsonBlob BLOB;
-			DECLARE jsonMsg CHAR;
-			DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);	
-			
-			SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;
-			SET OutputRoot.JSON.Data.idRegistro = Environment.Variables.idRegistro;
-			SET OutputRoot.JSON.Data.idFila = Environment.Variables.tipo;
-			SET OutputRoot.JSON.Data.status = Environment.Variables.status;
-			SET OutputRoot.JSON.Data.sucesso = Environment.Variables.sucesso;
-			SET OutputRoot.JSON.Data.localTransactionId = COALESCE(Environment.Monitoring.EventCorrelation.localTransactionId,NULL);
-				
-			SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
-			SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
-			
-			CALL procs.upsetHistoricoContrato(jsonMsg, Environment.Variables.idHistorico);
-			COMMIT;
-			
-			SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;
-				
-			ELSE IF Environment.Variables.tipo = 'PRODUTO' THEN
-			
-			END IF;
-		END IF;
+		SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
+		SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
+		
+		CALL procs.upsetHistoricoContrato(jsonMsg, Environment.Variables.idHistorico);
+		COMMIT;
+		
+		SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;
 		
 		RETURN TRUE;
 	END;

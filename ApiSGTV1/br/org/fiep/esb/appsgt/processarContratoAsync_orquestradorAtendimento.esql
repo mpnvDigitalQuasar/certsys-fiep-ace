@@ -16,7 +16,7 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 			SET etapa = 1;
 
 			DECLARE codigoIntegracaoAtendimento CHAR '';
-			SET codigoIntegracaoAtendimento = codigoIntegracaoAtendimentoAux || current.codigoProduto;
+			SET codigoIntegracaoAtendimento = codigoIntegracaoAtendimentoAux || '-' || current.codigoProduto;
 
 			DECLARE refContrato REFERENCE TO Environment.Variables.CRMcontratoResult;
 
@@ -64,7 +64,16 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 				WHEN etapa = 3 THEN																			-- Cadastrar o Atendimento no SGT
 					
 					DECLARE tituloAtendimento CHAR '';
-					SET tituloAtendimento = Environment.Variables.CRMcontratoResult.codUnidadeOp || ' ' || Environment.Variables.CRMcontratoResult.codigoContratoCTR || ' ' || current.codigoProduto;
+					
+					DECLARE aux1 CHAR '';
+					DECLARE aux2 CHAR '';
+					DECLARE aux3 CHAR '';
+			
+					SET aux1 = SUBSTRING(Environment.Variables.CRMcontratoResult.codigoContratoCTR AFTER '_');
+					SET aux2 = SUBSTRING(aux1 BEFORE '_');
+					SET aux3 = SUBSTRING(aux1 AFTER '_');
+					
+					SET tituloAtendimento = Environment.Variables.CRMcontratoResult.codUnidadeOp || ' ' || aux2 || ' ' || aux3 || ' ' || current.codigoProduto;
 					
 					SET OutputRoot.JSON.Data.dataEmissao = procs.converterTIMESTAMP_TZ(Environment.Variables.CRMcontratoResult.dataInicioContrato);
 					SET OutputRoot.JSON.Data.dataInicioPrevista = procs.converterTIMESTAMP_TZ(CURRENT_TIMESTAMP);
@@ -110,16 +119,10 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 					--Falha de atendimento. Passa para o proximo
 					IF Environment.Variables.etapa.status = 'Falha' THEN
 						SET fimAtendimento = true; 															-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
+					ELSE
+						SET etapa = 5;
 					END IF;
 					
-					IF fimAtendimento = true THEN														-- Valida mudança de valor para casos de erro
-						LEAVE fimAtendimento;
-					ELSEIF InputRoot.JSON.Data.idAtendimento = 0 THEN 									-- Alterado Status do Atendimento no SGT para aceit
-						SET etapa = 5;
-					ELSE 																				-- Passa para o proximo contrato
-						SET fimAtendimento = true;
-					END IF;
-
 				WHEN etapa = 5 THEN 																	-- REMOVER DA FILA CRM
 
 					PROPAGATE TO LABEL 'lbRemoverFilaCRM'; 											-- Se não ocorreu erro no contrato remove da fila
