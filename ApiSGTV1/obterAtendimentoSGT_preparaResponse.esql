@@ -5,16 +5,17 @@ CREATE COMPUTE MODULE obterAtendimentoSGT_preparaResponse
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
-		
+
+		SET Environment.Variables.etapa.status = 'Concluido';
+		SET Environment.Variables.etapa.sucesso = true;
+					
 		IF FIELDTYPE(InputRoot.JSON.Data.Atendimentos.Atendimento) IS NOT NULL THEN 
 			SET Environment.Variables.SGTObterAtendimento = InputRoot.JSON.Data.Atendimentos.Atendimento;
-
-			SET Environment.Variables.etapa.status = 'Concluido';
-			SET Environment.Variables.etapa.sucesso = true;
-		ELSE
-			SET Environment.Variables.etapa.status = 'Falha';
-			SET Environment.Variables.etapa.sucesso = false;
 		END IF;
+--		ELSE
+--			SET Environment.Variables.etapa.status = 'Falha';
+--			SET Environment.Variables.etapa.sucesso = false;
+--		END IF;
 						
 		RETURN TRUE;
 	END;

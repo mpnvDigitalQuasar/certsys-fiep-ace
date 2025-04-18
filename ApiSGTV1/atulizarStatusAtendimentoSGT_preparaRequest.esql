@@ -17,7 +17,8 @@ CREATE COMPUTE MODULE atulizarStatusAtendimentoSGT_preparaRequest
 		SET OutputRoot.HTTPRequestHeader."Accept" = 'application/json';  
 		SET OutputRoot.HTTPRequestHeader."Authorization" = 'Bearer ' || atualizarStatusToken;
 		
-		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarAtendimento || Environment.Variables.SGTObterAtendimento.Atendimentos.Atendimento.idAtendimento || '/aceito';
+		SET OutputLocalEnvironment.Destination.REST.Request.Parameters.id = Environment.Variables.SGTObterAtendimento.idAtendimento;
+		--SET OutputLocalEnvironment.Destination.HTTP.RequestURL = urlAtualizarAtendimento || Environment.Variables.SGTObterAtendimento.idAtendimento || '/aceito';
 								
 		RETURN TRUE;
 	END;

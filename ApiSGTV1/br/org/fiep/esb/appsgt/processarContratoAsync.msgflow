@@ -128,7 +128,7 @@
       <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_10" location="1647,243">
         <translation xmi:type="utility:ConstantString" string="registrarErros"/>
       </nodes>
-      <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_39" location="2955,400">
+      <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_39" location="3180,476">
         <translation xmi:type="utility:ConstantString" string="registrarErros1"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_41" location="3011,319" dataSource="odbc_db_broker" computeExpression="esql://routine/#registrarHistoricos_registarHistorico.Main">
@@ -177,6 +177,7 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_43" targetNode="FCMComposite_1_39" sourceNode="FCMComposite_1_50" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_46" targetNode="FCMComposite_1_41" sourceNode="FCMComposite_1_50" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_47" targetNode="FCMComposite_1_38" sourceNode="FCMComposite_1_41" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_39" sourceNode="FCMComposite_1_41" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
     </composition>
     <propertyOrganizer/>
     <stickyBoard/>
