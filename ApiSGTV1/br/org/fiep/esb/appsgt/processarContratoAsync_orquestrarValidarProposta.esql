@@ -7,20 +7,25 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestrarValidarProposta
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
 		
-		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta.idProposta) IS NULL THEN
+		DECLARE retorno BOOLEAN FALSE;
+		
+		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta.idProposta) IS NOT NULL THEN
+			--Localizada proposta no SGT
+			SET Environment.Variables.SGTidProposta = InputRoot.JSON.Data.Propostas.Proposta.idProposta;
+			SET retorno = TRUE;
+		ELSE
 			--Não Localizada a proposta no SGT
 			PROPAGATE TO LABEL 'lbCriarPropostaSGT';
 			
 			--Falha de contrato. Passa para o proximo
 			IF Environment.Variables.etapa.status = 'Falha' THEN
-				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao inserir criar proposta no SGT', BrokerName);
+				CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Falha ao criar proposta no SGT', BrokerName);
 			END IF;
-		ELSE
-			--Localizada proposta no SGT
-			SET Environment.Variables.SGTproposta = InputRoot.JSON.Data.Propostas.Proposta;
+			
+			SET retorno = TRUE;
 		END IF;		
 			
-		RETURN TRUE;
+		RETURN retorno;
 	END;
 
 	CREATE PROCEDURE CopyMessageHeaders() BEGIN

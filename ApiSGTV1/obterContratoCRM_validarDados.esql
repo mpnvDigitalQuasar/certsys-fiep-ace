@@ -4,6 +4,9 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
+		
+		DECLARE retorno BOOLEAN FALSE;
+		
 		IF FIELDTYPE(InputRoot.SOAP.Body.ns36:GetContratoResponse.ns36:GetContratoResult.ns36:codigoContratoCTR) IS NOT NULL THEN
 			
 			DECLARE refContrato REFERENCE TO InputRoot.SOAP.Body.ns36:GetContratoResponse.ns36:GetContratoResult;
@@ -12,55 +15,55 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 				--Validação se há endereço no contrato
 		     	IF refContrato.ns36:endereco.ns36:logradouro = '' THEN 
 		     		SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;
+					SET Environment.Variables.etapa.sucesso = false;
 				
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. Logradouro Inválido', BrokerName);
 		     	END IF;
 		     	
 		     	IF refContrato.ns36:endereco.ns36:numeroEndereco = '' THEN 
 					SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;	     		
+					SET Environment.Variables.etapa.sucesso = false;	
 		     		
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. Numero Endereço Inválido', BrokerName);
 		     	END IF;
 		     	
 		     	IF refContrato.ns36:endereco.ns36:bairro  = '' THEN
 					SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;	     		
+					SET Environment.Variables.etapa.sucesso = false;  		
 		     		 
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. Bairro Inválido', BrokerName);
 		     	END IF;
 		     	
 		     	IF refContrato.ns36:endereco.ns36:cep  = '' THEN
 					SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;	     		
+					SET Environment.Variables.etapa.sucesso = false;	     		
 		     		 
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. CEP Inválido', BrokerName);
 		     	END IF;
 		     	
 		     	IF refContrato.ns36:endereco.ns36:cidade  = '' THEN
 					SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;	     		
+					SET Environment.Variables.etapa.sucesso = false;     		
 			     		 
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. Cidade Inválido', BrokerName);
 		     	END IF;     	     	     	     	
 		
 		     	IF refContrato.ns36:endereco.ns36:estado  = '' THEN
 					SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;	     		
+					SET Environment.Variables.etapa.sucesso = false;     		
 		     		 
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. Estado Inválido', BrokerName);
 		     	END IF;     	     	     	     	
 			        
 		     	IF refContrato.ns36:endereco.ns36:pais  = '' THEN
 					SET Environment.Variables.etapa.status = 'Falha';
-					SET Environment.Variables.etapa.sucesso = 0;	     		
+					SET Environment.Variables.etapa.sucesso = false;     		
 		     		 
 		            CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp || '. Pais Inválido', BrokerName);
 		     	END IF;     	     	     	     	
 			ELSE 
 				SET Environment.Variables.etapa.status = 'Falha';
-				SET Environment.Variables.etapa.sucesso = 0;	
+				SET Environment.Variables.etapa.sucesso = false;
 									
 				CALL br.org.fiep.esb.utils.v1.throw('EN:001', 'Erro ao buscar endereco do contrato: ' || refContrato.ns36:codigoContratoCTR || 'Unidade: ' || refContrato.ns36:codUnidadeOp, BrokerName);				
 			END IF;
@@ -122,16 +125,17 @@ CREATE COMPUTE MODULE obterContratoCRM_validarDados
 			
 			--Setando os dados para atualizar a etapa
 	        SET Environment.Variables.etapa.status = 'Concluido';	
-	        SET Environment.Variables.etapa.sucesso = 1;	
+	        SET Environment.Variables.etapa.sucesso = true;	
+	        SET retorno = TRUE;
 	       
 		ELSE
 			SET Environment.Variables.etapa.status = 'Falha';
-			SET Environment.Variables.etapa.sucesso = 0;	
-								
+			SET Environment.Variables.etapa.sucesso = false;
+
 			CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Contrato não encontrado. Id Registro: ' || Environment.Variables.idRegistro, BrokerName);		
 		END IF;
 					               		                           		
-		RETURN TRUE;
+		RETURN retorno;
 	END;
 
 	CREATE PROCEDURE CopyMessageHeaders() BEGIN

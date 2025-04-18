@@ -6,9 +6,15 @@ CREATE COMPUTE MODULE obterPropostaSGT_preparaResponse
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
 		
-		SET Environment.Variables.etapa.status = 'Concluido';
-		SET Environment.Variables.etapa.sucesso = true;
-		
+--		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta.idProposta) IS NOT NULL  THEN
+			SET Environment.Variables.etapa.status = 'Concluido';
+			SET Environment.Variables.etapa.sucesso = true;		
+--		ELSE
+--			SET Environment.Variables.etapa.status = 'Falha';
+--			SET Environment.Variables.etapa.sucesso = false;
+--			SET Environment.Variables.etapa.erro = false;
+--		END IF;
+			
 		RETURN TRUE;
 	END;
 

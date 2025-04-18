@@ -16,8 +16,8 @@
       <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
         <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="obterPropostaSGT" pluginId="ApiSGTV1"/>
       </nodes>
-      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="1693,23">
-        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="obterPropostaSGT" pluginId="ApiSGTV1"/>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="1668,24">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Continuar" bundleName="obterPropostaSGT" pluginId="ApiSGTV1"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="224,20" computeExpression="esql://routine/#obterPropostaSGT_preparaRequest.Main" computeMode="destinationAndMessage">
         <translation xmi:type="utility:ConstantString" string="preparaRequest"/>
@@ -44,6 +44,9 @@
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="1440,22" computeExpression="esql://routine/#obterPropostaSGT_preparaResponse.Main">
         <translation xmi:type="utility:ConstantString" string="preparaResponse"/>
       </nodes>
+      <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_7" location="1610,93">
+        <translation xmi:type="utility:ConstantString" string="registrarErros2"/>
+      </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_8" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
@@ -54,6 +57,7 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
     </composition>
     <propertyOrganizer>
       <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.urlProposta">

@@ -6,11 +6,15 @@ CREATE COMPUTE MODULE criarAtendimentoSGT_preparaResponse
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
 		
-		IF InputRoot.JSON.Data.idAtendimento <> '' THEN
-			SET Environment.Variables.SGTidAtendimento = InputRoot.JSON.Data.idAtendimento;
+		IF InputRoot.JSON.Data.idAtendimento <> ''  THEN 
+			SET Environment.Variables.SGTidAtendimento = InputRoot.JSON.Data.id;
+
+			SET Environment.Variables.etapa.status = 'Concluido';
+			SET Environment.Variables.etapa.sucesso = true;
+		ELSE
+			SET Environment.Variables.etapa.status = 'Falha';
+			SET Environment.Variables.etapa.sucesso = false;
 		END IF;
-		
-		SET Environment.Variables.etapa.status = 'Concluido';
 		
 		RETURN TRUE;
 	END;

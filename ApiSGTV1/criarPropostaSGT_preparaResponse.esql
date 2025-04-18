@@ -7,12 +7,15 @@ CREATE COMPUTE MODULE criarPropostaSGT_preparaResponse
 		-- CALL CopyEntireMessage();
 		
 		IF FIELDTYPE(InputRoot.JSON.Data.id) IS NOT NULL THEN 
-			SET Environment.Variables.idPropostaSGT = InputRoot.JSON.Data.id;
+			SET Environment.Variables.SGTidProposta = InputRoot.JSON.Data.id;
+			
+			SET Environment.Variables.etapa.status = 'Concluido';
+			SET Environment.Variables.etapa.sucesso = true;
+		ELSE
+			SET Environment.Variables.etapa.status = 'Falha';
+			SET Environment.Variables.etapa.sucesso = false;
 		END IF;
-		
-		SET Environment.Variables.etapa.status = 'Concluido';
-		SET Environment.Variables.etapa.sucesso = true;
-		
+			
 		RETURN TRUE;
 	END;
 

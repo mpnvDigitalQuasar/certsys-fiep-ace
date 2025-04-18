@@ -3,11 +3,14 @@
 CREATE COMPUTE MODULE atualizarEnderecoClienteSGT_preparaResponse
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		CALL CopyEntireMessage();
 		
-		SET Environment.Variables.etapa.status = 'Concluido';
-		SET Environment.Variables.etapa.sucesso = true;
+		IF InputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code" = 204 THEN 
+			SET Environment.Variables.etapa.status = 'Concluido';
+			SET Environment.Variables.etapa.sucesso = true;
+		ELSE
+			SET Environment.Variables.etapa.status = 'Falha';
+			SET Environment.Variables.etapa.sucesso = false;
+		END IF;
 		
 		RETURN TRUE;
 	END;

@@ -6,8 +6,16 @@ CREATE COMPUTE MODULE criarClienteSGT_preparaResponse
 		-- CALL CopyMessageHeaders();
 		CALL CopyEntireMessage();
 		
-		SET Environment.Variables.etapa.status = 'Concluido';
-		SET Environment.Variables.etapa.sucesso = true;
+		IF FIELDTYPE(InputRoot.JSON.Data.id) IS NOT NULL THEN 
+			SET Environment.Variables.SGTidCliente = InputRoot.JSON.Data.id;
+			
+			SET Environment.Variables.etapa.status = 'Concluido';
+			SET Environment.Variables.etapa.sucesso = true;
+		ELSE
+			SET Environment.Variables.etapa.status = 'Falha';
+			SET Environment.Variables.etapa.sucesso = false;
+		END IF;
+			
 		
 		RETURN TRUE;
 	END;

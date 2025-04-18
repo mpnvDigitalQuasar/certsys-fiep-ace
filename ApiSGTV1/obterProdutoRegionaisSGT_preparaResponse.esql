@@ -5,19 +5,24 @@ CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaResponse
 	BEGIN
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
-		
-		SET Environment.Variables.etapa.status = 'Concluido';
-		SET Environment.Variables.etapa.sucesso = 1;
+			
+		DECLARE retorno BOOLEAN TRUE;
 		
 		IF Environment.Variables.msgMQ.tipo = 'CONTRATO' THEN	
 			IF InputRoot.JSON.Data.ProdutosRegionais.ProdutoRegional.idProdutoRegional IS NOT NULL THEN
 				SET Environment.Variables.SGTProdutoRegional = InputRoot.JSON.Data.ProdutosRegionais.ProdutoRegional;
 				
-				RETURN TRUE;
+				SET Environment.Variables.etapa.status = 'Concluido';
+				SET Environment.Variables.etapa.sucesso = true;		
+			ELSE
+				SET Environment.Variables.etapa.status = 'Falha';
+				SET Environment.Variables.etapa.sucesso = false;			
 			END IF;	
 		ELSE
-			DECLARE retorno BOOLEAN TRUE;
-			
+		
+			SET Environment.Variables.etapa.status = 'Concluido';
+			SET Environment.Variables.etapa.sucesso = true;
+		
 			IF InputRoot.JSON.Data.ProdutosRegionais.ProdutoRegional.idProdutoRegional IS NOT NULL THEN
 				SET Environment.Variables.SGTidProdutoRegional = InputRoot.JSON.Data.ProdutosRegionais.ProdutoRegional.idProdutoRegional;
 				
@@ -25,9 +30,9 @@ CREATE COMPUTE MODULE obterProdutoRegionaisSGT_preparaResponse
 				PROPAGATE TO TERMINAL 'out1';
 			END IF;	
 			
-			RETURN retorno;
 		END IF;
 
+		RETURN retorno;
 	END;
 
 	CREATE PROCEDURE CopyMessageHeaders() BEGIN

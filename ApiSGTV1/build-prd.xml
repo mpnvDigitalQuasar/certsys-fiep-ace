@@ -5,14 +5,14 @@
 		<echo message="Initialize environment variables" />
 		<echo message="###################################" />
 		<property  name="api.version" value="v1.0.0"></property>
-		<property name="file.properties" value="dev.properties"></property>
+		<property name="file.properties" value="prd.properties"></property>
 		<property name="api.name" value="ApiSGTV1"></property>
 		<property name="bar.name" value="ApiSGTV1.bar"></property>
 		<property name="bar.output.l	ocation" value="..\deployedBars"></property>
 		<property name="workspace.location" value="..\"></property>
 		<property name="MQSI_JARPATH" value="C:\ProgramData\IBM\MQSI\shared-classes"></property>
 		<property name="util" value="..\Util\utilitarios"></property>
-		<property name="host" value="acenodedev01.fiepr.org.br" />
+		<property name="host" value="acenode01.fiepr.org.br" />
 		<property name="port" value="4414" />
 		<property name="integration_service" value="IS_Saude" />
 	</target>
