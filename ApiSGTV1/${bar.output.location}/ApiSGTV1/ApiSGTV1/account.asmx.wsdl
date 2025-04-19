@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/conta/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s1="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base" xmlns:s2="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base.Output" xmlns:s3="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base.Input" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://tempuri.org/conta/">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="account.asmx_InlineSchema2.xsd"/>
+        <generatedXSD location="account.asmx_InlineSchema3.xsd"/>
+        <generatedXSD location="account.asmx_InlineSchema4.xsd"/>
+        <generatedXSD location="account.asmx_InlineSchema1.xsd"/>
+        <binding hasEncoding="false" imported="true" name="AccountSoap" originalBindingStyle="document"/>
+        <binding hasEncoding="false" imported="false" name="AccountSoap12" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    
+    
+    
+    
+          <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base">
+<xsd:include schemaLocation="account.asmx_InlineSchema2.xsd"/>
+    </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base.Output">
+<xsd:include schemaLocation="account.asmx_InlineSchema3.xsd"/>
+    </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base.Input">
+<xsd:import namespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base" schemaLocation="account.asmx_InlineSchema2.xsd"/>
+<xsd:include schemaLocation="account.asmx_InlineSchema4.xsd"/>
+    </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://tempuri.org/conta/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:import namespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base" schemaLocation="account.asmx_InlineSchema2.xsd"/>
+<xsd:import namespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base.Output" schemaLocation="account.asmx_InlineSchema3.xsd"/>
+<xsd:import namespace="http://schemas.datacontract.org/2004/07/SS2ERP.MVC.Models.Base.Input" schemaLocation="account.asmx_InlineSchema4.xsd"/>
+<xsd:include schemaLocation="account.asmx_InlineSchema1.xsd"/>
+    </xsd:schema>
+    </wsdl:types>
+  <wsdl:message name="ConsultaDadosClienteSIGASoapIn">
+    <wsdl:part element="tns:ConsultaDadosClienteSIGA" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaDadosClienteSIGASoapOut">
+    <wsdl:part element="tns:ConsultaDadosClienteSIGAResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FindAccountAXSoapIn">
+    <wsdl:part element="tns:FindAccountAX" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FindAccountAXSoapOut">
+    <wsdl:part element="tns:FindAccountAXResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAccountAXSoapIn">
+    <wsdl:part element="tns:UpdateAccountAX" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAccountAXSoapOut">
+    <wsdl:part element="tns:UpdateAccountAXResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="InsertAccountAXSoapIn">
+    <wsdl:part element="tns:InsertAccountAX" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="InsertAccountAXSoapOut">
+    <wsdl:part element="tns:InsertAccountAXResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientesInadimplentesSoapIn">
+    <wsdl:part element="tns:GetClientesInadimplentes" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientesInadimplentesSoapOut">
+    <wsdl:part element="tns:GetClientesInadimplentesResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetClienteInadimplenteSoapIn">
+    <wsdl:part element="tns:GetClienteInadimplente" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetClienteInadimplenteSoapOut">
+    <wsdl:part element="tns:GetClienteInadimplenteResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CarregarContasPFSoapIn">
+    <wsdl:part element="tns:CarregarContasPF" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CarregarContasPFSoapOut">
+    <wsdl:part element="tns:CarregarContasPFResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SalvarContasDuplicadasSoapIn">
+    <wsdl:part element="tns:SalvarContasDuplicadas" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SalvarContasDuplicadasSoapOut">
+    <wsdl:part element="tns:SalvarContasDuplicadasResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GravarContaSoapIn">
+    <wsdl:part element="tns:GravarConta" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GravarContaSoapOut">
+    <wsdl:part element="tns:GravarContaResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetContasSoapIn">
+    <wsdl:part element="tns:GetContas" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetContasSoapOut">
+    <wsdl:part element="tns:GetContasResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="AtualizaContaAXSoapIn">
+    <wsdl:part element="tns:AtualizaContaAX" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="AtualizaContaAXSoapOut">
+    <wsdl:part element="tns:AtualizaContaAXResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="AccountSoap">
+    <wsdl:operation name="ConsultaDadosClienteSIGA">
+      <wsdl:input message="tns:ConsultaDadosClienteSIGASoapIn"/>
+      <wsdl:output message="tns:ConsultaDadosClienteSIGASoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="FindAccountAX">
+      <wsdl:input message="tns:FindAccountAXSoapIn"/>
+      <wsdl:output message="tns:FindAccountAXSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccountAX">
+      <wsdl:input message="tns:UpdateAccountAXSoapIn"/>
+      <wsdl:output message="tns:UpdateAccountAXSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAccountAX">
+      <wsdl:input message="tns:InsertAccountAXSoapIn"/>
+      <wsdl:output message="tns:InsertAccountAXSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientesInadimplentes">
+      <wsdl:input message="tns:GetClientesInadimplentesSoapIn"/>
+      <wsdl:output message="tns:GetClientesInadimplentesSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetClienteInadimplente">
+      <wsdl:input message="tns:GetClienteInadimplenteSoapIn"/>
+      <wsdl:output message="tns:GetClienteInadimplenteSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarContasPF">
+      <wsdl:input message="tns:CarregarContasPFSoapIn"/>
+      <wsdl:output message="tns:CarregarContasPFSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="SalvarContasDuplicadas">
+      <wsdl:input message="tns:SalvarContasDuplicadasSoapIn"/>
+      <wsdl:output message="tns:SalvarContasDuplicadasSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GravarConta">
+      <wsdl:input message="tns:GravarContaSoapIn"/>
+      <wsdl:output message="tns:GravarContaSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetContas">
+      <wsdl:input message="tns:GetContasSoapIn"/>
+      <wsdl:output message="tns:GetContasSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="AtualizaContaAX">
+      <wsdl:input message="tns:AtualizaContaAXSoapIn"/>
+      <wsdl:output message="tns:AtualizaContaAXSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountSoap" type="tns:AccountSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ConsultaDadosClienteSIGA">
+      <soap:operation soapAction="http://tempuri.org/conta/ConsultaDadosClienteSIGA" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindAccountAX">
+      <soap:operation soapAction="http://tempuri.org/conta/FindAccountAX" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccountAX">
+      <soap:operation soapAction="http://tempuri.org/conta/UpdateAccountAX" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAccountAX">
+      <soap:operation soapAction="http://tempuri.org/conta/InsertAccountAX" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientesInadimplentes">
+      <soap:operation soapAction="http://tempuri.org/conta/GetClientesInadimplentes" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClienteInadimplente">
+      <soap:operation soapAction="http://tempuri.org/conta/GetClienteInadimplente" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarContasPF">
+      <soap:operation soapAction="http://tempuri.org/conta/CarregarContasPF" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SalvarContasDuplicadas">
+      <soap:operation soapAction="http://tempuri.org/conta/SalvarContasDuplicadas" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GravarConta">
+      <soap:operation soapAction="http://tempuri.org/conta/GravarConta" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContas">
+      <soap:operation soapAction="http://tempuri.org/conta/GetContas" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AtualizaContaAX">
+      <soap:operation soapAction="http://tempuri.org/conta/AtualizaContaAX" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AccountSoap12" type="tns:AccountSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ConsultaDadosClienteSIGA">
+      <soap12:operation soapAction="http://tempuri.org/conta/ConsultaDadosClienteSIGA" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindAccountAX">
+      <soap12:operation soapAction="http://tempuri.org/conta/FindAccountAX" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccountAX">
+      <soap12:operation soapAction="http://tempuri.org/conta/UpdateAccountAX" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAccountAX">
+      <soap12:operation soapAction="http://tempuri.org/conta/InsertAccountAX" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientesInadimplentes">
+      <soap12:operation soapAction="http://tempuri.org/conta/GetClientesInadimplentes" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClienteInadimplente">
+      <soap12:operation soapAction="http://tempuri.org/conta/GetClienteInadimplente" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarContasPF">
+      <soap12:operation soapAction="http://tempuri.org/conta/CarregarContasPF" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SalvarContasDuplicadas">
+      <soap12:operation soapAction="http://tempuri.org/conta/SalvarContasDuplicadas" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GravarConta">
+      <soap12:operation soapAction="http://tempuri.org/conta/GravarConta" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContas">
+      <soap12:operation soapAction="http://tempuri.org/conta/GetContas" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AtualizaContaAX">
+      <soap12:operation soapAction="http://tempuri.org/conta/AtualizaContaAX" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Account">
+    <wsdl:port binding="tns:AccountSoap" name="AccountSoap">
+      <soap:address location="https://wbscrmprd.fiepr.org.br/account.asmx"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:AccountSoap12" name="AccountSoap12">
+      <soap12:address location="https://wbscrmprd.fiepr.org.br/account.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

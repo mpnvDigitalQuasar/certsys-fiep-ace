@@ -4,13 +4,7 @@
     xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="processarFilaCRMPost.subflow" nsPrefix="processarFilaCRMPost.subflow">
   <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" nodeLayoutStyle="RECTANGLE">
     <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
-    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaDomain" name="processarFilaDomain" defaultValueLiteral="CRMDomain">
-      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eStructuralFeatures>
-    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaPass" name="processarFilaPass" defaultValueLiteral="CRMPassword">
-      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eStructuralFeatures>
-    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaUser" name="processarFilaUser" defaultValueLiteral="CRMUser">
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.processarFilaDomain" name="processarFilaDomain" lowerBound="1" defaultValueLiteral="CRMDomain">
       <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="processarFilaCRMPost" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
@@ -125,12 +119,6 @@
     <propertyOrganizer>
       <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.processarFilaDomain">
         <propertyName xmi:type="utility:TranslatableString" key="Property.processarFilaDomain" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
-        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.processarFilaPass">
-          <propertyName xmi:type="utility:TranslatableString" key="Property.processarFilaPass" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
-          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.processarFilaUser">
-            <propertyName xmi:type="utility:TranslatableString" key="Property.processarFilaUser" bundleName="processarFilaCRMPost" pluginId="ApiSGTV1"/>
-          </propertyDescriptor>
-        </propertyDescriptor>
       </propertyDescriptor>
     </propertyOrganizer>
     <stickyBoard/>

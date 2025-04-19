@@ -6,12 +6,6 @@
     <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterContratoUser" name="obterContratoUser" lowerBound="1" defaultValueLiteral="CRMUser">
       <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
-    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterContratoPassword" name="obterContratoPassword" lowerBound="1" defaultValueLiteral="CRMPassword">
-      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eStructuralFeatures>
-    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterContratoDomain" name="obterContratoDomain" lowerBound="1" defaultValueLiteral="CRMDomain">
-      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </eStructuralFeatures>
     <translation xmi:type="utility:TranslatableString" key="obterContratoCRM" bundleName="obterContratoCRM" pluginId="ApiSGTV1"/>
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/obterContratoCRM.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/obterContratoCRM.gif"/>
@@ -61,12 +55,6 @@
     <propertyOrganizer>
       <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterContratoUser">
         <propertyName xmi:type="utility:TranslatableString" key="Property.obterContratoUser" bundleName="obterContratoCRM" pluginId="ApiSGTV1"/>
-        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterContratoPassword">
-          <propertyName xmi:type="utility:TranslatableString" key="Property.obterContratoPassword" bundleName="obterContratoCRM" pluginId="ApiSGTV1"/>
-          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterContratoDomain">
-            <propertyName xmi:type="utility:TranslatableString" key="Property.obterContratoDomain" bundleName="obterContratoCRM" pluginId="ApiSGTV1"/>
-          </propertyDescriptor>
-        </propertyDescriptor>
       </propertyDescriptor>
     </propertyOrganizer>
     <stickyBoard/>

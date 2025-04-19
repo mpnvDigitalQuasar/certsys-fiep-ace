@@ -1,7 +1,5 @@
 DECLARE ns36 NAMESPACE 'http://tempuri.org/contrato/';
 
-DECLARE obterContratoUser EXTERNAL CHAR '';
-DECLARE obterContratoPassword EXTERNAL CHAR '';
 DECLARE obterContratoDomain EXTERNAL CHAR '';
 
 CREATE COMPUTE MODULE obterContratoCRM_preparaRequest
@@ -16,8 +14,6 @@ CREATE COMPUTE MODULE obterContratoCRM_preparaRequest
 		
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
 				
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns36:GetContrato.ns36:token.ns36:User = obterContratoUser;
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns36:GetContrato.ns36:token.ns36:Password = obterContratoPassword;	
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns36:GetContrato.ns36:token.ns36:Domain = obterContratoDomain;
 		
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns36:GetContrato.ns36:contratoId = InputRoot.JSON.Data.idRegistro;

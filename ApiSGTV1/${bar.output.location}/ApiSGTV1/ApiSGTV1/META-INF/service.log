@@ -1,0 +1,338 @@
+
+==============================================
+
+!Fri Apr 18 22:47:12 BRT 2025
+
+Successfully added file ApiSGTV1\gen\ApiSGTV1.msgflow to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarProdutoAsync.msgflow to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync.msgflow to BAR file.
+
+Successfully added file ApiSGTV1\FilaIntegracao.asmx.wsdl to BAR file.
+
+Successfully added file ApiSGTV1\FilaIntegracao.asmx.xsd to BAR file.
+
+Successfully added file ApiSGTV1\FilaIntegracao.asmx_InlineSchema1.xsd to BAR file.
+
+Successfully added file ApiSGTV1\IBMdefined\org\w3\www\_2003\_05\soapenvelope\soapenv12.xsd to BAR file.
+
+Successfully added file ApiSGTV1\IBMdefined\org\w3\www\xml\_1998\namespace\xml.xsd to BAR file.
+
+Successfully added file ApiSGTV1\IBMdefined\org\xmlsoap\schemas\soap\envelope\soapenv11.xsd to BAR file.
+
+Successfully added file ApiSGTV1\IBMdefined\soap.xsd to BAR file.
+
+Successfully added file ApiSGTV1\SGTIntegracoes.json to BAR file.
+
+Successfully added file ApiSGTV1\SGTIntegracoes.json to BAR file.
+
+Successfully added file ApiSGTV1\account.asmx.wsdl to BAR file.
+
+Successfully added file ApiSGTV1\account.asmx.xsd to BAR file.
+
+Successfully added file ApiSGTV1\account.asmx_InlineSchema1.xsd to BAR file.
+
+Successfully added file ApiSGTV1\account.asmx_InlineSchema2.xsd to BAR file.
+
+Successfully added file ApiSGTV1\account.asmx_InlineSchema3.xsd to BAR file.
+
+Successfully added file ApiSGTV1\account.asmx_InlineSchema4.xsd to BAR file.
+
+Successfully added file ApiSGTV1\atualizarEnderecoClienteSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\atualizarEnderecoClienteSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\atualizarEnderecoClienteSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\atualizarProdutoSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\atualizarProdutoSGT_requestProduto.esql to BAR file.
+
+Successfully added file ApiSGTV1\atualizarProdutoSGT_responseProduto.esql to BAR file.
+
+Successfully added file ApiSGTV1\atualizarStatusAtendimentoSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\atulizarStatusAtendimentoSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\atulizarStatusAtendimentoSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_delay.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_orquestarValidarCliente.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_orquestarValidarCliente.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_orquestradorAtendimento.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_orquestradorAtendimento.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_orquestrarValidarProposta.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_orquestrarValidarProposta.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarContratoAsync_preparaProcessamento.esql to BAR file.
+
+Successfully added file ApiSGTV1\br\org\fiep\esb\appsgt\processarProdutoAsync_Compute.esql to BAR file.
+
+Successfully added file ApiSGTV1\build-certsys.xml to BAR file.
+
+Successfully added file ApiSGTV1\build-dev.xml to BAR file.
+
+Successfully added file ApiSGTV1\build-hmg.xml to BAR file.
+
+Successfully added file ApiSGTV1\build-prd.xml to BAR file.
+
+Successfully added file ApiSGTV1\contract.asmx.wsdl to BAR file.
+
+Successfully added file ApiSGTV1\contract.asmx.xsd to BAR file.
+
+Successfully added file ApiSGTV1\contract.asmx_InlineSchema1.xsd to BAR file.
+
+Successfully added file ApiSGTV1\contract.asmx_InlineSchema2.xsd to BAR file.
+
+Successfully added file ApiSGTV1\contract.asmx_InlineSchema3.xsd to BAR file.
+
+Successfully added file ApiSGTV1\criarAtendimentoSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\criarAtendimentoSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarAtendimentoSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarClienteSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\criarClienteSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarClienteSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarEnderecoClienteSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\criarEnderecoClienteSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarEnderecoClienteSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarProdutoSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\criarProdutoSGT_prepararRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarProdutoSGT_prepararRetorno.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarPropostaSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\criarPropostaSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\criarPropostaSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterAtendimentoSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterAtendimentoSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterAtendimentoSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterClienteSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterClienteSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterClienteSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterClienteSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContaCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContratoCRM.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterContratoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContratoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContratoCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContratoCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterContratoCRM_validarDados.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterEnderecoSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterListaFilaIntegracaoCRM.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterListaFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoCRM_prepararResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoRegionaisSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoRegionaisSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutoRegionaisSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutosRegionaisSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutosRegionaisSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutosRegionaisSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterProdutosRegionaisSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterPropostaSGT.subflow to BAR file.
+
+Successfully added file ApiSGTV1\obterPropostaSGT_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\obterPropostaSGT_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete.subflow to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMDelete_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch.subflow to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPatch_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost.subflow to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost_configurarStatus.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost_preparaMsgIn.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarFilaCRMPost_preparaMsgOut.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarProduto_registarEtapas.esql to BAR file.
+
+Successfully added file ApiSGTV1\processarProduto_registarEtapas.esql to BAR file.
+
+Successfully added file ApiSGTV1\procs\PROCEDURES.esql to BAR file.
+
+Successfully added file ApiSGTV1\procs\UTIL.esql to BAR file.
+
+Successfully added file ApiSGTV1\product.asmx.wsdl to BAR file.
+
+Successfully added file ApiSGTV1\product.asmx.xsd to BAR file.
+
+Successfully added file ApiSGTV1\product.asmx_InlineSchema1.xsd to BAR file.
+
+Successfully added file ApiSGTV1\registrarErros.subflow to BAR file.
+
+Successfully added file ApiSGTV1\registrarErrosProduto.subflow to BAR file.
+
+Successfully added file ApiSGTV1\registrarErrosProduto_registrarErro.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarErrosProduto_registrarErro.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarErrosProduto_registrarErro.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarErros_registrarErro.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarErros_registrarErro.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarErros_registrarErro.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarEtapas_registarEtapas.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarEtapas_registarEtapas.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarHistoricos_registarHistorico.esql to BAR file.
+
+Successfully added file ApiSGTV1\registrarHistoricos_registarHistorico.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM.subflow to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerItemFilaIntegracaoCRM_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerProdutoFilaIntegracaoCRM.subflow to BAR file.
+
+Successfully added file ApiSGTV1\removerProdutoFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerProdutoFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerProdutoFilaIntegracaoCRM_preparaRequest.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerProdutoFilaIntegracaoCRM_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\removerProdutoFilaIntegracaoCRM_preparaResponse.esql to BAR file.
+
+Successfully added file ApiSGTV1\restapi.descriptor to BAR file.
+
+Successfully added file ApiSGTV1\restapi.descriptor to BAR file.
+
+Successfully added file ApiSGTV1\restapi.descriptor to BAR file.
+
+Successfully added file ApiSGTV1\restapi.descriptor to BAR file.
+
+Successfully added file ApiSGTV1\swagger.json to BAR file.
+
+Successfully added file ApiSGTV1\swagger.json to BAR file.

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" 
+xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:br_org_fiep_esb_monitoramento_v1_RestRequestOut.subflow="br/org/fiep/esb/monitoramento/v1/RestRequestOut.subflow" xmlns:br_org_fiep_esb_monitoramento_v1_RestRequestIn.subflow="br/org/fiep/esb/monitoramento/v1/RestRequestIn.subflow" xmlns:ComIbmRESTRequest.msgnode="ComIbmRESTRequest.msgnode" xmlns:registrarErros.subflow="registrarErros.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" 
+xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="obterClienteSGT.subflow" 
+nsPrefix="obterClienteSGT.subflow">
+<eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="RECTANGLE">
+<eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+<eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.urlCliente" name="urlCliente" lowerBound="1"  defaultValueLiteral="urlCliente">
+  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+</eStructuralFeatures>
+<eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterClienteToken" name="obterClienteToken" lowerBound="1"  defaultValueLiteral="SGTBearerToken">
+  <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+</eStructuralFeatures>
+<translation xmi:type="utility:TranslatableString" key="obterClienteSGT" bundleName="obterClienteSGT" pluginId="flowAPIgenerated"/>
+<colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/flowAPIgenerated/icons/full/obj16/obterClienteSGT.gif"/>
+<colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/flowAPIgenerated/icons/full/obj30/obterClienteSGT.gif"/>
+<composition>
+<nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
+<translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="obterClienteSGT" pluginId="flowAPIgenerated"/>
+</nodes>
+<nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="1633,22">
+<translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="obterClienteSGT" pluginId="flowAPIgenerated"/>
+</nodes>
+<nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="224,21" computeExpression="esql://routine/#obterClienteSGT_preparaRequest.Main" computeMode="destinationAndMessage">
+<translation xmi:type="utility:ConstantString" string="preparaRequest"/>
+</nodes>
+<nodes xmi:type="br_org_fiep_esb_monitoramento_v1_RestRequestOut.subflow:FCMComposite_1" xmi:id="FCMComposite_1_2" location="1177,23">
+<translation xmi:type="utility:ConstantString" string="RestRequestOut"/>
+</nodes>
+<nodes xmi:type="br_org_fiep_esb_monitoramento_v1_RestRequestIn.subflow:FCMComposite_1" xmi:id="FCMComposite_1_3" location="439,22">
+<translation xmi:type="utility:ConstantString" string="RestRequestIn"/>
+</nodes>
+<nodes xmi:type="ComIbmRESTRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="652,23" definitionFile="SGTIntegracoes.json" definitionType="swagger_20" operationName="getClientes" baseURL="https://apisgt" dataLocation="$Body&#xD;&#xA;" acceptCompressedResponses="true" messageDomainProperty="JSON">
+<translation xmi:type="utility:ConstantString" string="getClientes"/>
+<parameters name="cpfcnpj"/>
+</nodes>
+<nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_1" location="920,53">
+<translation xmi:type="utility:ConstantString" string="registrarErros"/>
+</nodes>
+<nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="920,-14">
+<translation xmi:type="utility:ConstantString" string="registrarErros1"/>
+</nodes>
+<nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="1408,22" computeExpression="esql://routine/#obterClienteSGT_preparaResponse.Main">
+<translation xmi:type="utility:ConstantString" string="preparaResponse"/>
+</nodes>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_8" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.Input"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input2"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
+<connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+</composition>
+<propertyOrganizer>
+<propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.urlCliente">
+<propertyName xmi:type="utility:TranslatableString" key="Property.urlCliente" bundleName="obterClienteSGT" pluginId="flowAPIgenerated"/>
+<propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterClienteToken">
+<propertyName xmi:type="utility:TranslatableString" key="Property.obterClienteToken" bundleName="obterClienteSGT" pluginId="flowAPIgenerated"/>
+</propertyDescriptor>
+</propertyDescriptor>
+</propertyOrganizer>
+<stickyBoard/>
+</eClassifiers>
+</ecore:EPackage>
