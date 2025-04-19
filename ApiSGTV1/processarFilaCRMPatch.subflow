@@ -56,7 +56,7 @@
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_23" location="829,640" computeExpression="esql://routine/#processarFilaCRMPost_configurarStatus.Main">
         <translation xmi:type="utility:ConstantString" string="configurarStatus1"/>
       </nodes>
-      <nodes xmi:type="ComIbmLabel.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_24" location="19,293" labelName="QL.SGT.CONTRATO.IN_Post">
+      <nodes xmi:type="ComIbmLabel.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_24" location="19,293" labelName="QL.SGT.CONTRATO.IN_Path">
         <translation xmi:type="utility:ConstantString" string="QL.SGT.CONTRATO.IN_Post"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_25" location="1058,437" dataSource="odbc_db_broker" computeExpression="esql://routine/#registrarEtapas_registarEtapas.Main">
@@ -83,7 +83,7 @@
       <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_MQOutPutIn.subflow:FCMComposite_1" xmi:id="FCMComposite_1_34" location="428,365">
         <translation xmi:type="utility:ConstantString" string="MQOutPutIn3"/>
       </nodes>
-      <nodes xmi:type="ComIbmLabel.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_35" location="22,543" labelName="QL.SGT.PRODUTO.IN_Post">
+      <nodes xmi:type="ComIbmLabel.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_35" location="22,543" labelName="QL.SGT.PRODUTO.IN_Path">
         <translation xmi:type="utility:ConstantString" string="QL.SGT.PRODUTO.IN_Post"/>
       </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>

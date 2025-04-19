@@ -35,7 +35,7 @@ CREATE COMPUTE MODULE processarFilaCRMPatch_preparaMsgOut
 				
 				SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;	
 				
-				PROPAGATE TO LABEL 'QL.SGT.CONTRATO.IN_Post';
+				PROPAGATE TO LABEL 'QL.SGT.CONTRATO.IN_Path';
 				
 			ELSEIF Environment.Variables.tipo = 'PRODUTO' THEN
 				
@@ -57,7 +57,7 @@ CREATE COMPUTE MODULE processarFilaCRMPatch_preparaMsgOut
 				
 				SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;		
 				
-				PROPAGATE TO LABEL 'QL.SGT.PRODUTO.IN_Post';
+				PROPAGATE TO LABEL 'QL.SGT.PRODUTO.IN_Path';
 			END IF;		
 			
 			MOVE filaRetorno NEXTSIBLING;
