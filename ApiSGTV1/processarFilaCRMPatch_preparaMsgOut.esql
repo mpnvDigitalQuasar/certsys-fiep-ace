@@ -65,12 +65,12 @@ CREATE COMPUTE MODULE processarFilaCRMPatch_preparaMsgOut
 			SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;	
 			SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;	
 			SET OutputRoot.JSON.Data.status = Environment.Variables.etapa.status;		
-			SET OutputRoot.JSON.Data.mensagem = 'idFila removido do CRM: ' || Environment.Variables.idFila;
+			SET OutputRoot.JSON.Data.mensagem = 'idFila enviado para processamento';
 		
 		ELSE
 			SET OutputRoot.JSON.Data.idFila = Environment.Variables.idFila;
 			SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;
-			SET OutputRoot.JSON.Data.mensagem = 'idFila não encontrado no CRM: ' || Environment.Variables.idFila;
+			SET OutputRoot.JSON.Data.mensagem = 'idFila não encontrado no CRM';
 		END IF; 
 		
 		RETURN TRUE;

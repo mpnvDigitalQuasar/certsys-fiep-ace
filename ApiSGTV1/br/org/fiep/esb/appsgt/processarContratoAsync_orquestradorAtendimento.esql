@@ -115,20 +115,9 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 				WHEN etapa = 4 THEN 																	-- Alterar Status do Atendimento no SGT para Aceito
 		
 					PROPAGATE TO LABEL 'lbAtualizarStatusAtendimentoSGT'; 								
-					
-					--Falha de atendimento. Passa para o proximo
-					IF Environment.Variables.etapa.status = 'Falha' THEN
-						SET fimAtendimento = true; 															-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
-					ELSE
-						SET etapa = 5;
-					END IF;
-					
-				WHEN etapa = 5 THEN 																	-- REMOVER DA FILA CRM
 
-					PROPAGATE TO LABEL 'lbRemoverFilaCRM'; 											-- Se não ocorreu erro no contrato remove da fila
+					SET fimAtendimento = true; 															-- PARA EM CASO DE FALHA IR PARA O PRÓXIMO CONTRATO
 					
-					SET fimAtendimento = true;	
-
 				ELSE																					-- Passa para o proximo contrato
 					SET fimAtendimento = true;
 				END CASE;
@@ -138,6 +127,10 @@ CREATE COMPUTE MODULE processarContratoAsync_orquestradorAtendimento
 			END REPEAT fimAtendimento;
 
 		END FOR;
+		
+		IF Environment.Variables.etapa.status <> 'Falha' THEN															-- REMOVER DA FILA CRM
+			PROPAGATE TO LABEL 'lbRemoverFilaCRM'; 											-- Se não ocorreu erro no contrato remove da fila
+		END IF;
 
 		RETURN TRUE;
 	END;

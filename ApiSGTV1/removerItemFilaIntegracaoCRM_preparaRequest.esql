@@ -1,5 +1,5 @@
 
-
+DECLARE removerItemDomain EXTERNAL CHAR '';
 CREATE COMPUTE MODULE removerItemFilaIntegracaoCRM_preparaRequest
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
@@ -12,7 +12,7 @@ CREATE COMPUTE MODULE removerItemFilaIntegracaoCRM_preparaRequest
 
 		PROPAGATE TO LABEL 'lbRegistrarEtapas' DELETE NONE;
 
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns36:GetContrato.ns36:token.ns36:Domain = obterContratoDomain;
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:PutInativarItensFilaIntegracao.ns:token.ns:Domain = removerItemDomain;
 
 		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:PutInativarItensFilaIntegracao.ns:idFila = Environment.Variables.msgMQ.idFila;
 						
