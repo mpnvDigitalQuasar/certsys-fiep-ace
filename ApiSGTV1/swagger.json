@@ -73,17 +73,14 @@
           "name" : "idFila",
           "in" : "query",
           "type" : "string",
-          "description" : "Id da fila a ser removida do CRM"
-        }, {
-          "name" : "idRegistro",
-          "in" : "query",
-          "type" : "string",
-          "description" : "Id do registro a ser removida do CRM"
+          "description" : "Id do registro a ser removida do CRM",
+          "required" : true
         }, {
           "name" : "tipo",
           "in" : "query",
           "type" : "string",
-          "description" : "Tipo da fila a ser removida do CRM"
+          "description" : "Tipo da fila a ser removida do CRM",
+          "required" : true
         } ]
       },
       "patch" : {
@@ -468,12 +465,25 @@
       }
     },
     "processarFilaCRMPost_Out" : {
-      "type" : "object"
+      "type" : "object",
+      "properties" : {
+        "mensagem" : {
+          "type" : "string"
+        },
+        "monitoramento" : {
+          "type" : "object",
+          "properties" : {
+            "localTransactionId" : {
+              "type" : "string"
+            },
+            "localTransactionDate" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
     },
     "processarFilaCRMDelete_Out" : {
-      "type" : "object"
-    },
-    "processarFilaCRMPatch_In" : {
       "type" : "object",
       "properties" : {
         "idFila" : {
@@ -484,11 +494,68 @@
         },
         "tipo" : {
           "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "monitoramento" : {
+          "type" : "object",
+          "properties" : {
+            "localTransactionId" : {
+              "type" : "string"
+            },
+            "localTransactionDate" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "processarFilaCRMPatch_In" : {
+      "type" : "object",
+      "properties" : {
+        "idFila" : {
+          "type" : "string"
+        },
+        "tipo" : {
+          "type" : "string"
         }
       }
     },
     "processarFilaCRMPatch_Out" : {
-      "type" : "object"
+      "type" : "object",
+      "properties" : {
+        "idFila" : {
+          "type" : "object",
+          "properties" : { }
+        },
+        "idRegistro" : {
+          "type" : "string"
+        },
+        "idHistorico" : {
+          "type" : "string"
+        },
+        "tipo" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "sucesso" : {
+          "type" : "string"
+        },
+        "monitoramento" : {
+          "type" : "object",
+          "properties" : {
+            "localTransactionId" : {
+              "type" : "string"
+            },
+            "localTransactionDate" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -7,15 +7,22 @@ CREATE COMPUTE MODULE processarFilaCRMPatch_preparaMsgIn
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
 
-		SET Environment.Variables.idFila = InputRoot.JSON.Data.idFila;
-		SET Environment.Variables.idRegistro = InputRoot.JSON.Data.idRegistro;
-		SET Environment.Variables.tipo = InputRoot.JSON.Data.tipo;				
-
-		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns36:GetContrato.ns36:token.ns36:Domain = pathCRMDomain;
-
-		SET Environment.Variables.tipo = Environment.Variables.tipo;
-		SET Environment.Variables.etapa.tipo = Environment.Variables.tipo;	
+		IF FIELDTYPE(InputRoot.JSON.Data.idFila) IS NOT NULL THEN
+			SET Environment.Variables.idFila = InputRoot.JSON.Data.idFila;
+		ELSE
+			CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Campo idFila obrigatório', BrokerName);
+		END IF;
 		
+		IF FIELDTYPE(InputRoot.JSON.Data.tipo) IS NOT NULL THEN
+			SET Environment.Variables.tipo = InputRoot.JSON.Data.tipo;	
+		ELSE
+			CALL br.org.fiep.esb.utils.v1.throw('EN:401', 'Campo tipo obrigatório', BrokerName);
+		END IF;
+
+		SET Environment.Variables.etapa.tipo = Environment.Variables.tipo;	
+						
+		SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:token.ns:Domain = pathCRMDomain;
+
 		IF Environment.Variables.tipo = 'CONTRATO' THEN
 
 			SET OutputRoot.XMLNSC.ns5:Envelope.ns5:Body.ns:GetFilaIntegracao.ns:idIntegracao = Environment.Variables.idFila;

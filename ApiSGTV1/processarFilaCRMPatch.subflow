@@ -41,7 +41,7 @@
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="5,153" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarFilaCRMPatch_preparaMsgIn.Main">
         <translation xmi:type="utility:ConstantString" string="preparaMsgIn"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="434,153" computeExpression="esql://routine/#processarFilaCRMPatch_preparaMsgOut.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="434,153" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarFilaCRMPatch_preparaMsgOut.Main">
         <translation xmi:type="utility:ConstantString" string="preparaMsgOut"/>
       </nodes>
       <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_19" location="428,293" dataSource="odbc_db_broker" computeExpression="esql://routine/#registrarEtapas_registarEtapas.Main">
