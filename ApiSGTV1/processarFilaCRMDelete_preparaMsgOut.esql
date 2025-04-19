@@ -6,14 +6,12 @@ CREATE COMPUTE MODULE processarFilaCRMDelete_preparaMsgOut
 
 		IF InputRoot.SOAP.Body.ns:PutInativarItensFilaIntegracaoResponse.ns:PutInativarItensFilaIntegracaoResult = true THEN
 			SET OutputRoot.JSON.Data.idFila = Environment.Variables.idFila ;
-			SET OutputRoot.JSON.Data.idRegistro = Environment.Variables.idRegistro;
 			SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;
-			SET OutputRoot.JSON.Data.status = 'Removido da fila do CRM com sucesso'; 
+			SET OutputRoot.JSON.Data.mensagem = 'Removido da fila do CRM com sucesso'; 
 		ELSE
 			SET OutputRoot.JSON.Data.idFila = Environment.Variables.idFila ;
-			SET OutputRoot.JSON.Data.idRegistro = Environment.Variables.idRegistro;
 			SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;
-			SET OutputRoot.JSON.Data.status = 'Não removido da fila do CRM com sucesso';  
+			SET OutputRoot.JSON.Data.mensagem = 'Não removido da fila do CRM com sucesso';  
 		END IF;
 		
 		RETURN TRUE;

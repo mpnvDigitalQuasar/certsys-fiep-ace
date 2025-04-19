@@ -489,13 +489,10 @@
         "idFila" : {
           "type" : "string"
         },
-        "idRegistro" : {
-          "type" : "string"
-        },
         "tipo" : {
           "type" : "string"
         },
-        "status" : {
+        "mensagem" : {
           "type" : "string"
         },
         "monitoramento" : {
@@ -529,9 +526,6 @@
           "type" : "object",
           "properties" : { }
         },
-        "idRegistro" : {
-          "type" : "string"
-        },
         "idHistorico" : {
           "type" : "string"
         },
@@ -541,7 +535,7 @@
         "status" : {
           "type" : "string"
         },
-        "sucesso" : {
+        "mensagem" : {
           "type" : "string"
         },
         "monitoramento" : {
