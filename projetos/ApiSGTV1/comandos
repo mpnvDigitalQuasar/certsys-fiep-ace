@@ -1,0 +1,2 @@
+mqsisetdbparms IN_DEV01 -n CREDSGTCRM -u "service_sgthmg" -p "S3rv1ce@sGtHMG"
+mqsicreateconfigurableservice IN_DEV01 -c SecurityProfiles -o SEGCREDSGTCRM -n mapping,rejectBlankpassword,propagation,passwordValue,keyStore,authorizationConfig,authenticationConfig,idToPropagateToTransport,trustStore,authentication,authorization,mappingConfig,transportPropagationConfig -v "NONE","TRUE","TRUE","PLAIN","Reserved for future use","","","STATIC ID","Reserved for future use","NONE","NONE","","CREDSGTCRM"

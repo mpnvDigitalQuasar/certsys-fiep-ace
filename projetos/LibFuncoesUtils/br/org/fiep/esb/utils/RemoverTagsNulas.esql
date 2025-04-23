@@ -1,0 +1,178 @@
+BROKER SCHEMA br.org.fiep.esb.utils
+PATH br.org.fiep.esb.utils;
+
+
+/*************
+
+	Remover todas as tags nulas de uma estrutura XML.
+
+Nota: existe uma versão do algoritmo abaixo escrito de forma recursiva. Mas o Broker tem alguma
+	limitação ao escrever em variaveis tipo REFERENCE que são passadas de forma recursiva.
+	Se alguém souber como superar tal limitação, segue o algoritmo alternativo...
+	-- primeiro verifica os filhos diretos
+		MOVE nextChildRef FIRSTCHILD;
+		WHILE LASTMOVE(nextChildRef) DO
+			CALL RemoverTagsNulas(nextChildRef);			
+			MOVE nextChildRef NEXTSIBLING;
+		END WHILE;
+		
+		-- caso não tenha filhos, então verifica se é nulo e remove
+		-- e avança para os irmãos
+		IF nextChildRef IS NULL THEN
+			SET deleteRef = nextChildRef;  
+			MOVE nextChildRef NEXTSIBLING;
+			WHILE LASTMOVE(nextChildRef) DO
+				CALL RemoverTagsNulas(nextChildRef);			
+				MOVE nextChildRef NEXTSIBLING;
+			END WHILE;
+			--DELETE FIELD deleteRef;
+			SET deleteRef = 'teste';
+		END IF;
+	END; 
+
+
+*************/
+CREATE COMPUTE MODULE Remover_Tags_Nulas
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CALL CopyEntireMessage();	
+		
+		DECLARE xmlRef REFERENCE TO OutputRoot.XMLNSC;
+				
+		CALL RemoverTagsNulas(xmlRef);
+		
+		RETURN TRUE;
+	END;
+	
+	/***********************
+	
+		Caminha sobre a arvore de mensagem JSON recursivamente.
+		Atualiza os elementos que são listas (arrays) com o seu campo com o um tipo JSON.Array.
+	
+	************************/ 
+	CREATE PROCEDURE RemoverTagsNulas(INOUT root REFERENCE ) 
+	BEGIN
+		-- Referencias para a iteracao da arvore
+		DECLARE nextChildRef REFERENCE TO root;
+		DECLARE rootAux REFERENCE TO root;
+		DECLARE estado CHAR;
+		
+		-- Estados possiveis...
+		-- F - tratando filho direto (estado inicial)
+		-- I - tratando próximo irmão
+		-- P - tratando o pai imediato
+		-- A - apagando um elemento nulo sem filhos
+		-- E - end of state machine
+		SET estado = 'F';
+		WHILE (estado = 'F') OR (estado = 'I') OR (estado = 'P') OR (estado = 'A') DO
+			
+			-- tratamento e ações para o estado F
+			IF (estado = 'F') THEN
+				MOVE nextChildRef FIRSTCHILD;
+				-- ainda tem filhos a buscar
+				IF LASTMOVE(nextChildRef) THEN
+					SET estado = 'F';
+				ELSE
+					MOVE nextChildRef NEXTSIBLING;
+					-- nao tem filhos mas tem irmãos que precisam ser processados ainda
+					IF LASTMOVE(nextChildRef) THEN
+						SET estado = 'I';
+					ELSE
+						-- não tem filhos nem irmãos, tenta retornar para o pai
+						MOVE nextChildRef PARENT;
+						IF LASTMOVE(nextChildRef) THEN
+							SET estado = 'P';
+						ELSE
+							-- SEM FILHOS, SEM PAIS, SEM IRMÃOS, é o root, logo é o fim
+							SET estado = 'E';
+						END IF;
+					END IF;
+				END IF;	
+			END IF;
+			
+			-- tratamento e ações para o estado I
+			IF (estado = 'I') THEN
+				MOVE nextChildRef FIRSTCHILD;
+				-- ainda tem filhos a buscar
+				IF LASTMOVE(nextChildRef) THEN
+					SET estado = 'F';
+				ELSE
+					-- não tem mais filhos
+					-- verifica se é nulo
+					IF (nextChildRef IS NULL) THEN
+						SET estado = 'A';
+					ELSE
+						-- sem filho, com irmão, não nulo
+						MOVE nextChildRef NEXTSIBLING;
+						IF LASTMOVE(nextChildRef) THEN
+							SET estado = 'I';
+						ELSE
+							-- não tem filho, nem irmão, nem é nulo
+							SET estado = 'P';
+						END IF;
+					END IF;	
+				END IF;
+			END IF;
+			
+			-- tratamento e ações para o estado P
+			IF (estado = 'P') THEN
+				MOVE nextChildRef NEXTSIBLING;
+				IF LASTMOVE(nextChildRef) THEN
+					SET estado = 'I';
+				ELSE
+					-- não tem irmão, mas tem pai
+					MOVE nextChildRef PARENT;
+					IF LASTMOVE(nextChildRef) THEN
+						SET estado = 'P';
+					ELSE
+						-- não tem irmão, nem pai, nem filhos
+						SET estado = 'E';
+					END IF;
+				END IF;
+			END IF;
+			
+			-- tratamento e ações para o estado A
+			IF (estado = 'A') THEN
+				DECLARE deleteRef REFERENCE TO nextChildRef;
+				MOVE nextChildRef NEXTSIBLING;
+				IF LASTMOVE(nextChildRef) THEN
+						-- apagou e tem irmão
+						SET estado = 'I';
+						DELETE FIELD deleteRef;
+					ELSE
+						-- apagou e não tem irmão nem filhos, só resta o pai
+						MOVE nextChildRef PARENT;
+						IF LASTMOVE(nextChildRef) THEN
+							SET estado = 'P';
+							DELETE FIELD deleteRef;
+						ELSE 
+							-- sem pai, sem filho, sem irmãos, e apagado, fim
+							SET estado = 'E';
+						END IF;
+					END IF;
+			END IF;
+			
+		END WHILE;
+		
+
+
+	END;
+	
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;	
+	
+	
+END MODULE;

@@ -1,0 +1,107 @@
+<project default="all">
+
+	<target name="init">
+		<echo message="###################################" />
+		<echo message="Initialize environment variables" />
+		<echo message="###################################" />
+		<property name="app.version" value="v1.0.1"></property>
+		<property name="file.properties" value="libfuncoesUteis-hmg.properties"></property>
+		<property name="app.name" value="LibFuncoesUtils"></property>
+		<property name="bar.name" value="LibFuncoesUtils.bar"></property>
+		<property name="bar.output.location" value="..\deployedBars"></property>
+		<property name="workspace.location" value="..\"></property>
+		<property name="MQSI_JARPATH" value="C:\ProgramData\IBM\MQSI\shared-classes"></property>
+		<property name="util" value="..\Util\utilitarios"></property>
+		<property name="host" value="acenodehmg01.fiepr.org.br" />
+		<property name="port" value="4414" />
+		<property name="integration_service" value="IS_Portal_Assinatura" />
+	</target>
+
+	<property environment="env" />
+	<property name="build_parameter"  value="${env.BUILD_NUMBER}"/>
+
+	<target name="all"
+			depends="run_mqsipackagebar, run_mqsiapplybaroverride, run_javacompile, run_mqsideploy">
+	</target>
+	
+	<target name="run_mqsipackagebar" description="--> runs mqsipackagebar from an ant task"
+		depends="init">
+		<echo message="###################################" />
+		<echo message="Packaging Broker Archive file ${bar.name}" />
+		<echo message="###################################" />
+		<java classname="com.ibm.broker.config.appdev.FlowRendererBAR"
+			failonerror="true" fork="true">
+			<arg line="-w ${workspace.location}" />
+			<arg line="-a ${bar.output.location}\${bar.name}" />
+			<arg line="-k ${app.name}" />
+			<classpath>
+				<fileset dir="${MQSI_JARPATH}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<!-- Target to build the broker archive using mqsiapplybaroverride -->
+	<target name="run_mqsiapplybaroverride">
+		<echo message="###################################" />
+		<echo message="Applying overrides in Broker Archive file ${bar.name} " />
+		<echo message="###################################" />
+
+		<echo
+			message="mqsiapplybaroverride -b ${bar.output.location}\${bar.name} -p ${workspace.location}\${app.name}\${file.properties} -o ${bar.output.location}\${app.name}-${app.version}.bar -r" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true">
+			<arg line="/c call C:\IBM\ACE\12.0.4.0\ace.cmd mqsiapplybaroverride.bat" />
+			<arg value="-b" />
+			<arg value="${bar.output.location}\${bar.name}" />
+			<arg value="-p" />
+			<arg value="${workspace.location}\${app.name}\${file.properties}" />
+			<arg value="-o" />
+			<arg value="${bar.output.location}\${app.name}-${app.version}.bar" />
+			<arg value="-r" />
+		</exec>
+		<echo message="Completed apply overrides in Broker Archive file ${app.name}-${app.version}.bar" />
+	</target>
+
+	<target name="run_javacompile">
+       <jar destfile = "${bar.output.location}\LibFuncoesUtilsJava.jar"
+          basedir = "../LibFuncoesUtilsJava"
+          excludes = "**/Test.class">
+       </jar>
+    </target>
+          	
+	<target name="run_addversion" description="--> runs mqsipackagebar from an ant task"
+		depends="run_mqsiapplybaroverride" >
+		<echo message="###################################" />
+		<echo message="Adding version ${app.version} Build ${build_parameter} in ${app.name}-${app.version}.bar" />
+		<echo message="###################################" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true" outputproperty="devnull">
+			<arg line="/c call ${util}\addversion-lib.bat" />
+			<arg value="${bar.output.location}\${app.name}-${app.version}.bar" />
+			<arg value="${app.name}" />
+			<arg value="${app.version}" />
+			<arg value="${bar.output.location}"  />
+		</exec>
+	</target>
+
+	<target name="run_mqsideploy" description="--> runs mqsipackagebar from an ant task"
+		>
+		<echo message="###################################" />
+		<echo message="Deploying Broker Archive file ${app.name}-${app.version}.bar" />
+		<echo message="###################################" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true">
+			<arg line="/c call java -jar ${util}\mqsideploy.jar" />
+			<arg value="${host}" />
+			<arg value="${port}" />
+			<arg value="${integration_service}" />
+			<arg value="${bar.output.location}\${app.name}-${app.version}.bar" />
+		</exec>
+	</target>
+
+</project>

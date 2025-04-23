@@ -1,0 +1,1 @@
+java -jar C:\ProgramData\IBM\MQSI\shared-classes\token.jar

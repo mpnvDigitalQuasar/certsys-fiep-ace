@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="br/org/fiep/esb/utils/v1/TratarErro.subflow" nsPrefix="br_org_fiep_esb_utils_v1_TratarErro.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Legacy_System" name="Legacy_System">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="TratarErro" bundleName="br/org/fiep/esb/utils/v1/TratarErro" pluginId="LibFuncoesUtils"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj16/TratarErro.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj30/TratarErro.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,136">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="br/org/fiep/esb/utils/v1/TratarErro" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="101,136" computeExpression="esql://routine/br.org.fiep.esb.utils.v1#TratamentoErro.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Tratamento Erro"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="235,137">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="br/org/fiep/esb/utils/v1/TratarErro" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.Legacy_System">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.Legacy_System" bundleName="br/org/fiep/esb/utils/v1/TratarErro" pluginId="LibFuncoesUtils"/>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

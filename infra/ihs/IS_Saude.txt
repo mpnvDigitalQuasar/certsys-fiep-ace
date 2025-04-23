@@ -1,0 +1,17 @@
+<!-- IS_Saude -->
+<ServerCluster Name="ServerCluster13_to_ACE" CloneSeparatorChange="false" LoadBalance="Round Robin" PostBufferSize="64" IgnoreAffinityRequests="true" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+	<Server Name="srvdcv159_IN_HMG01_https_Server_0" ConnectTimeout="5" ExtendedHandshake="false" ServerIOTimeout="60" LoadBalanceWeight="1" MaxConnections="-1" WaitForContinue="false">
+		<Transport Hostname="acenodehmg01.fiepr.org.br" Port="7855" Protocol="https">
+			<Property name="keyring" value="E:\IBM\WebSphere\Plugins\config\webserver01.fiep\plugin-key.kdb"/>
+			<Property name="stashfile" value="E:\IBM\WebSphere\Plugins\config\webserver01.fiep\plugin-key.sth"/>
+		</Transport>
+	</Server>       
+</ServerCluster>
+
+<!-- IS_Saude -->
+<UriGroup Name="ServerCluster13_to_ACE_URIs">
+	<Uri Name="/api/omni/saude/v1*"/>
+	<Uri Name="/api/qmais/v1*"/>
+</UriGroup>
+
+<Route ServerCluster="ServerCluster13_to_ACE" UriGroup="ServerCluster13_to_ACE_URIs" VirtualHostGroup="default_host_https"/>

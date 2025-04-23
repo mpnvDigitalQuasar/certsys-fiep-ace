@@ -1,0 +1,43 @@
+Comandos básicos para o IBM App Connect Enterprise Console.
+
+------- LISTAR INTEGRATION NODE
+mqsilist
+
+------- LISTAR OBJETOS DO INTEGRATION NODE 
+mqsilist IN_DEV01
+
+------- LISTAR OBJETOS DO INTEGRATION SERVER 
+mqsilist IN_DEV01 -e IS_Saude
+
+------- INICIAR UM INTEGRATION NODE
+mqsistart IN_DEV01
+
+------- PARAR UM INTEGRATION NODE
+mqsistop IN_DEV01
+
+------- INICIAR UM INTEGRATION SERVER
+mqsistartmsgflow IN_DEV01 -e IS_Saude
+
+------- PARAR UM INTEGRATION SERVER
+mqsistopmsgflow IN_DEV01 -e IS_Saude
+
+------- TESTE DE CONEXÃO COM BANCO DE DADOS
+mqsicvp IN_DEV01 -n odbc_db_broker
+
+------- CONFIGURAR O BASIC AUTH
+mqsichangeproperties IN_DEV01 -e IS_Saude -o ComIbmSocketConnectionManager -n preemptiveAuthType -v 'Basic'
+
+------- SECURITY-PROFILE - # Envio de usuário e senha 
+
+# Envio de usuário e senha 
+mqsisetdbparms IN_DEV01 -n CREDIIB -u 'usuario' -p 'password'
+
+# Criar Configurable Service
+mqsicreateconfigurableservice IN_DEV01 -c SecurityProfiles -o SEGCREDIIB -n mapping,rejectBlankpassword,propagation,passwordValue,keyStore,authorizationConfig,authenticationConfig,idToPropagateToTransport,trustStore,authentication,authorization,mappingConfig,transportPropagationConfig -v "NONE","TRUE","TRUE","PLAIN","Reserved for future use","","","STATIC ID","Reserved for future use","NONE","NONE","","CREDIIB
+
+------- SECURITY-PROFILE - # LDAP
+
+mqsicreateconfigurableservice IN_DEV01 -c SecurityProfiles -o SEGCREDFUTURODIGITAL -n mapping,rejectBlankpassword,propagation,passwordValue,keyStore,authorizationConfig,authenticationConfig,idToPropagateToTransport,trustStore,authentication,authorization,mappingConfig,transportPropagationConfig -v "NONE","TRUE","TRUE","PLAIN","Reserved for future use",\"ldap://fiepr.local:389/|(CN=GS.ACE.DEV,OU=Desenvolvimento,OU=IBM-IIB,OU=SEGURANCA,OU=GRUPOS,OU=TAXONOMIA,DC=fiepr,DC=local)(CN=GS.ACE.DEV.FUTURODIGITAL,OU=FuturoDigital,OU=Desenvolvimento,OU=IBM-IIB,OU=SEGURANCA,OU=GRUPOS,OU=TAXONOMIA,DC=fiepr,DC=local)(CN=GS.ACE.DEV.FUTURODIGITAL.VENDA.POST,OU=FuturoDigital,OU=Desenvolvimento,OU=IBM-IIB,OU=SEGURANCA,OU=GRUPOS,OU=TAXONOMIA,DC=fiepr,DC=local)\",\"ldap://fiepr.local:389/dc=fiepr,dc=local?sAMAccountName\","Message ID","Reserved for future use","LDAP","LDAP","",""
+
+------- PERMISSÕES PARA NOVOS INTEGRATIONS SERVERS
+

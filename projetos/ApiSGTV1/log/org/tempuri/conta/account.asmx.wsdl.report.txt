@@ -1,0 +1,55 @@
+
+
+Importing file: C:\Barramento\GIT\FIEP\testeIntegradoV2\assembly\AppSGT_V7\xml-resources\web-service-references\account\wsdl\wbscrmprd.fiepr.org.br\account.asmx.wsdl
+
+The WSDL import will proceed with bindings AccountSoap.
+Creating wsdl schema document for file:///C:/Barramento/GIT/FIEP/testeIntegradoV2/assembly/AppSGT_V7/xml-resources/web-service-references/account/wsdl/wbscrmprd.fiepr.org.br/account.asmx.wsdl.
+Parsing wsdl binding {http://tempuri.org/conta/}AccountSoap.
+Parsing wsdl binding input ConsultaDadosClienteSIGA.
+Parsing wsdl binding output ConsultaDadosClienteSIGA.
+Parsing wsdl binding input FindAccountAX.
+Parsing wsdl binding output FindAccountAX.
+Parsing wsdl binding input UpdateAccountAX.
+Parsing wsdl binding output UpdateAccountAX.
+Parsing wsdl binding input InsertAccountAX.
+Parsing wsdl binding output InsertAccountAX.
+Parsing wsdl binding input GetClientesInadimplentes.
+Parsing wsdl binding output GetClientesInadimplentes.
+Parsing wsdl binding input GetClienteInadimplente.
+Parsing wsdl binding output GetClienteInadimplente.
+Parsing wsdl binding input CarregarContasPF.
+Parsing wsdl binding output CarregarContasPF.
+Parsing wsdl binding input SalvarContasDuplicadas.
+Parsing wsdl binding output SalvarContasDuplicadas.
+Parsing wsdl binding input GravarConta.
+Parsing wsdl binding output GravarConta.
+Parsing wsdl binding input GetContas.
+Parsing wsdl binding output GetContas.
+Parsing wsdl binding input AtualizaContaAX.
+Parsing wsdl binding output AtualizaContaAX.
+Processing doc style for operation ConsultaDadosClienteSIGA.
+Processing doc style for operation FindAccountAX.
+Processing doc style for operation UpdateAccountAX.
+Processing doc style for operation InsertAccountAX.
+Processing doc style for operation GetClientesInadimplentes.
+Processing doc style for operation GetClienteInadimplente.
+Processing doc style for operation CarregarContasPF.
+Processing doc style for operation SalvarContasDuplicadas.
+Processing doc style for operation GravarConta.
+Processing doc style for operation GetContas.
+Processing doc style for operation AtualizaContaAX.
+Populating WSDL schema account.asmx.xsd.
+Creating file account.asmx.xsd in the workspace.
+Creating file account.asmx_InlineSchema1.xsd in the workspace.
+Creating file /ApiSGT/account.asmx_InlineSchema2.xsd in the workspace.
+Creating file /ApiSGT/account.asmx_InlineSchema3.xsd in the workspace.
+Creating file /ApiSGT/account.asmx_InlineSchema4.xsd in the workspace.
+Copying source WSDL account.asmx.wsdl to account.asmx.wsdl.
+
+Elapsed time processing this message definition file: 0.323 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

@@ -1,0 +1,30 @@
+BROKER SCHEMA br.org.fiep.esb.utils
+
+
+
+CREATE COMPUTE MODULE LancaSoapFault
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE excecaoBLOB BLOB ASBITSTREAM(InputRoot.XMLNSC.Erro ENCODING InputRoot.MQMD.Encoding 
+                                 CCSID InputRoot.MQMD.CodedCharSetId SET '' TYPE '' FORMAT '' OPTIONS FolderBitStream);
+		DECLARE excecaoCDATA CHARACTER CAST(excecaoBLOB AS CHARACTER CCSID InputRoot.MQMD.CodedCharSetId);
+		
+		
+		THROW USER EXCEPTION MESSAGE 3001 VALUES( CAST(excecaoCDATA AS CHARACTER), excecaoCDATA);
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

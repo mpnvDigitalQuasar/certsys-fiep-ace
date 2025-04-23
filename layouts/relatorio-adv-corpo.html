@@ -1,0 +1,422 @@
+<!-- 
+    
++ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+  
+   == RELATÓRIO ADV - CORPO ==
+   
+   Este arquivo é a representação visual do relatório ADV.
+ 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+   
+   Autor: Henrique Fantini
+   Contato: henrique.fantini@certsys.com.br
+   Data: 16/07/2020
+   
++ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+
+-->
+
+<!DOCTYPE html>
+<html>
+
+    <!-- == HEAD ========================================================================================== -->
+
+    <head>
+
+        <meta charset="UTF-8">
+        
+        <style>
+
+            body
+            {
+                /* margin: 0px 10px 0px 10px; */
+                margin: 0px;
+                /* font-family: "Calibri Light";*/
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px;
+            }
+
+            .TEXTO-DESTAQUE-TAMANHO
+            {
+                font-size: 12px;
+            }
+
+            .DIV-TABELA-INTERNA
+            {
+                margin: 17px 5px 17px 5px;
+            }
+
+            .DIV-CONTAINER-TEXTO
+            {
+                margin: 25px 5px 25px 5px;
+            }
+
+            .DIV-ASSIANTURA
+            {
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+                border-bottom: 1px solid #000000;
+            }
+
+            .TABELA
+            {
+                border-spacing: 0px;
+            }
+
+            .TABELA-FULLWIDTH
+            {
+                width: 100%;
+            }
+
+            .TABELA-CORFUNDO
+            {
+                background-color: #D9D9D9;
+            }
+
+            .TABELA-TEXTO-ESQUERDA
+            {
+                text-align: left;
+            }
+
+            .TABELA-TEXTO-CENTRO
+            {
+                text-align: center;
+            }
+
+            .TABELA-TEXTO-DIREITA
+            {
+                text-align: right;
+            }
+
+            .TABELA-MARGEM-CIMA
+            {
+                padding-top: 10px;
+            }
+
+            .TABELA-MARGEM-BAIXO
+            {
+                padding-bottom: 10px;
+            }
+
+            .TABELA-SEPARADOR-VERTICAL
+            {
+                height: 10px;
+            }
+
+            .TABELA-BORDA-BAIXO
+            {
+                border-bottom: 1px solid #D9D9D9;
+            }
+
+            .TABELA-BORDA-CIMA
+            {
+                border-top: 1px solid #D9D9D9;
+            }
+
+            .TABELA-BORDA-DIREITA
+            {
+                border-right: 1px solid #D9D9D9;
+            }
+
+            .TABELA-BORDA-COMPLETA
+            {
+                border: 1px solid #D9D9D9;
+            }
+
+            .TABELA-CELULA-ESPACO-ESQUERDO
+            {
+                padding-left: 5px;
+            }
+
+            .TABELA-CELULA-ESPACO-DIREITO
+            {
+                padding-right: 5px;
+            }
+
+        </style>
+
+    </head>
+
+    <!-- == BODY ========================================================================================== -->
+
+    <body>
+
+        <!-- == ADIANTAMENTO PARA DESPESAS DE VIAGEM ==================================================== -->
+
+        <table class="TABELA TABELA-FULLWIDTH">
+
+            <tr class="TABELA-CORFUNDO">
+
+                <td class="TABELA-TEXTO-CENTRO TABELA-MARGEM-CIMA">
+
+                    <span class="TEXTO-DESTAQUE-TAMANHO"> <b>ADV - ADIANTAMENTO PARA DESPESAS DE VIAGEM</b> </span>
+
+                </td>
+
+            </tr>
+
+            <tr class="TABELA-CORFUNDO">
+
+                <td class="TABELA-TEXTO-CENTRO TABELA-MARGEM-BAIXO">
+
+                    <span class="TEXTO-DESTAQUE-TAMANHO"> <b>ADV N.º</b> </span>
+                    <span class="TEXTO-DESTAQUE-TAMANHO">${NRO_SOLICITACAO}</span>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    <span class="TEXTO-DESTAQUE-TAMANHO"> <b>Emissão em:</b> </span>
+                    <span class="TEXTO-DESTAQUE-TAMANHO">${DATA_EMISSAO}</span>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <div class="DIV-TABELA-INTERNA">
+
+            <table class="TABELA TABELA-FULLWIDTH">
+
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" style="width: 45%;"> <b>Nome: </b> ${NOME_COLABORADOR} </td>
+                    <td class="TABELA-TEXTO-ESQUERDA" style="width: 25%;"> <b>CPF: </b> ${CPF_VIAJANTE} </td>
+                    <td class="TABELA-TEXTO-DIREITA" style="width: 30%;"> <b>Matrícula: </b> ${MATRICULA} </td>
+
+                </tr>
+
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Empresa: </b> ${CODIGO_EMPRESA} - ${DESCRICAO_EMPRESA_SEM_CODIGO} </td>
+
+                </tr>
+
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Unidade: </b> ${DESCRICAO_UNIDADE} </td>
+
+                </tr>      
+                
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Centro de Responsabilidade: </b> ${CODIGO_CENTRO_RESPONSABILIDADE} - ${DESCRICAO_CENTRO_RESPONSABILIDADE_SEM_CODIGO} </td>
+
+                </tr> 
+
+                <tr>
+
+                    <td class="TABELA-SEPARADOR-VERTICAL">
+
+                        <!-- LINHA EM BRANCO / SEPARADOR -->
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3">
+                        
+                        <b>Início: </b> ${INICIO_VIAGEM}
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <b>Término: </b> ${TERMINO_VIAGEM}
+                    
+                    </td>
+
+                </tr> 
+
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Objetivo: </b> ${OBJETIVO_VIAGEM} </td>
+
+                </tr> 
+
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Origem: </b> ${ORIGEM} </td>
+
+                </tr>     
+                
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Pernoite: </b> ${PERNOITE} </td>
+
+                </tr>      
+                
+                <tr>
+
+                    <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Evento: </b> ${EVENTO} </td>
+
+                </tr>               
+                
+            </table>
+
+        </div>
+
+        <!-- == DESTINO(S) PREVISTO(S) ================================================================= -->
+
+        <table class="TABELA TABELA-FULLWIDTH">
+
+            <tr class="TABELA-CORFUNDO">
+
+                <td class="TABELA-TEXTO-CENTRO TABELA-MARGEM-CIMA TABELA-MARGEM-BAIXO">
+
+                    <span class="TEXTO-DESTAQUE-TAMANHO"><b>DESTINO(S) PREVISTO(S)</b></span>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <div class="DIV-TABELA-INTERNA">
+
+            <table class="TABELA TABELA-FULLWIDTH">
+
+                ${destinos|
+
+                    <tr>
+
+                        <td class="TABELA-TEXTO-ESQUERDA" style="width: 18%;"> <b>De: </b> ${DATA_DE} </td>
+                        <td class="TABELA-TEXTO-ESQUERDA" style="width: 18%;"> <b>Até: </b> ${DATA_ATE} </td>
+                        <td class="TABELA-TEXTO-ESQUERDA" style="width: 64%;"> <b>Local: </b> ${CIDADE} </td>
+    
+                    </tr>
+
+                |destinos}
+
+            </table>
+
+        </div>
+
+        <!-- == MEIO(S) DE TRANSPORTE PREVISTO(S) ======================================================= -->
+
+        <table class="TABELA TABELA-FULLWIDTH">
+
+            <tr class="TABELA-CORFUNDO">
+
+                <td class="TABELA-TEXTO-CENTRO TABELA-MARGEM-CIMA TABELA-MARGEM-BAIXO">
+
+                    <span class="TEXTO-DESTAQUE-TAMANHO"><b>MEIO(S) DE TRANSPORTE PREVISTO(S)</b></span>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <div class="DIV-TABELA-INTERNA">
+
+            <table class="TABELA TABELA-FULLWIDTH">
+
+                ${meiosTransporte|
+
+                    <tr>
+
+                        <td class="TABELA-TEXTO-ESQUERDA" colspan="3"> <b>Descrição: </b> ${MEIO_TRANSPORTE} </td>
+
+                    </tr>
+
+                |meiosTransporte}
+
+            </table>
+            
+        </div>
+
+        <!-- == VALORES AUFERIDOS NO ADIANTAMENTO ================================================== -->
+
+        <table class="TABELA TABELA-FULLWIDTH">
+
+            <tr class="TABELA-CORFUNDO">
+
+                <td class="TABELA-TEXTO-CENTRO TABELA-MARGEM-CIMA TABELA-MARGEM-BAIXO">
+
+                    <span class="TEXTO-DESTAQUE-TAMANHO"><b>VALORES AUFERIDOS NO ADIANTAMENTO</b></span>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <table class="TABELA TABELA-FULLWIDTH">
+
+            <tr>
+
+                <td class="TABELA-TEXTO-ESQUERDA TEXTO-DESTAQUE-TAMANHO TABELA-BORDA-BAIXO TABELA-CELULA-ESPACO-ESQUERDO" style="width: 64%;"> <b>Parcela(s) do ADV</b> </td>
+                <td class="TABELA-TEXTO-CENTRO TEXTO-DESTAQUE-TAMANHO TABELA-BORDA-BAIXO" style="width: 18%;"> <b>Qtde. Previsto</b> </td>
+                <td class="TABELA-TEXTO-DIREITA TEXTO-DESTAQUE-TAMANHO TABELA-BORDA-BAIXO TABELA-CELULA-ESPACO-DIREITO" style="width: 18%;"> <b>Valor Previsto</b> </td>
+
+            </tr>
+
+            ${despesas|
+
+                <tr>
+                
+                    <td class="TABELA-TEXTO-ESQUERDA TABELA-CELULA-ESPACO-ESQUERDO"> ${TIPO_DESPESA_PAGO} </td>
+                    <td class="TABELA-TEXTO-CENTRO"> ${QUANTIDADE_PAGO} </td>
+                    <td class="TABELA-TEXTO-DIREITA TABELA-CELULA-ESPACO-DIREITO"> ${VALOR_PAGO} </td>
+
+                </tr>
+
+            |despesas}
+
+            <tr class="TABELA-CORFUNDO">
+                <td class="TABELA-TEXTO-ESQUERDA TEXTO-DESTAQUE-TAMANHO TABELA-CELULA-ESPACO-ESQUERDO" colspan="1"> <b>Cotação do Dólar: </b> </td>
+                <td class="TABELA-TEXTO-DIREITA TEXTO-DESTAQUE-TAMANHO TABELA-CELULA-ESPACO-DIREITO" colspan="2"> ${COTACAO_MOEDA} </td>               
+
+            </tr>
+
+            <tr class="TABELA-CORFUNDO">
+                
+                <td class="TABELA-TEXTO-ESQUERDA TEXTO-DESTAQUE-TAMANHO TABELA-CELULA-ESPACO-ESQUERDO" colspan="1"> <b>Total: </b> </td>
+                <td class="TABELA-TEXTO-DIREITA TEXTO-DESTAQUE-TAMANHO TABELA-CELULA-ESPACO-DIREITO" colspan="2"> <b>${TOTAL_PAGO} </b> </td>
+
+            </tr>
+
+        </table>
+            
+        <!-- == TERMO DE CONCORDÂNCIA ==================================================================== -->
+
+        <br/><br/>
+        <table class="TABELA TABELA-FULLWIDTH">
+
+            <tr class="TABELA-CORFUNDO">
+
+                <td class="TABELA-TEXTO-CENTRO TABELA-MARGEM-CIMA TABELA-MARGEM-BAIXO">
+
+                    <span class="TEXTO-DESTAQUE-TAMANHO"> <b>${TERMO}</b> </span>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <div class="DIV-CONTAINER-TEXTO">
+
+            Recebi ${ENTIDADE}, inscrito no CNPJ/MF N.º ${CNPJ}, a importância de ${VALOR_TOTAL_ADV}, (${VALOR_TOTAL_ADV_EXTENSO}), relativa ao adiantamento para viagem supramencionada. Estou ciente que para o não cumprimento do prazo estipulado para a prestação de contas, serão aplicadas as regras previstas na NG 007/08 - e NG 002/12 FIEP.
+            <br/><br/>
+            E por ser verdade, firmo o presente. 
+            <br/><br/><br/><br/>
+            <div class="TABELA-TEXTO-CENTRO"> ${DATA_EMISSAO} </div>
+            <br/><br/><br/><br/>
+            <div class="DIV-ASSIANTURA"></div>
+            <div class="TABELA-TEXTO-CENTRO">Assinatura</div>
+            <br/><br/>
+            <div class="TABELA-TEXTO-ESQUERDA">${TERMO_LINHA_1}</div>
+            <div class="TABELA-TEXTO-CENTRO">${TERMO_LINHA_2}</div>
+            <div class="TABELA-TEXTO-CENTRO">${TERMO_LINHA_3}</div>
+            <div class="TABELA-TEXTO-CENTRO">${TERMO_LINHA_4}</div>
+
+        </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFlowOrder.msgnode="ComIbmFlowOrder.msgnode" xmlns:ComIbmSOAPRequest.msgnode="ComIbmSOAPRequest.msgnode" xmlns:br_org_fiep_esb_monitoramento_v1_SoapRequestIn.subflow="br/org/fiep/esb/monitoramento/v1/SoapRequestIn.subflow" xmlns:br_org_fiep_esb_monitoramento_v1_SoapRequestOut.subflow="br/org/fiep/esb/monitoramento/v1/SoapRequestOut.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:registrarErros.subflow="registrarErros.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="obterProdutoCRM.subflow" nsPrefix="obterProdutoCRM.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="SQUARE">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterProdutoUser" name="obterProdutoUser" defaultValueLiteral="CRMUser">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterProdutoPass" name="obterProdutoPass" defaultValueLiteral="CRMPassword">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.obterProdutoDomain" name="obterProdutoDomain" defaultValueLiteral="CRMDomain">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="obterProdutoCRM" bundleName="obterProdutoCRM" pluginId="ApiSGTV1"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj16/obterProdutoCRM.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/ApiSGTV1/icons/full/obj30/obterProdutoCRM.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="53,150">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="obterProdutoCRM" pluginId="ApiSGTV1"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="941,156">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="obterProdutoCRM" pluginId="ApiSGTV1"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="423,156" wsdlFileName="product.asmx.wsdl" selectedPortType="ProductSoap" selectedBinding="ProductSoap12" selectedOperation="GetProdutos" selectedPort="ProductSoap12" targetNamespace="http://tempuri.org/produto/" useHTTPTransport="true" webServiceURL="https://crm/product" sslProtocol="TLS">
+        <translation xmi:type="utility:ConstantString" string="SOAP Request"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_SoapRequestIn.subflow:FCMComposite_1" xmi:id="FCMComposite_1_1" location="324,156">
+        <translation xmi:type="utility:ConstantString" string="SoapRequestIn"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_SoapRequestOut.subflow:FCMComposite_1" xmi:id="FCMComposite_1_7" location="622,155">
+        <translation xmi:type="utility:ConstantString" string="SoapRequestOut"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="111,149" computeExpression="esql://routine/#obterProdutoCRM_prepararRequest.Main">
+        <translation xmi:type="utility:ConstantString" string="prepararRequest"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="725,155" computeExpression="esql://routine/#obterProdutoCRM_prepararResponse.Main">
+        <translation xmi:type="utility:ConstantString" string="prepararResponse"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="844,155" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
+        <translation xmi:type="utility:ConstantString" string="registarEtapas"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="331,35" dataSource="odbc_db_broker" computeExpression="esql://routine/#processarProduto_registarEtapas.Main">
+        <translation xmi:type="utility:ConstantString" string="registarEtapas1"/>
+      </nodes>
+      <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="524,191">
+        <translation xmi:type="utility:ConstantString" string="registrarErros"/>
+      </nodes>
+      <nodes xmi:type="registrarErros.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="523,106">
+        <translation xmi:type="utility:ConstantString" string="registrarErros1"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFlowOrder.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="221,149">
+        <translation xmi:type="utility:ConstantString" string="Flow Order"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_8" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_14" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.Input">
+        <bendPoints>31,-83,440,-84</bendPoints>
+        <bendPoints>-440,-83,-31,-84</bendPoints>
+      </connections>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_10" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.fault" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_13" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input2"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_15" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.first" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.second" targetTerminalName="InTerminal.Input"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterProdutoUser">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.obterProdutoUser" bundleName="obterProdutoCRM" pluginId="ApiSGTV1"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterProdutoPass">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.obterProdutoPass" bundleName="obterProdutoCRM" pluginId="ApiSGTV1"/>
+          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.obterProdutoDomain">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.obterProdutoDomain" bundleName="obterProdutoCRM" pluginId="ApiSGTV1"/>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

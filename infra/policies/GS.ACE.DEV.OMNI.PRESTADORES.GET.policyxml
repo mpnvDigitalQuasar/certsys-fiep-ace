@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="yes"?>
+<policies>
+  <policy policyType="SecurityProfiles" policyName="GS.ACE.DEV.OMNI.PRESTADORES.GET">
+    <alternateServers></alternateServers>
+    <authentication>LDAP</authentication>
+    <authenticationConfig>ldap://fiepr.local:389/dc=fiepr,dc=local?sAMAccountName</authenticationConfig>
+    <authorization>LDAP</authorization>
+    <authorizationConfig>ldap://fiepr.local:389/|(CN=GS.ACE.DEV,OU=Desenvolvimento,OU=IBM-IIB,OU=SEGURANCA,OU=GRUPOS,OU=TAXONOMIA,DC=fiepr,DC=local)(CN=GS.ACE.DEV.OMNI.PRESTADORES.GET,OU=OMNI,OU=Desenvolvimento,OU=IBM-IIB,OU=SEGURANCA,OU=GRUPOS,OU=TAXONOMIA,DC=fiepr,DC=local)</authorizationConfig>
+    <idToPropagateToTransport>Message ID</idToPropagateToTransport>
+    <keyStore>Reserved for futureuse</keyStore>
+    <mapping>NONE</mapping>
+    <mappingConfig></mappingConfig>
+    <passwordValue>PLAIN</passwordValue>
+    <propagation>TRUE</propagation>
+    <rejectBlankpassword>TRUE</rejectBlankpassword>
+    <transportPropagationConfig></transportPropagationConfig>
+    <trustStore>Reserved for future use</trustStore>
+  </policy>
+</policies>

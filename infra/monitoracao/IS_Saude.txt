@@ -1,0 +1,25 @@
+RecordReplay:
+  Sources:
+    DataCaptureSourceApiOmniSaudeV1:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_HMG01/Monitoring/IS_Saude/gen.ApiOmniSaudeV1'
+    DataCaptureSourceApiOmniSaudeV1_importacaoFuncionario:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_HMG01/Monitoring/IS_Saude/importacaoFuncionario'
+    DataCaptureSourceApiOmniSaudeV1_incluirPedidoExame:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_HMG01/Monitoring/IS_Saude/incluirPedidoExame'      
+    DataCaptureSourceApiQmaisV1:
+      store: 'Auditoria'
+      topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_ Saude/gen.ApiQmaisV1'
+  Stores:
+    Auditoria_IS_Saude:
+      backoutQueue: 'SYSTEM.BROKER.DC.BACKOUT'
+      commitCount: 10
+      commitIntervalSecs: 5
+      dataSource: 'odbc_db_iibauditoria'
+      queue: 'SYSTEM.BROKER.DC.RECORD'
+      schema: ''
+      storeMode: 'all'
+      threadPoolSize: 10
+      useCoordinatedTransaction: false      

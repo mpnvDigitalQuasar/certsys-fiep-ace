@@ -1,0 +1,114 @@
+<project default="all">
+
+	<target name="init">
+		<echo message="###################################" />
+		<echo message="Initialize environment variables" />
+		<echo message="###################################" />
+		<property  name="api.version" value="v1.0.0"></property>
+		<property name="file.properties" value="prd.properties"></property>
+		<property name="api.name" value="ApiSGTV1"></property>
+		<property name="bar.name" value="ApiSGTV1.bar"></property>
+		<property name="bar.output.l	ocation" value="..\deployedBars"></property>
+		<property name="workspace.location" value="..\"></property>
+		<property name="MQSI_JARPATH" value="C:\ProgramData\IBM\MQSI\shared-classes"></property>
+		<property name="util" value="..\Util\utilitarios"></property>
+		<property name="host" value="acenode01.fiepr.org.br" />
+		<property name="port" value="4414" />
+		<property name="integration_service" value="IS_Saude" />
+	</target>
+
+	<property environment="env" />
+	<property name="build_parameter"  value="${env.BUILD_NUMBER}"/>
+
+	<target name="all"
+		depends="run_mqsipackagebar, run_mqsiapplybaroverride, run_mqsideploy">
+	</target>
+	
+	<target name="run_mqsipackagebar" description="--> runs mqsipackagebar from an ant task"
+		depends="init">
+		<echo message="###################################" />
+		<echo message="Packaging Broker Archive file ${bar.name}" />
+		<echo message="###################################" />
+		<java classname="com.ibm.broker.config.appdev.FlowRendererBAR"
+			failonerror="true" fork="true">
+			<arg line="-w ${workspace.location}" />
+			<arg line="-a ${bar.output.location}\${bar.name}" />
+			<arg line="-k ${api.name}" />
+			<classpath>
+				<fileset dir="${MQSI_JARPATH}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<!-- Target to build the broker archive using mqsiapplybaroverride -->
+	<target name="run_mqsiapplybaroverride">
+		<echo message="###################################" />
+		<echo message="Applying overrides in Broker Archive file ${bar.name} " />
+		<echo message="###################################" />
+
+		<echo
+			message="mqsiapplybaroverride -b ${bar.output.location}\${bar.name} -p ${workspace.location}\${api.name}\${file.properties} -o ${bar.output.location}\${api.name}-${api.version}.bar -r" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true">
+			<arg line="/c call 'C:\Program Files\IBM\ACE\12.0.10.0\ace.cmd' mqsiapplybaroverride.bat" />
+			<arg value="-b" />
+			<arg value="${bar.output.location}\${bar.name}" />
+			<arg value="-p" />
+			<arg value="${workspace.location}\${api.name}\${file.properties}" />
+			<arg value="-o" />
+			<arg value="${bar.output.location}\${api.name}-${api.version}.bar" />
+			<arg value="-r" />
+		</exec>
+		<echo message="Completed apply overrides in Broker Archive file ${api.name}-${api.version}.bar" />
+	</target>
+
+	<target name="run_addversion" description="--> runs mqsipackagebar from an ant task"
+		depends="run_mqsiapplybaroverride" >
+		<echo message="###################################" />
+		<echo message="Adding version ${api.version} Build ${build_parameter} in ${api.name}-${api.version}.bar" />
+		<echo message="###################################" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true" outputproperty="devnull">
+			<arg line="/c call ${util}\addversion.bat" />
+			<arg value="${bar.output.location}\${api.name}-${api.version}.bar" />
+			<arg value="${api.name}" />
+			<arg value="${api.version}" />
+			<arg value="${bar.output.location}" />
+			<arg value="${build_parameter}" />
+		</exec>
+	</target>
+
+	<target name="run_mqsideploy" description="--> runs mqsipackagebar from an ant task"
+		>
+		<echo message="###################################" />
+		<echo message="Deploying Broker Archive file ${api.name}-${api.version}.bar" />
+		<echo message="###################################" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true">
+			<arg line="/c call java -jar ${util}\mqsideploy.jar" />
+			<arg value="${host}" />
+			<arg value="${port}" />
+			<arg value="${integration_service}" />
+			<arg value="${bar.output.location}\${api.name}-${api.version}.bar" />
+		</exec>
+	</target>
+
+	<target name="run_iib_providers" description="--> runs mqsipackagebar from an ant task"
+		depends="run_mqsiapplybaroverride" >
+		<echo message="###################################" />
+		<echo message=" Insert information about all providers (SOAP, REST, DB) into Database" />
+		<echo message="###################################" />
+
+		<exec executable="cmd.exe" failonerror="true" logError="true"
+			vmlauncher="false" append="true" outputproperty="devnull">
+			<arg line="/c call ${util}\iib-providers.jar" />
+			<arg value="${api.name}" />
+			<arg value="${workspace.location}\${api.name}" />
+		</exec>
+	</target>
+</project>

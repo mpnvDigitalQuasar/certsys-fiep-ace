@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmWSRequest.msgnode="ComIbmWSRequest.msgnode" xmlns:br_org_fiep_esb_monitoramento_v1_HttpRequestIn.subflow="br/org/fiep/esb/monitoramento/v1/HttpRequestIn.subflow" xmlns:br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow="br/org/fiep/esb/monitoramento/v1/HttpRequestOut.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow"
+    xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="br/org/fiep/esb/lemontech/obterCredencialLemontech.subflow" nsPrefix="br_org_fiep_esb_lemontech_obterCredencialLemontech.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="RECTANGLE">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="obterCredencialLemontech" bundleName="br/org/fiep/esb/lemontech/obterCredencialLemontech" pluginId="LibFuncoesUtils"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj16/obterCredencialLemontech.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj30/obterCredencialLemontech.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="br/org/fiep/esb/lemontech/obterCredencialLemontech" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="1228,24">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="br/org/fiep/esb/lemontech/obterCredencialLemontech" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="612,22" URLSpecifier="https://localhost:7843/ObterCredencial" httpVersion="1.1" protocol="TLSv1.2">
+        <translation xmi:type="utility:ConstantString" string="HTTP Request"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_HttpRequestIn.subflow:FCMComposite_1" xmi:id="FCMComposite_1_2" location="404,22">
+        <translation xmi:type="utility:ConstantString" string="HttpRequestIn"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="1036,22" computeExpression="esql://routine/br.fiep.esb.lemontech#obterCredencial_Montar_Response.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Montar Response"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="839,23" Legacy_System="ERP">
+        <translation xmi:type="utility:ConstantString" string="HttpRequestOut"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="193,20" computeExpression="esql://routine/br.fiep.esb.lemontech#obterCredencial_setOperation.Main">
+        <translation xmi:type="utility:ConstantString" string="setOperation"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.Input2"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input1"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_5" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

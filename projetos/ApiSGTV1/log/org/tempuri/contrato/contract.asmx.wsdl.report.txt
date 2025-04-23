@@ -1,0 +1,33 @@
+
+
+Importing file: C:\Barramento\GIT\FIEP\testeIntegradoV2\assembly\AppSGT_V7\xml-resources\web-service-references\contract\wsdl\wbscrmprd.fiepr.org.br\contract.asmx.wsdl
+
+The WSDL import will proceed with bindings ContractSoap.
+Creating wsdl schema document for file:///C:/Barramento/GIT/FIEP/testeIntegradoV2/assembly/AppSGT_V7/xml-resources/web-service-references/contract/wsdl/wbscrmprd.fiepr.org.br/contract.asmx.wsdl.
+Parsing wsdl binding {http://tempuri.org/contrato/}ContractSoap.
+Parsing wsdl binding input GetContracts.
+Parsing wsdl binding output GetContracts.
+Parsing wsdl binding input EnviarContratoAX.
+Parsing wsdl binding output EnviarContratoAX.
+Parsing wsdl binding input ImprimirContrato.
+Parsing wsdl binding output ImprimirContrato.
+Parsing wsdl binding input GetContrato.
+Parsing wsdl binding output GetContrato.
+Processing doc style for operation GetContracts.
+Processing doc style for operation EnviarContratoAX.
+Processing doc style for operation ImprimirContrato.
+Processing doc style for operation GetContrato.
+Populating WSDL schema contract.asmx.xsd.
+Creating file contract.asmx.xsd in the workspace.
+Creating file contract.asmx_InlineSchema1.xsd in the workspace.
+Creating file /ApiSGT/contract.asmx_InlineSchema2.xsd in the workspace.
+Creating file /ApiSGT/contract.asmx_InlineSchema3.xsd in the workspace.
+Copying source WSDL contract.asmx.wsdl to contract.asmx.wsdl.
+
+Elapsed time processing this message definition file: 0.25 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

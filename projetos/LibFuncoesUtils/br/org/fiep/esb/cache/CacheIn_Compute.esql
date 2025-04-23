@@ -1,0 +1,110 @@
+BROKER SCHEMA br.org.fiep.esb.cache
+PATH br.org.fiep.esb.utils;
+DECLARE CacheFile ROW;
+
+
+CREATE COMPUTE MODULE CacheIn_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputLocalEnvironment = InputLocalEnvironment;
+		SET Environment.Variables.Properties = InputRoot.Properties;
+
+		DECLARE messageIn CHAR;
+		DECLARE key CHAR;
+		DECLARE sql CHAR;			
+
+
+		DECLARE jsonBlob BLOB;
+		DECLARE JSON CHAR;
+
+		DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);
+
+		--SET OutputRoot.JSON.Data = InputLocalEnvironment.REST.Input;
+		SET OutputRoot.JSON = InputLocalEnvironment.REST.Input;
+		IF InputLocalEnvironment.HTTP.Input.QueryString.atualizar = UPPER('true') THEN
+			SET Environment.Variables.atualizar = true;
+		END IF;
+		SET OutputRoot.JSON.Parameters.atualizar = NULL;
+		SET OutputLocalEnvironment.Destination.HTTP.QueryString.atualizar = NULL;
+		SET OutputRoot.JSON.Parameters.globalTransactionId = NULL;
+		SET OutputRoot.JSON.Parameters.parentTransactionId = NULL;
+
+		SET jsonBlob = ASBITSTREAM(OutputRoot,,1208,,,,options);
+		SET JSON = CAST(jsonBlob AS CHAR ENCODING InputRoot.Properties.Encoding);
+		SET messageIn = BASE64ENCODE(JSON);
+		SET Environment.Variables.messageIn = messageIn;
+		SET Environment.Variables.input.nomeOperacao = InputLocalEnvironment.REST.Input.Operation;
+		SET Environment.Variables.input.nomeApi = ApplicationLabel;
+
+		DECLARE env REFERENCE TO Environment;
+		CALL obterMD5Txt(messageIn, env);
+		SET key = env.Variables.md5;
+		SET Environment.Variables.key = key;
+
+		IF Environment.Variables.atualizar = UPPER('true') THEN
+			--PROPAGATE TO TERMINAL 'out1';
+			--RETURN FALSE;
+			SET OutputLocalEnvironment.HTTP.Input.QueryString.atualizar = true;
+			RETURN TRUE;
+		END IF;
+
+		Routing: BEGIN ATOMIC -- beginning of atomic block. Processing is single threaded until the END is reached.
+
+			IF CacheFile.valid IS NOT NULL THEN
+				--consulta a cache
+				SET OutputRoot.JSON.Data.dados.requisicaoOut = CacheFile.{key};
+				--consulta o banco de dados
+				IF OutputRoot.JSON.Data.dados.requisicaoOut IS NULL THEN
+					SET sql = 'SELECT requisicaoOut FROM BROKER.dbo.IIB_CACHE WITH (NOLOCK) WHERE chave = '''|| key ||'''';
+					SET OutputRoot.JSON.Data.dados[] = PASSTHRU(sql);
+					COMMIT;
+				END IF;
+
+			ELSE
+				--consulta o banco de dados
+				SET sql = 'SELECT requisicaoOut FROM BROKER.dbo.IIB_CACHE WITH (NOLOCK) WHERE chave = '''|| key ||'''';
+				SET OutputRoot.JSON.Data.dados[] = PASSTHRU(sql);
+				COMMIT;
+			END IF;
+			--update dataExecucao
+			IF EXISTS(OutputRoot.JSON.Data.dados[]) THEN
+				SET sql = 'UPDATE dbo.IIB_CACHE set dataExecucao = getDate() WHERE chave = '''|| key ||'''';
+				PASSTHRU(sql);
+				COMMIT;
+				SET OutputLocalEnvironment.HTTP.Input.QueryString.atualizar = false;
+			END IF;
+
+		END Routing;
+		/*
+		Se não encontrado o dado no retorno da cache, então propague a mensagem para o node compute Montar Request.
+		*/
+		IF EXISTS(OutputRoot.JSON.Data.dados[]) IS FALSE THEN
+			--PROPAGATE TO TERMINAL 'out1';
+			--RETURN FALSE;
+			SET OutputLocalEnvironment.HTTP.Input.QueryString.atualizar = true;
+			--monta a resposta
+			-- DECLARE decoded BLOB BASE64DECODE(Environment.Variables.messageOut);
+			-- SET OutputRoot.JSON = NULL;
+			-- DECLARE retorno CHARACTER CAST(decoded AS CHARACTER CCSID 1208);
+			-- CREATE LASTCHILD OF OutputRoot DOMAIN('JSON') PARSE(CAST(retorno AS BLOB CCSID 1208 ENCODING InputRoot.Properties.Encoding));
+			--
+			RETURN TRUE;
+		END IF;
+		-- ELSE
+		--monta a resposta
+		DECLARE decoded BLOB BASE64DECODE(OutputRoot.JSON.Data.dados.requisicaoOut);
+		SET OutputRoot.JSON = NULL;
+		DECLARE retorno CHARACTER CAST(decoded AS CHARACTER CCSID 1208);
+		CREATE LASTCHILD OF OutputRoot DOMAIN('JSON') PARSE(CAST(retorno AS BLOB CCSID 1208 ENCODING InputRoot.Properties.Encoding));
+		-- END IF;
+		
+		RETURN TRUE;
+	END;
+END MODULE;		   
+
+													  
+																						
+
+																					 
+
+																				   

@@ -1,0 +1,43 @@
+BROKER SCHEMA br.org.fiep.esb.appsgt
+
+
+CREATE COMPUTE MODULE processarContratoAsync_orquestrarValidarProposta
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		
+		DECLARE retorno BOOLEAN TRUE;
+		
+		IF FIELDTYPE(InputRoot.JSON.Data.Propostas.Proposta.idProposta) IS NOT NULL THEN
+			--Localizada proposta no SGT
+			SET Environment.Variables.SGTidProposta = InputRoot.JSON.Data.Propostas.Proposta.idProposta;
+		ELSE
+			--Não Localizada a proposta no SGT
+			PROPAGATE TO LABEL 'lbCriarPropostaSGT';
+			
+			--Falha de contrato. Passa para o proximo
+			IF Environment.Variables.etapa.status = 'Falha' THEN
+				SET retorno = FALSE;
+				RETURN retorno;
+			END IF;
+			
+		END IF;		
+			
+		RETURN retorno;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

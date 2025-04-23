@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmResetContentDescriptor.msgnode="ComIbmResetContentDescriptor.msgnode" xmlns:ComIbmTrace.msgnode="ComIbmTrace.msgnode" xmlns:br_org_fiep_esb_utils_v1_Reply.subflow="br/org/fiep/esb/utils/v1/Reply.subflow" xmlns:br_org_fiep_esb_utils_v1_TratarErro.subflow="br/org/fiep/esb/utils/v1/TratarErro.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:mbmonitor="http://www.ibm.com/wbi/2008/eflow_mbmonitor"
+    xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="br/org/fiep/esb/monitoramento/v1/HttpRequestOut.subflow" nsPrefix="br_org_fiep_esb_monitoramento_v1_HttpRequestOut.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Legacy_System" name="Legacy_System">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="HttpRequestOut" bundleName="br/org/fiep/esb/monitoramento/v1/HttpRequestOut" pluginId="LibFuncoesUtils"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj16/HttpRequestOut.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/LibFuncoesUtils/icons/full/obj30/HttpRequestOut.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Failure" bundleName="br/org/fiep/esb/monitoramento/v1/HttpRequestOut" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input1" location="19,114">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Out" bundleName="br/org/fiep/esb/monitoramento/v1/HttpRequestOut" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="218,20">
+        <translation xmi:type="utility:ConstantString" string="Trace Failure"/>
+        <monitorEvents eventSourceDescription="Out terminal" eventSourceName="Trace Failure.terminal.out" eventIdentity="HTTP REQUEST FAILURE">
+          <eventXMLDoc xmi:type="mbmonitor:MonitorEvent" eventUOW="none">
+            <applicationData dataLocation="$ExceptionList" isXPath="true" complexData="true"/>
+            <globalTransactionCorrelator dataLocation="$Environment/Variables/globalTransactionId" eventCorrelation="dataLocation"/>
+            <parentTransactionCorrelator dataLocation="$Environment/Variables/parentTransactionId" eventCorrelation="dataLocation"/>
+            <localTransactionCorrelator/>
+            <bitStreamData encoding="base64Binary"/>
+            <eventName literal="HTTP REQUEST FAILURE"/>
+            <eventFilter dataLocation="true()" isXPath="true"/>
+          </eventXMLDoc>
+        </monitorEvents>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="150,114">
+        <translation xmi:type="utility:ConstantString" string="Trace Output"/>
+        <monitorEvents eventSourceDescription="Out terminal" eventSourceName="Trace Output.terminal.out" eventIdentity="HTTP RESPONSE">
+          <eventXMLDoc xmi:type="mbmonitor:MonitorEvent" eventUOW="none">
+            <globalTransactionCorrelator dataLocation="$Environment/Variables/globalTransactionId" eventCorrelation="dataLocation"/>
+            <parentTransactionCorrelator dataLocation="$Environment/Variables/parentTransactionId" eventCorrelation="dataLocation"/>
+            <localTransactionCorrelator/>
+            <bitStreamData encoding="base64Binary"/>
+            <eventName literal="HTTP RESPONSE"/>
+            <eventFilter dataLocation="true()" isXPath="true"/>
+          </eventXMLDoc>
+        </monitorEvents>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input2" location="18,193">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Error%20" bundleName="br/org/fiep/esb/monitoramento/v1/HttpRequestOut" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="238,197">
+        <translation xmi:type="utility:ConstantString" string="Trace Error"/>
+        <monitorEvents eventSourceDescription="Out terminal" eventSourceName="Trace Error.terminal.out" eventIdentity="HTTP REQUEST ERROR">
+          <eventXMLDoc xmi:type="mbmonitor:MonitorEvent" eventUOW="none">
+            <globalTransactionCorrelator dataLocation="$Environment/Variables/globalTransactionId" eventCorrelation="dataLocation"/>
+            <parentTransactionCorrelator dataLocation="$Environment/Variables/parentTransactionId" eventCorrelation="dataLocation"/>
+            <localTransactionCorrelator/>
+            <bitStreamData encoding="base64Binary"/>
+            <eventName literal="HTTP REQUEST ERROR"/>
+            <eventFilter dataLocation="true()" isXPath="true"/>
+          </eventXMLDoc>
+        </monitorEvents>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output2" location="266,114">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="br/org/fiep/esb/monitoramento/v1/HttpRequestOut" pluginId="LibFuncoesUtils"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_utils_v1_TratarErro.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="393,123">
+        <translation xmi:type="utility:ConstantString" string="TratarErro"/>
+      </nodes>
+      <nodes xmi:type="br_org_fiep_esb_utils_v1_Reply.subflow:FCMComposite_1" xmi:id="FCMComposite_1_5" location="496,123">
+        <translation xmi:type="utility:ConstantString" string="Reply"/>
+      </nodes>
+      <nodes xmi:type="ComIbmResetContentDescriptor.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="70,193" messageDomain="JSON" resetMessageDomain="true">
+        <translation xmi:type="utility:ConstantString" string="Reset Content Descriptor"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_2" sourceNode="InTerminal.Input1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="OutTerminal.Output2" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_6" sourceNode="InTerminal.Input2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.Legacy_System">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.Legacy_System" bundleName="br/org/fiep/esb/utils/v1/TratarErro" pluginId="LibFuncoesUtils"/>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.Legacy_System" overriddenNodes="FCMComposite_1_4">
+      <overriddenAttribute href="br/org/fiep/esb/utils/v1/TratarErro.subflow#Property.Legacy_System"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

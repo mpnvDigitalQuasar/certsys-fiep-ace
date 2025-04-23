@@ -1,0 +1,92 @@
+
+
+CREATE COMPUTE MODULE processarFilaCRMPatch_preparaMsgOut
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		IF FIELDTYPE(InputRoot.SOAP.Body.ns:GetFilaIntegracaoResponse.ns:GetFilaIntegracaoResult.ns:resultados.ns:FilaRetorno) IS NOT NULL THEN
+
+			DECLARE getFilaIntegracaoResult REFERENCE TO InputRoot.SOAP.Body.ns:GetFilaIntegracaoResponse.ns:GetFilaIntegracaoResult;	
+			DECLARE filaRetorno REFERENCE TO InputRoot.SOAP.Body.ns:GetFilaIntegracaoResponse.ns:GetFilaIntegracaoResult.ns:resultados.ns:FilaRetorno;		
+	
+			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+			CREATE LASTCHILD OF OutputRoot.JSON NAME 'Data';
+	
+			SET Environment.Variables.etapa.nome = 'Enviar Fila MQ';
+			SET Environment.Variables.etapa.status = 'Em processamento';
+			SET Environment.Variables.etapa.sucesso = false;
+			
+			IF Environment.Variables.tipo = 'CONTRATO' THEN
+				
+				DECLARE jsonBlob BLOB;
+				DECLARE jsonMsg CHAR;
+				DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);	
+				
+				SET OutputRoot.JSON.Data = filaRetorno;
+				SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;
+				SET OutputRoot.JSON.Data.status = 'Em processamento';
+				SET OutputRoot.JSON.Data.sucesso = false;
+				SET OutputRoot.JSON.Data.parentTransactionId = Environment.Monitoring.EventCorrelation.localTransactionId;
+					
+				SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
+				SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
+				
+				CALL procs.upsetHistoricoContrato(jsonMsg, Environment.Variables.idHistorico);
+				COMMIT;
+				
+				SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;	
+				
+				PROPAGATE TO LABEL 'QL.SGT.CONTRATO.IN_Path';
+				
+			ELSEIF Environment.Variables.tipo = 'PRODUTO' THEN
+				
+				DECLARE jsonBlob BLOB;
+				DECLARE jsonMsg CHAR;
+				DECLARE options INTEGER BITOR(FolderBitStream, ValidateNone);	
+				
+				SET OutputRoot.JSON.Data = filaRetorno;
+				SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;
+				SET OutputRoot.JSON.Data.status = 'Em processamento';
+				SET OutputRoot.JSON.Data.sucesso = false;
+				SET OutputRoot.JSON.Data.parentTransactionId = Environment.Monitoring.EventCorrelation.localTransactionId;
+					
+				SET jsonBlob = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options);
+				SET jsonMsg = CAST(jsonBlob AS CHAR ENCODING 1208);	
+				
+				CALL procs.upsetHistoricoProduto(jsonMsg, Environment.Variables.idHistorico);
+				COMMIT;
+				
+				PROPAGATE TO LABEL 'QL.SGT.PRODUTO.IN_Path';
+			END IF;		
+		
+			DELETE FIELD OutputRoot.JSON.Data.parentTransactionId;
+			
+			SET OutputRoot.JSON.Data.idFila = Environment.Variables.idFila;
+			SET OutputRoot.JSON.Data.idHistorico = Environment.Variables.idHistorico;	
+			SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;	
+			SET OutputRoot.JSON.Data.status = Environment.Variables.etapa.status;		
+			SET OutputRoot.JSON.Data.mensagem = 'idFila enviado para processamento';
+		
+		ELSE
+			SET OutputRoot.JSON.Data.idFila = Environment.Variables.idFila;
+			SET OutputRoot.JSON.Data.tipo = Environment.Variables.tipo;
+			SET OutputRoot.JSON.Data.mensagem = 'idFila não encontrado no CRM';
+		END IF; 
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

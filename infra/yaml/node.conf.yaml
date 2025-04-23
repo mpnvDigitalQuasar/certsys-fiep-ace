@@ -1,0 +1,78 @@
+---
+brokerDefaultCCSID: '5348'
+brokerUUID: '9d8f6495-129e-4308-980a-ab200431e2ae'
+dataSourceUserId: 'LocalSystem'
+defaultQueueManager: 'QM.IIB01.DEV'
+BrokerRegistry: 
+  brokerKeystoreFile: 'E:\IBM\Certificado\IIBKeystore.jks'
+  brokerTruststoreFile: 'E:\IBM\Certificado\IIBTrustStore.jks'
+Events: 
+  BusinessEvents: 
+    MQTT: 
+      enabled: false
+NodeHttpListener: 
+  HTTPConnector: 
+    CORSEnabled: true
+  HTTPSConnector: 
+    CORSEnabled: true
+    KeystoreFile: 'E:\IBM\Certificado\IIBKeystore.jks'
+    KeystorePassword: 'iib@fiep#'
+    ListenerPort: 7843
+    TruststoreFile: 'E:\IBM\Certificado\IIBTrustStore.jks'
+    TruststorePassword: 'iib@fiep#'
+RestAdminListener: 
+  authorizationEnabled: false
+  basicAuth: true
+  port: 4414
+  webUserPasswordHashAlgorithm: 'SHA-1'
+Security: 
+  Node: 
+    DataPermissions: 
+      iibAdmins: 'read+:write-:execute-'
+    Permissions: 
+      iibAdmins: 'read+:write+:execute+'
+      iibDevs: 'read+:write+:execute+'
+      iibUsers: 'read+:write-:execute-'
+      swaggerui: 'read+:write-:execute-'
+  Server: 
+    IS_Corporativo: 
+      DataPermissions: 
+        iibAdmins: 'read+:write-:execute-'
+      Permissions: 
+        iibAdmins: 'read+:write+:execute+'
+        iibDevs: 'read+:write+:execute+'
+        iibUsers: 'read+:write-:execute-'
+        swaggerui: 'read+:write-:execute-'
+    IS_Extracao_Dados: 
+      DataPermissions: 
+        iibAdmins: 'read+:write-:execute-'
+      Permissions: 
+        iibAdmins: 'read+:write+:execute+'
+        swaggerui: 'read+:write-:execute-'
+    IS_Market_Place: 
+      DataPermissions: 
+        iibAdmins: 'read+:write-:execute-'
+      Permissions: 
+        iibAdmins: 'read+:write+:execute+'
+        swaggerui: 'read+:write-:execute-'
+    IS_Processa_Arquivos: 
+      DataPermissions: 
+        iibAdmins: 'read+:write-:execute-'
+      Permissions: 
+        iibAdmins: 'read+:write+:execute+'
+        swaggerui: 'read+:write-:execute-'
+    IS_Relacoes_Sindicais: 
+      DataPermissions: 
+        iibAdmins: 'read+:write-:execute-'
+      Permissions: 
+        iibAdmins: 'read+:write+:execute+'
+        swaggerui: 'read+:write-:execute-'
+    IS_Saude: 
+      DataPermissions: 
+        iibAdmins: 'read+:write-:execute-'
+      Permissions: 
+        iibAdmins: 'read+:write+:execute+'
+        swaggerui: 'read+:write-:execute-'
+SecurityCache: 
+  cacheSweepInterval: 1
+  cacheTimeout: 1

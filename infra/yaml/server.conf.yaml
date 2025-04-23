@@ -1,0 +1,54 @@
+---
+Monitoring: 
+  MessageFlow: 
+    eventFormat: 'WMB'
+    publicationOn: 'active'
+RecordReplay: 
+  Sources: 
+    DataCaptureSourceApiOmniSaudeV1: 
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Saude/gen.ApiOmniSaudeV1'
+    DataCaptureSourceApiOmniSaudeV1_importacaoFuncionario:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_HMG01/Monitoring/IS_Saude/importacaoFuncionario'
+    DataCaptureSourceApiOmniSaudeV1_incluirPedidoExame:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_HMG01/Monitoring/IS_Saude/incluirPedidoExame'
+    DataCaptureSourceApiQmaisV1:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Saude/gen.ApiQmaisV1'
+    DataCaptureSourceApiSGTV1:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Saude/gen.ApiSGTV1'
+    DataCaptureSourceApiSGTV1_processarContratoAsync:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Saude/br.org.fiep.esb.appsgt.processarContratoAsync'
+    DataCaptureSourceApiSGTV1_processarProdutoAsync:
+      store: 'Auditoria_IS_Saude'
+      topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Saude/br.org.fiep.esb.appsgt.processarProdutoAsync'
+  Stores:
+    Auditoria_IS_Saude:
+      backoutQueue: 'SYSTEM.BROKER.DC.BACKOUT'
+      commitCount: 10
+      commitIntervalSecs: 5
+      dataSource: 'odbc_db_iibauditoria'
+      queue: 'SYSTEM.BROKER.DC.RECORD'
+      schema: ''
+      storeMode: 'all'
+      threadPoolSize: 10
+      useCoordinatedTransaction: false
+ResourceManagers:
+  ExecutionGroup: 
+    httpNodesUseEmbeddedListener: 'true'
+  HTTPConnector:
+    ListenerPort: '7811'
+  HTTPSConnector:
+    ListenerPort: '7855'
+  JVM:
+    jvmDebugPort: '1068'
+    jvmMaxHeapSize: '1073741824'
+  SocketConnectionManager:
+    preemptiveAuthType: 'Basic'
+Statistics:
+  Resource: 
+    reportingOn: 'true'
