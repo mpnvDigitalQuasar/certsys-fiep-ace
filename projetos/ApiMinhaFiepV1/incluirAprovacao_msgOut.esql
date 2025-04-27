@@ -6,7 +6,7 @@ CREATE COMPUTE MODULE incluirAprovacao_msgOut
 		-- CALL CopyMessageHeaders();
 		-- CALL CopyEntireMessage();
 		
-		SET OutputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code" = 204;
+		SET OutputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code" = 200;
 		
 		RETURN TRUE;
 	END;
