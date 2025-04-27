@@ -1,0 +1,18 @@
+==============================================
+
+!Dom, abr 27 20:09:26 BRT 2025
+
+Arquivo 'atualizarAprovacao.subflow' incluído com sucesso no arquivo BAR.
+Arquivo 'atualizarAprovacao_msgOut.esql' incluído com sucesso no arquivo BAR.
+Arquivo 'build-certsys.xml' incluído com sucesso no arquivo BAR.
+Arquivo 'build-dev.xml' incluído com sucesso no arquivo BAR.
+Arquivo 'build-hmg.xml' incluído com sucesso no arquivo BAR.
+Arquivo 'build-prd.xml' incluído com sucesso no arquivo BAR.
+Arquivo 'gen\ApiMinhaFiepV1.msgflow' incluído com sucesso no arquivo BAR.
+Arquivo 'incluirAprovacao.subflow' incluído com sucesso no arquivo BAR.
+Arquivo 'incluirAprovacao_msgOut.esql' incluído com sucesso no arquivo BAR.
+Arquivo 'postIncluirAprovacao_msgIn.esql' incluído com sucesso no arquivo BAR.
+Arquivo 'putAtualizarAprovacao_msgIn.esql' incluído com sucesso no arquivo BAR.
+Arquivo 'restapi.descriptor' incluído com sucesso no arquivo BAR.
+Arquivo 'swagger.json' incluído com sucesso no arquivo BAR.
+Arquivo de aplicativo 'ApiMinhaFiepV1.appzip' incluído com sucesso no arquivo BAR.

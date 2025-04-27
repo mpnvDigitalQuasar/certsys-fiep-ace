@@ -1,0 +1,64 @@
+Executando o comando: mqsipackagebar
+Argumentos de comando: '-w ..\ -a ..\deployedBars\ApiMinhaFiepV1.bar -k ApiMinhaFiepV1'
+==============================================
+
+!Dom, abr 27 20:09:25 BRT 2025
+
+Processando o arquivo 'ApiMinhaFiepV1'.
+Conteúdo do aplicativo:
+
+	Processando o arquivo 'atualizarAprovacao.subflow'.
+	Arquivo 'atualizarAprovacao.subflow' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.612' segundo(s).
+	
+	Processando o arquivo 'atualizarAprovacao_msgOut.esql'.
+	Arquivo 'atualizarAprovacao_msgOut.esql' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.001' segundo(s).
+	
+	Processando o arquivo 'build-certsys.xml'.
+	Arquivo 'build-certsys.xml' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'build-dev.xml'.
+	Arquivo 'build-dev.xml' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'build-hmg.xml'.
+	Arquivo 'build-hmg.xml' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'build-prd.xml'.
+	Arquivo 'build-prd.xml' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'gen\ApiMinhaFiepV1.msgflow'.
+	Arquivo 'gen\ApiMinhaFiepV1.msgflow' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.018' segundo(s).
+	
+	Processando o arquivo 'incluirAprovacao.subflow'.
+	Arquivo 'incluirAprovacao.subflow' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.01' segundo(s).
+	
+	Processando o arquivo 'incluirAprovacao_msgOut.esql'.
+	Arquivo 'incluirAprovacao_msgOut.esql' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'postIncluirAprovacao_msgIn.esql'.
+	Arquivo 'postIncluirAprovacao_msgIn.esql' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'putAtualizarAprovacao_msgIn.esql'.
+	Arquivo 'putAtualizarAprovacao_msgIn.esql' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'restapi.descriptor'.
+	Arquivo 'restapi.descriptor' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+	Processando o arquivo 'swagger.json'.
+	Arquivo 'swagger.json' incluído com sucesso no arquivo BAR.
+	Tempo decorrido: '0.0' segundo(s).
+	
+Arquivo de aplicativo 'ApiMinhaFiepV1.appzip' incluído com sucesso no arquivo BAR.
+Tempo decorrido: '0.678' segundo(s).
+
