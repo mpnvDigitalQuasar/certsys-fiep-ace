@@ -20,13 +20,13 @@
             }
           },
           "401" : {
-            "description" : "The operation was successful.",
+            "description" : "Not authorized.",
             "schema" : {
               "$ref" : "#/definitions/ApiError"
             }
           },
           "500" : {
-            "description" : "The operation was successful.",
+            "description" : "Internal server error.",
             "schema" : {
               "$ref" : "#/definitions/ApiError"
             }
@@ -70,13 +70,13 @@
             }
           },
           "401" : {
-            "description" : "The operation was successful.",
+            "description" : "Not authorized.",
             "schema" : {
               "$ref" : "#/definitions/ApiError"
             }
           },
           "500" : {
-            "description" : "The operation was successful.",
+            "description" : "Internal server error.",
             "schema" : {
               "$ref" : "#/definitions/ApiError"
             }
