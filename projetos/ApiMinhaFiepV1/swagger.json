@@ -1,0 +1,320 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "ApiMinhaFiepV1",
+    "version" : "1.0.0",
+    "description" : "ApiMinhaFiepV1"
+  },
+  "paths" : {
+    "/atualizarAprovacao" : {
+      "put" : {
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ],
+        "operationId" : "atualizarAprovacao",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/atualizarAprovacaoMsgOut"
+            }
+          },
+          "401" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          },
+          "500" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Update atualizarAprovacao",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/atualizarAprovacaoMsgIn"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        }, {
+          "name" : "globalTransactionId",
+          "in" : "header",
+          "type" : "string",
+          "description" : "Numero da instancia para rastreabilidade de auditoria"
+        }, {
+          "name" : "parentTransactionId",
+          "in" : "header",
+          "type" : "string",
+          "description" : "Correlacao de chamadas de servicos internos no ACE"
+        } ]
+      }
+    },
+    "/incluirAprovacao" : {
+      "post" : {
+        "security" : [ {
+          "basicAuth" : [ ]
+        } ],
+        "operationId" : "incluirAprovacao",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/incluirAprovacaoMsgOut"
+            }
+          },
+          "401" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          },
+          "500" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/ApiError"
+            }
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Insert a incluirAprovacao",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/incluirAprovacaoMsgIn"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        }, {
+          "name" : "globalTransactionId",
+          "in" : "header",
+          "type" : "string",
+          "description" : "Numero da instancia para rastreabilidade de auditoria"
+        }, {
+          "name" : "parentTransactionId",
+          "in" : "header",
+          "type" : "string",
+          "description" : "Correlacao de chamadas de servicos internos no ACE"
+        } ]
+      }
+    }
+  },
+  "basePath" : "/api/minhafiep/v1",
+  "securityDefinitions" : {
+    "basicAuth" : {
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "incluirAprovacaoMsgIn" : {
+      "type" : "object",
+      "properties" : {
+        "cabecalho" : {
+          "type" : "object",
+          "properties" : {
+            "tipo" : {
+              "type" : "string"
+            },
+            "acao" : {
+              "type" : "string"
+            },
+            "descricaoAcao" : {
+              "type" : "string"
+            },
+            "matriculaSolicitante" : {
+              "type" : "string"
+            },
+            "casaSolicitante" : {
+              "type" : "string"
+            },
+            "nomeSolicitante" : {
+              "type" : "string"
+            },
+            "justificativa" : {
+              "type" : "object",
+              "properties" : {
+                "descricao" : {
+                  "type" : "string"
+                },
+                "observacao" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "detalhamento" : {
+          "type" : "object",
+          "properties" : {
+            "descricaoSolicitacao" : {
+              "type" : "string"
+            },
+            "valorSolicitacao" : {
+              "type" : "string"
+            },
+            "Itens" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/itemCompra"
+              }
+            }
+          }
+        },
+        "sistema" : {
+          "type" : "object",
+          "properties" : {
+            "idSolicitacao" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "incluirAprovacaoMsgOut" : {
+      "type" : "object",
+      "properties" : {
+        "sucesso" : {
+          "type" : "string"
+        },
+        "mensagem" : {
+          "type" : "string"
+        },
+        "monitoracao" : {
+          "$ref" : "#/definitions/Monitoramento"
+        }
+      }
+    },
+    "atualizarAprovacaoMsgIn" : {
+      "type" : "object",
+      "properties" : {
+        "idSolicitacao" : {
+          "type" : "string"
+        },
+        "idAtividade" : {
+          "type" : "string"
+        },
+        "sistema" : {
+          "type" : "string"
+        },
+        "login" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "aprovado" : {
+          "type" : "string"
+        },
+        "observacao" : {
+          "type" : "string"
+        },
+        "dataAcao" : {
+          "type" : "string"
+        }
+      }
+    },
+    "atualizarAprovacaoMsgOut" : {
+      "type" : "object",
+      "properties" : {
+        "sucesso" : {
+          "type" : "string"
+        },
+        "mensagem" : {
+          "type" : "string"
+        },
+        "monitoracao" : {
+          "$ref" : "#/definitions/Monitoramento"
+        }
+      }
+    },
+    "itemCompra" : {
+      "type" : "object",
+      "properties" : {
+        "codigo" : {
+          "type" : "string"
+        },
+        "descricao" : {
+          "type" : "string"
+        },
+        "finalidade" : {
+          "type" : "string"
+        },
+        "departamento" : {
+          "type" : "string"
+        },
+        "cr" : {
+          "type" : "string"
+        },
+        "unidMedida" : {
+          "type" : "string"
+        },
+        "quantidade" : {
+          "type" : "string"
+        },
+        "precoUnitario" : {
+          "type" : "string"
+        },
+        "precoTotal" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ApiError" : {
+      "type" : "object",
+      "properties" : {
+        "httpCode" : {
+          "type" : "integer"
+        },
+        "httpMessage" : {
+          "type" : "string"
+        },
+        "error" : {
+          "$ref" : "#/definitions/Error"
+        }
+      }
+    },
+    "Error" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "application" : {
+          "type" : "string"
+        },
+        "parentTransactionId" : {
+          "type" : "string"
+        },
+        "localTransactionDate" : {
+          "type" : "string"
+        },
+        "exception" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Monitoramento" : {
+      "type" : "object",
+      "properties" : {
+        "localTransactionId" : {
+          "type" : "string"
+        },
+        "localTransactionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    }
+  }
+}
