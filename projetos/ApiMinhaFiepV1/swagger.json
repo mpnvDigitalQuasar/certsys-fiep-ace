@@ -173,6 +173,18 @@
           "properties" : {
             "idSolicitacao" : {
               "type" : "string"
+            },
+            "idAtividade" : {
+              "type" : "string"
+            },
+            "sistema" : {
+              "type" : "string"
+            },
+            "login" : {
+              "type" : "string"
+            },
+            "email" : {
+              "type" : "string"
             }
           }
         }
@@ -217,7 +229,8 @@
           "type" : "string"
         },
         "dataAcao" : {
-          "type" : "string"
+          "type" : "string",
+          "format" : "date-time"
         }
       }
     },
