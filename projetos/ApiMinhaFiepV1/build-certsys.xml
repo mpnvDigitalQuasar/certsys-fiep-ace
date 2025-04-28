@@ -14,7 +14,7 @@
 		<property name="util" value="..\Util\utilitarios"></property>
 		<property name="host" value="10.44.114.132" />
 		<property name="port" value="4414" />
-		<property name="integration_service" value="IS_Saude" />
+		<property name="integration_service" value="IS_Corporativo" />
 	</target>
 
 	<property environment="env" />
