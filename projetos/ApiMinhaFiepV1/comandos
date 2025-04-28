@@ -1,0 +1,9 @@
+Monitoracao:
+
+DataCaptureSourceApiMinhaFiepV1: 
+  store: 'Auditoria'
+  topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Corporativo/gen.ApiMinhaFiepV1'
+  
+IHS
+  <Uri Name="/api/minhafiep/v1*"/>
+  
