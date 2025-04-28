@@ -87,7 +87,7 @@
           "required" : true
         }, {
           "name" : "globalTransactionId",
-          "in" : "query",
+          "in" : "header",
           "type" : "string",
           "description" : "Numero da instancia para rastreabilidade de auditoria"
         }, {
