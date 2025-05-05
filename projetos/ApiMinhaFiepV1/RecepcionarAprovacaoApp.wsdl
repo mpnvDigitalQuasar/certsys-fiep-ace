@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:intf="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="RecepcionarAprovacaoApp_InlineSchema1.xsd"/>
+        <binding hasEncoding="false" imported="true" name="soap12WFA_WS_RecepcionarAprovacaoAppSoapSoapBinding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    
+          <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:include schemaLocation="RecepcionarAprovacaoApp_InlineSchema1.xsd"/>
+    </schema>
+    </wsdl:types>
+  <wsdl:message name="recepcionarAprovacaoAppResponse">
+    <wsdl:part element="impl:recepcionarAprovacaoAppResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="recepcionarAprovacaoAppRequest">
+    <wsdl:part element="impl:recepcionarAprovacaoApp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WFA_WS_RecepcionarAprovacaoAppPortType">
+    <wsdl:operation name="recepcionarAprovacaoApp">
+      <wsdl:input message="impl:recepcionarAprovacaoAppRequest" name="recepcionarAprovacaoAppRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:recepcionarAprovacaoAppResponse" name="recepcionarAprovacaoAppResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="soap12WFA_WS_RecepcionarAprovacaoAppSoapSoapBinding" type="impl:WFA_WS_RecepcionarAprovacaoAppPortType">
+    <wsdlsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="recepcionarAprovacaoApp">
+      <wsdlsoap12:operation soapAction="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws/recepcionarAprovacaoApp"/>
+      <wsdl:input name="recepcionarAprovacaoAppRequest">
+        <wsdlsoap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="recepcionarAprovacaoAppResponse">
+        <wsdlsoap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WFA_WS_RecepcionarAprovacaoApp">
+    <wsdl:port binding="impl:soap12WFA_WS_RecepcionarAprovacaoAppSoapSoapBinding" name="soap12WFA_WS_RecepcionarAprovacaoAppSoap">
+      <wsdlsoap12:address location="https://bpmdev.sistemafiep.org.br/teamworks/webservices/WFA/WFA_WS_RecepcionarAprovacaoApp.tws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,56 @@
+BROKER SCHEMA br.org.fiep.esb.token.v1
+
+
+CREATE COMPUTE MODULE obterTokenMinhaFIEP_manterToken
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		SET OutputRoot.JSON.Data.sistema = Environment.Variables.sistema;
+		SET OutputRoot.JSON.Data.resource = Environment.Variables.scope;
+		SET OutputRoot.JSON.Data.clientId = Environment.Variables.user;
+		
+		--conversão de long pata timestamp
+		DECLARE formattedExpiry CHARACTER;
+		
+		IF FIELDTYPE(InputRoot.JSON.Data.expires_in) IS NOT NULL THEN
+			
+			DECLARE baseTimestamp TIMESTAMP;
+			DECLARE expiryTimestamp TIMESTAMP;
+			DECLARE expiresIn INTEGER InputRoot.JSON.Data.expires_in;
+			
+			SET baseTimestamp = CURRENT_TIMESTAMP - INTERVAL '5' MINUTE;
+			SET expiryTimestamp = baseTimestamp + CAST(CAST(expiresIn AS CHARACTER) AS INTERVAL SECOND);
+        	SET formattedExpiry = CAST(expiryTimestamp AS CHARACTER FORMAT 'yyyy-MM-dd HH:mm:ss');
+		END IF;
+		
+		SET OutputRoot.JSON.Data.expiresOn = formattedExpiry;
+		SET OutputRoot.JSON.Data.tokenType = InputRoot.JSON.Data.token_type;
+		SET OutputRoot.JSON.Data.accessToken = InputRoot.JSON.Data.access_token;
+
+		DECLARE jsonBlob1 BLOB;
+		DECLARE JSON CHAR;
+		DECLARE options1 INTEGER BITOR(FolderBitStream, ValidateNone);
+		
+		SET jsonBlob1 = ASBITSTREAM(OutputRoot.JSON.Data,,1208,,,,options1);
+		SET JSON = CAST(jsonBlob1 AS CHAR ENCODING 1208);
+		
+		DECLARE result row;
+		
+		CALL insert_token(JSON, result.Item[]);
+		COMMIT;
+		
+		DELETE FIELD OutputRoot.JSON;
+		
+		SET Environment.Variables.idTokenBroker = result.Item.idTokenBroker;		
+		
+		SET Environment.Variables.token = 'Bearer ' || InputRoot.JSON.Data.access_token;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE insert_token(IN json CHAR)
+	LANGUAGE DATABASE
+	DYNAMIC RESULT SETS 1
+	EXTERNAL NAME "dbo.MKP_ECOM_SP_INS_TOKEN";
+	
+END MODULE;

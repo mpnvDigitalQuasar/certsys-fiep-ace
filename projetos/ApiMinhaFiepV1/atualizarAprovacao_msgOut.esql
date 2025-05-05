@@ -3,25 +3,25 @@
 CREATE COMPUTE MODULE atualizarAprovacao_msgOut
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
 		
-		SET OutputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code" = 200;
+		DECLARE nomeSistema CHARACTER Environment.variables.nomeSistema;
 		
-		RETURN TRUE;
-	END;
+		DECLARE soapenv NAMESPACE 'http://www.w3.org/2003/05/soap-envelope';
+		DECLARE wfa NAMESPACE 'http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws';
+		
+		
+			-- Retorna response SOAP
+		IF nomeSistema = 'BPM'  THEN
+		    SET OutputRoot.JSON.Data.sucesso = InputRoot.SOAP.Body.wfa:recepcionarAprovacaoAppResponse.wfa:recepcionarAprovacaoAppResponse.wfa:sucesso;
+		    SET OutputRoot.JSON.Data.mensagem = InputRoot.SOAP.Body.wfa:recepcionarAprovacaoAppResponse.wfa:recepcionarAprovacaoAppResponse.wfa:mensagem;
+		
+		ELSE
+		    -- retorna response Json
+		    SET OutputRoot.JSON.Data.sucesso = InputRoot.JSON.Data.sucesso;
+		    SET OutputRoot.JSON.Data.mensagem = InputRoot.JSON.Data.mensagem;
+		END IF;
 
-	CREATE PROCEDURE CopyMessageHeaders() BEGIN
-		DECLARE I INTEGER 1;
-		DECLARE J INTEGER;
-		SET J = CARDINALITY(InputRoot.*[]);
-		WHILE I < J DO
-			SET OutputRoot.*[I] = InputRoot.*[I];
-			SET I = I + 1;
-		END WHILE;
-	END;
 
-	CREATE PROCEDURE CopyEntireMessage() BEGIN
-		SET OutputRoot = InputRoot;
+	    RETURN TRUE;
 	END;
 END MODULE;

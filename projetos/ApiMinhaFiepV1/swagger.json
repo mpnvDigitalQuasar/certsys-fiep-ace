@@ -48,7 +48,7 @@
         }, {
           "name" : "parentTransactionId",
           "in" : "header",
-          "type" : "string",
+          "type" : "number",
           "description" : "Correlacao de chamadas de servicos internos no ACE"
         } ]
       },

@@ -1,9 +1,2 @@
-Monitoracao:
-
-DataCaptureSourceApiMinhaFiepV1: 
-  store: 'Auditoria'
-  topic: '$SYS/Broker/IN_DEV01/Monitoring/IS_Corporativo/gen.ApiMinhaFiepV1'
-  
-IHS
-  <Uri Name="/api/minhafiep/v1*"/>
-  
+mqsisetdbparms IN_DEV01 -n CREDMINHAFIEP -u "b6ec1f46-27a1-4d50-92cf-cb36b9da86b8" -p "yJn8Q~ugZjbA6t.Yaj6-QWFsFyJc3MseHBh3-cik"
+mqsicreateconfigurableservice IN_DEV01 -c SecurityProfiles -o SEGCREDMINHAFIEP -n mapping,rejectBlankpassword,propagation,passwordValue,keyStore,authorizationConfig,authenticationConfig,idToPropagateToTransport,trustStore,authentication,authorization,mappingConfig,transportPropagationConfig -v "NONE","TRUE","TRUE","PLAIN","Reserved for future use","","","STATIC ID","Reserved for future use","NONE","NONE","","CREDMINHAFIEP"

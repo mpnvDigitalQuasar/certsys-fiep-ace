@@ -1,0 +1,27 @@
+
+
+Importing file: C:\Users\felip\Downloads\RecepcionarAprovacaoApp.wsdl
+
+
+The following is a list of WS-I warning messages found when importing:
+WS-I BP 1.1: (BP2402) The service does not contain any binding that uses a SOAP 1.1 binding., Line: 66, Column: 3
+
+
+The WSDL import will proceed with bindings soap12WFA_WS_RecepcionarAprovacaoAppSoapSoapBinding.
+Creating wsdl schema document for file:///C:/Users/felip/Downloads/RecepcionarAprovacaoApp.wsdl.
+Parsing wsdl binding {http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws}soap12WFA_WS_RecepcionarAprovacaoAppSoapSoapBinding.
+Parsing wsdl binding input recepcionarAprovacaoApp.
+Parsing wsdl binding output recepcionarAprovacaoApp.
+Processing doc style for operation recepcionarAprovacaoApp.
+Populating WSDL schema RecepcionarAprovacaoApp.xsd.
+Creating file RecepcionarAprovacaoApp.xsd in the workspace.
+Creating file RecepcionarAprovacaoApp_InlineSchema1.xsd in the workspace.
+Copying source WSDL RecepcionarAprovacaoApp.wsdl to RecepcionarAprovacaoApp.wsdl.
+
+Elapsed time processing this message definition file: 0.353 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

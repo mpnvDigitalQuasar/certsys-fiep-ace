@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:impl="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:intf="http://WFA/WFA_WS_RecepcionarAprovacaoApp.tws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <element ibmSchExtn:docRoot="true" name="recepcionarAprovacaoApp">
+    <complexType>
+      <sequence>
+        <element name="recepcionarAprovacaoAppRequest" type="impl:RecepcionarAprovacaoAppRequest"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element ibmSchExtn:docRoot="true" name="recepcionarAprovacaoAppResponse">
+    <complexType>
+      <sequence>
+        <element name="recepcionarAprovacaoAppResponse" type="impl:RecepcionarAprovacaoAppResponse"/>
+      </sequence>
+    </complexType>
+  </element>
+  <complexType name="RecepcionarAprovacaoAppResponse">
+    <sequence>
+      <element maxOccurs="1" minOccurs="0" name="sucesso" nillable="false" type="boolean"/>
+      <element maxOccurs="1" minOccurs="0" name="mensagem" nillable="false" type="string"/>
+    </sequence>
+  </complexType>
+  <complexType name="RecepcionarAprovacaoAppRequest">
+    <sequence>
+      <element maxOccurs="1" minOccurs="0" name="idSolicitacao" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="0" name="idAtividade" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="0" name="login" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="0" name="email" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="0" name="aprovado" nillable="false" type="boolean"/>
+      <element maxOccurs="1" minOccurs="0" name="observacao" nillable="false" type="string"/>
+      <element maxOccurs="1" minOccurs="0" name="dataAcao" nillable="false" type="dateTime"/>
+    </sequence>
+  </complexType>
+</schema>
